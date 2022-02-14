@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinker_project/common/routes/library.dart';
 import 'package:pinker_project/common/store/library.dart';
@@ -29,8 +30,17 @@ AppBar getFrameAppBar({
         )),
     actions: [
       getButton(
-        child: const Text('data'),
+        child: Obx(
+          () => SvgPicture.asset(
+            'assets/svg/set.svg',
+            color: ConfigStore.to.state.isDarkMode
+                ? LightColor.scaffoldBackground
+                : DarkColor.scaffoldBackground,
+          ),
+        ),
         onPressed: _onPressed,
+        width: 56.0,
+        height: 56.0,
       )
     ],
   );

@@ -5,6 +5,7 @@ class AppRoutes {
 
   /// frame
   static const frame = '/frame';
+  static const welcome = '/welcome';
 
   /// application
   static const application = '/application';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pinker_project/common/theme/library.dart';
 
 class AppTheme {
@@ -28,7 +29,12 @@ class AppTheme {
       centerTitle: true,
       titleTextStyle: TextStyle(
         color: Colors.white,
-        fontSize: 18,
+        fontSize: 17,
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
       ),
     ),
   );
@@ -53,7 +59,12 @@ class AppTheme {
       centerTitle: true,
       titleTextStyle: TextStyle(
         color: Colors.black,
-        fontSize: 18,
+        fontSize: 17,
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
       ),
     ),
   );

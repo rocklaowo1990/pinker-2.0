@@ -6,6 +6,8 @@ import 'package:pinker_project/common/routes/observers.dart';
 import 'package:pinker_project/pages/application/library.dart';
 import 'package:pinker_project/pages/frame/binding.dart';
 import 'package:pinker_project/pages/frame/view.dart';
+import 'package:pinker_project/pages/frame/welcome/binding.dart';
+import 'package:pinker_project/pages/frame/welcome/view.dart';
 import 'package:pinker_project/pages/initial/binding.dart';
 import 'package:pinker_project/pages/initial/view.dart';
 import 'package:pinker_project/pages/set/binding.dart';
@@ -48,6 +50,14 @@ class AppPages {
       name: AppRoutes.set,
       page: () => const SetView(),
       binding: SetBinding(),
+    ),
+  ];
+
+  static final List<GetPage> setPages = [
+    GetPage(
+      name: AppRoutes.welcome,
+      page: () => const WelcomeView(),
+      binding: WelcomeBinding(),
     ),
   ];
 }
