@@ -114,7 +114,7 @@ Widget getInfinityButton(
       ),
     ),
     width: double.infinity,
-    height: 50,
+    height: Get.width * 0.12,
     onPressed: onPressed,
   );
 }

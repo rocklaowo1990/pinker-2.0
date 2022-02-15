@@ -15,7 +15,8 @@ class FrameController extends GetxController {
     if (state.pageIndex > 0) state.pageIndex--;
     pageController.previousPage(
       duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceOut,
+      curve: Curves.easeIn,
     );
+    children.removeLast();
   }
 }

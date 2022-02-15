@@ -27,21 +27,24 @@ class WelcomeView extends GetView<WelcomeController> {
     );
 
     /// 登陆按钮
-    var signIn = Row(
-      children: [
-        getText(Lang.welcomeHint.tr),
-        getButton(
-          padding: const EdgeInsets.all(8),
-          child:
-              getText(Lang.welcomeGoSignIn.tr, color: AppColors.primaryColor),
-          onPressed: controller.handleSignIn,
-        ),
-      ],
+    var signIn = SafeArea(
+      child: Row(
+        children: [
+          getText(Lang.welcomeHint.tr),
+          getButton(
+            padding: const EdgeInsets.all(8),
+            child:
+                getText(Lang.welcomeGoSignIn.tr, color: AppColors.primaryColor),
+            onPressed: controller.handleSignIn,
+          ),
+        ],
+      ),
+      top: false,
     );
 
     /// 主体布局
     var padding = Padding(
-      padding: EdgeInsets.fromLTRB(Get.width * 0.12, 0, Get.width * 0.12, 64),
+      padding: EdgeInsets.fromLTRB(Get.width * 0.12, 0, Get.width * 0.12, 30),
       child: Column(
         children: [
           const SizedBox(),

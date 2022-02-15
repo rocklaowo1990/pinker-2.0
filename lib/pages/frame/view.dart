@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pinker_project/common/store/library.dart';
+import 'package:pinker_project/common/theme/library.dart';
 import 'package:pinker_project/common/widgets/library.dart';
 
 import 'package:pinker_project/pages/frame/library.dart';
@@ -21,9 +23,15 @@ class FrameView extends GetView<FrameController> {
     var appBar = getFrameAppBar(
       leading: Obx(
         () => getButton(
-          child:
-              controller.state.pageIndex > 0 ? getIconBack() : const SizedBox(),
-          onPressed: controller.handleLeading,
+          child: controller.state.pageIndex > 0
+              ? getIconBack(
+                  color: ConfigStore.to.state.isDarkMode
+                      ? LightColor.scaffoldBackground
+                      : DarkColor.scaffoldBackground,
+                )
+              : const SizedBox(),
+          onPressed:
+              controller.state.pageIndex > 0 ? controller.handleLeading : null,
         ),
       ),
     );
