@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:pinker_project/common/widgets/library.dart';
+import 'package:pinker_project/common/widgets/text.dart';
 import 'package:pinker_project/pages/set/library.dart';
 
 class SetView extends GetView<SetController> {
@@ -10,11 +11,11 @@ class SetView extends GetView<SetController> {
   @override
   Widget build(BuildContext context) {
     var theme = getButton(
-      child: const Text('更改主题'),
+      child: getText('更改主题'),
       onPressed: controller.handleSetTheme,
     );
     var lang = getButton(
-      child: const Text('更改语言'),
+      child: getText('更改语言'),
       onPressed: controller.handleSetLang,
     );
 

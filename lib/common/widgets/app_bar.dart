@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinker_project/common/routes/library.dart';
+
 import 'package:pinker_project/common/store/library.dart';
 import 'package:pinker_project/common/theme/library.dart';
 import 'package:pinker_project/common/widgets/library.dart';
+import 'package:pinker_project/common/widgets/text.dart';
 
 /// 初始页面的 AppBar
 ///
@@ -23,11 +25,13 @@ AppBar getFrameAppBar({
     elevation: 0,
     title: getIconLogo(),
     leading: leading,
-    flexibleSpace: Obx(() => Container(
-          color: ConfigStore.to.state.isDarkMode
-              ? DarkColor.scaffoldBackground
-              : LightColor.scaffoldBackground,
-        )),
+    flexibleSpace: Obx(
+      () => Container(
+        color: ConfigStore.to.state.isDarkMode
+            ? DarkColor.scaffoldBackground
+            : LightColor.scaffoldBackground,
+      ),
+    ),
     actions: [
       getButton(
         child: Obx(
@@ -60,7 +64,7 @@ AppBar getAppBar({
   }
 
   return AppBar(
-    title: Text(title),
+    title: getText(title),
     leading: getButton(
       child: Obx(
         () => getIconBack(

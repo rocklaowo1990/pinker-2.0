@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker_project/common/theme/colors.dart';
+import 'package:pinker_project/common/widgets/text.dart';
 
 /// 按钮封装
 ///
@@ -93,5 +95,26 @@ Widget getButton({
       ),
       child: child,
     ),
+  );
+}
+
+Widget getInfinityButton(
+  String text, {
+  void Function()? onPressed,
+}) {
+  return getButton(
+    child: Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Center(
+        child: getText(text, color: Colors.white),
+      ),
+      decoration: const BoxDecoration(
+        gradient: AppColors.decorationColors,
+      ),
+    ),
+    width: double.infinity,
+    height: 50,
+    onPressed: onPressed,
   );
 }

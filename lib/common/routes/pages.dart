@@ -4,11 +4,9 @@ import 'package:get/get.dart';
 import 'package:pinker_project/common/middlewares/library.dart';
 import 'package:pinker_project/common/routes/observers.dart';
 import 'package:pinker_project/pages/application/library.dart';
-import 'package:pinker_project/pages/frame/binding.dart';
-import 'package:pinker_project/pages/frame/view.dart';
-import 'package:pinker_project/pages/frame/welcome/binding.dart';
-import 'package:pinker_project/pages/frame/welcome/view.dart';
-import 'package:pinker_project/pages/initial/binding.dart';
+import 'package:pinker_project/pages/frame/library.dart';
+
+import 'package:pinker_project/pages/initial/library.dart';
 import 'package:pinker_project/pages/initial/view.dart';
 import 'package:pinker_project/pages/set/binding.dart';
 import 'package:pinker_project/pages/set/view.dart';
@@ -31,16 +29,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.initial,
       page: () => const InitialView(),
-      binding: InitialBinding(),
       middlewares: [
         MiddlewareInitial(),
       ],
     ),
     GetPage(
-      name: AppRoutes.frame,
-      page: () => const FrameView(),
-      binding: FrameBinding(),
-    ),
+        name: AppRoutes.frame,
+        page: () => const FrameView(),
+        binding: FrameBinding()),
     GetPage(
       name: AppRoutes.application,
       page: () => const ApplicationView(),
@@ -50,14 +46,6 @@ class AppPages {
       name: AppRoutes.set,
       page: () => const SetView(),
       binding: SetBinding(),
-    ),
-  ];
-
-  static final List<GetPage> setPages = [
-    GetPage(
-      name: AppRoutes.welcome,
-      page: () => const WelcomeView(),
-      binding: WelcomeBinding(),
     ),
   ];
 }

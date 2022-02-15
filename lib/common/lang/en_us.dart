@@ -8,4 +8,10 @@ const Map<String, String> en = {
   Lang.next: 'Next',
   Lang.success: 'Success',
   Lang.reminder: 'Reminder: Your operation has been completed',
+
+  /// 欢迎页面
+  Lang.welcomeGoSignIn: ' Sign In',
+  Lang.welcomeGoSignUp: 'Sign Up',
+  Lang.welcomeHint: 'Alreday have an account?',
+  Lang.welcomeTitle: 'See what is happening in the world',
 };

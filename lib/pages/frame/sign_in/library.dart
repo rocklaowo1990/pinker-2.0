@@ -1,4 +1,4 @@
-library application;
+library fram_sign_in;
 
 export 'binding.dart';
 export 'controller.dart';

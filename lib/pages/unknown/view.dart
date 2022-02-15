@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker_project/common/widgets/text.dart';
 import 'package:pinker_project/pages/unknown/library.dart';
 
 class UnknownView extends GetView<UnknownController> {
@@ -9,7 +10,7 @@ class UnknownView extends GetView<UnknownController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UnknowView'),
+        title: getText('UnknowView'),
       ),
     );
   }

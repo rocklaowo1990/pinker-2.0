@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker_project/common/lang/translation_service.dart';
 import 'package:pinker_project/common/utils/library.dart';
+import 'package:pinker_project/common/widgets/text.dart';
 
 /// 顶部弹窗封装，文字版
 ///
@@ -23,14 +24,8 @@ Future<SnackbarController> getSnackbar({
   return Get.snackbar(
     title,
     message,
-    titleText: Text(
-      title,
-      style: const TextStyle(fontSize: 17, color: Colors.white),
-    ),
-    messageText: Text(
-      message,
-      style: const TextStyle(color: Colors.white),
-    ),
+    titleText: getText(title, fontSize: 17),
+    messageText: getText(message),
     icon: Icon(
       isError ? Icons.error : Icons.check_circle,
       color: isError ? Colors.red : Colors.green,
