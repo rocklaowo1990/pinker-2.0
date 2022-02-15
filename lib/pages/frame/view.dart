@@ -22,16 +22,19 @@ class FrameView extends GetView<FrameController> {
     /// AppBar
     var appBar = getFrameAppBar(
       leading: Obx(
-        () => getButton(
-          child: controller.state.pageIndex > 0
-              ? getIconBack(
-                  color: ConfigStore.to.state.isDarkMode
-                      ? LightColor.scaffoldBackground
-                      : DarkColor.scaffoldBackground,
-                )
-              : const SizedBox(),
-          onPressed:
-              controller.state.pageIndex > 0 ? controller.handleLeading : null,
+        () => AnimatedOpacity(
+          opacity: controller.state.pageIndex > 0 ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 500),
+          child: getButton(
+            child: getIconBack(
+              color: ConfigStore.to.state.isDarkMode
+                  ? LightColor.scaffoldBackground
+                  : DarkColor.scaffoldBackground,
+            ),
+            onPressed: controller.state.pageIndex > 0
+                ? controller.handleLeading
+                : null,
+          ),
         ),
       ),
     );

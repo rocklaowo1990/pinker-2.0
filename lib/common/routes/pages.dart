@@ -34,9 +34,10 @@ class AppPages {
       ],
     ),
     GetPage(
-        name: AppRoutes.frame,
-        page: () => const FrameView(),
-        binding: FrameBinding()),
+      name: AppRoutes.frame,
+      page: () => const FrameView(),
+      binding: FrameBinding(),
+    ),
     GetPage(
       name: AppRoutes.application,
       page: () => const ApplicationView(),
