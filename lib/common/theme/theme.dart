@@ -29,7 +29,7 @@ class AppTheme {
       shadowColor: Colors.white24,
       centerTitle: true,
       titleTextStyle: TextStyle(
-        color: Colors.white,
+        color: LightColor.primaryBackground,
         fontSize: 17,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
@@ -37,6 +37,12 @@ class AppTheme {
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,
       ),
+    ),
+
+    /// Switch
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(AppColors.primaryColor),
+      trackColor: MaterialStateProperty.all(DarkColor.switchBacground),
     ),
   );
 
@@ -59,7 +65,7 @@ class AppTheme {
       shadowColor: Colors.black26,
       centerTitle: true,
       titleTextStyle: TextStyle(
-        color: Colors.black,
+        color: DarkColor.primaryBackground,
         fontSize: 17,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
@@ -68,9 +74,11 @@ class AppTheme {
         statusBarBrightness: Brightness.light,
       ),
     ),
+
+    /// Switch
     switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.all(AppColors.primaryColor),
-      trackColor: MaterialStateProperty.all(LightColor.scaffoldBackground),
+      trackColor: MaterialStateProperty.all(LightColor.switchBacground),
     ),
   );
 }

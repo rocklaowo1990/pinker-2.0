@@ -7,6 +7,9 @@ class DarkColor {
   /// 主要背景颜色
   static const Color primaryBackground = Color(0xff2e313c);
 
+  /// Switch
+  static const Color switchBacground = Color(0x990c7dff);
+
   /// 线条颜色
   static const Color line = Color(0x20949cbd);
 }

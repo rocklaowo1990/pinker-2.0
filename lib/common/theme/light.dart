@@ -7,6 +7,9 @@ class LightColor {
   /// 主要背景颜色 Light
   static const Color primaryBackground = Color(0xffffffff);
 
+  /// Switch
+  static const Color switchBacground = Color(0xffdddddd);
+
   /// 线条颜色
   static const Color line = Color(0x20949cbd);
 }

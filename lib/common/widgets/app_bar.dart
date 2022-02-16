@@ -6,7 +6,6 @@ import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/common/widgets/text.dart';
 
 /// 初始页面的 AppBar
 ///
