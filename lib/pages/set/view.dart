@@ -1,30 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/theme/colors.dart';
+import 'package:pinker/common/theme/library.dart';
 
-import 'package:pinker_project/common/widgets/library.dart';
-import 'package:pinker_project/common/widgets/text.dart';
-import 'package:pinker_project/pages/set/library.dart';
+import 'package:pinker/common/widgets/library.dart';
+
+import 'package:pinker/pages/set/library.dart';
 
 class SetView extends GetView<SetController> {
   const SetView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var theme = getButton(
-      child: getText('更改主题'),
-      onPressed: controller.handleSetTheme,
+    var setLang = getListRight(
+      title: '语言设置',
+      icon: 'set_lang',
+      onTap: controller.handleSetLang,
     );
-    var lang = getButton(
-      child: getText('更改语言'),
-      onPressed: controller.handleSetLang,
+    var setTheme = getListSwitch(
+      title: '夜间模式',
+      icon: 'set_lang',
+      onChanged: controller.handleSetTheme,
+      isChooise: ConfigStore.to.state.isDarkModeRx,
     );
 
-    var body = Column(
+    var system = Obx(
+      () => Container(
+        child: Column(
+          children: ListTile.divideTiles(
+            tiles: [
+              setLang,
+              setTheme,
+            ],
+            context: context,
+            color: ConfigStore.to.state.isDarkMode
+                ? Colors.white12
+                : Colors.black12,
+          ).toList(),
+        ),
+        color: ConfigStore.to.state.isDarkMode
+            ? DarkColor.primaryBackground
+            : LightColor.primaryBackground,
+      ),
+    );
+
+    var body = ListView(
       children: [
-        const SizedBox(height: 10),
-        Center(child: theme),
-        const SizedBox(height: 10),
-        lang,
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: getText('系统设置', color: AppColors.primaryColor),
+        ),
+        system,
       ],
     );
 

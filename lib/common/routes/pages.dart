@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker_project/common/middlewares/library.dart';
-import 'package:pinker_project/common/routes/observers.dart';
-import 'package:pinker_project/pages/application/library.dart';
-import 'package:pinker_project/pages/frame/library.dart';
+import 'package:pinker/common/middlewares/library.dart';
+import 'package:pinker/common/routes/observers.dart';
+import 'package:pinker/pages/application/library.dart';
+import 'package:pinker/pages/frame/library.dart';
 
-import 'package:pinker_project/pages/initial/library.dart';
-import 'package:pinker_project/pages/initial/view.dart';
-import 'package:pinker_project/pages/set/binding.dart';
-import 'package:pinker_project/pages/set/view.dart';
-import 'package:pinker_project/pages/unknown/library.dart';
+import 'package:pinker/pages/initial/library.dart';
+import 'package:pinker/pages/initial/view.dart';
+import 'package:pinker/pages/set/binding.dart';
+import 'package:pinker/pages/set/view.dart';
+import 'package:pinker/pages/unknown/library.dart';
 
 import 'library.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:pinker_project/pages/frame/sign_up/library.dart';
+import 'package:pinker/pages/frame/sign_up/library.dart';
 
 class SignUpView extends GetView<SignUpController> {
   const SignUpView({Key? key}) : super(key: key);

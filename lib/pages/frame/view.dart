@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker_project/common/store/library.dart';
-import 'package:pinker_project/common/theme/library.dart';
-import 'package:pinker_project/common/widgets/library.dart';
+import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/theme/library.dart';
+import 'package:pinker/common/widgets/library.dart';
 
-import 'package:pinker_project/pages/frame/library.dart';
+import 'package:pinker/pages/frame/library.dart';
 
 class FrameView extends GetView<FrameController> {
   const FrameView({Key? key}) : super(key: key);

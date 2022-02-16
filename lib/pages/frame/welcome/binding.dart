@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pinker_project/pages/frame/welcome/library.dart';
+import 'package:pinker/pages/frame/welcome/library.dart';
 
 class WelcomeBinding implements Bindings {
   @override

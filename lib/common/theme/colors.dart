@@ -4,6 +4,9 @@ class AppColors {
   /// 主色
   static const Color primaryColor = Color(0xff0c7dff);
 
+  /// Switch
+  static const Color switchBacground = Color(0xffeeeeee);
+
   /// 背景渐变色
   static const LinearGradient decorationColors = LinearGradient(
     colors: [

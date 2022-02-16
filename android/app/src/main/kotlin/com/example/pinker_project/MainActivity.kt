@@ -1,4 +1,4 @@
-package com.example.pinker_project
+package com.example.pinker
 
 import io.flutter.embedding.android.FlutterActivity
 

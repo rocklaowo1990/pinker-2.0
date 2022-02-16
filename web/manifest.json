@@ -1,6 +1,6 @@
 {
-    "name": "pinker_project",
-    "short_name": "pinker_project",
+    "name": "pinker",
+    "short_name": "pinker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

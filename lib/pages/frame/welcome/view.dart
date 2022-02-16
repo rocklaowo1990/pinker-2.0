@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker_project/common/lang/translation_service.dart';
-import 'package:pinker_project/common/theme/colors.dart';
-import 'package:pinker_project/common/widgets/library.dart';
-import 'package:pinker_project/common/widgets/text.dart';
+import 'package:pinker/common/lang/translation_service.dart';
+import 'package:pinker/common/theme/colors.dart';
+import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/common/widgets/text.dart';
 
-import 'package:pinker_project/pages/frame/welcome/library.dart';
+import 'package:pinker/pages/frame/welcome/library.dart';
 
 class WelcomeView extends GetView<WelcomeController> {
   const WelcomeView({Key? key}) : super(key: key);

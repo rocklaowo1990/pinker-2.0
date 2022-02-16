@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
-import 'package:pinker_project/common/routes/library.dart';
-import 'package:pinker_project/common/store/library.dart';
-import 'package:pinker_project/common/theme/library.dart';
-import 'package:pinker_project/common/utils/library.dart';
-import 'package:pinker_project/global.dart';
+import 'package:pinker/common/routes/library.dart';
+import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/theme/library.dart';
+import 'package:pinker/common/utils/library.dart';
+import 'package:pinker/global.dart';
 import 'common/lang/translation_service.dart';
 
 Future<void> main() async {

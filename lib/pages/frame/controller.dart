@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker_project/pages/frame/library.dart';
-import 'package:pinker_project/pages/frame/welcome/view.dart';
+import 'package:pinker/pages/frame/library.dart';
+import 'package:pinker/pages/frame/welcome/view.dart';
 
 class FrameController extends GetxController {
   final state = FrameState();

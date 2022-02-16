@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pinker_project/common/theme/library.dart';
+import 'package:pinker/common/theme/colors.dart';
+import 'package:pinker/common/theme/library.dart';
 
 class AppTheme {
   static const horizontalMargin = 16.0;
@@ -55,7 +56,7 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       backgroundColor: LightColor.primaryBackground,
       elevation: 1,
-      shadowColor: Colors.black12,
+      shadowColor: Colors.black26,
       centerTitle: true,
       titleTextStyle: TextStyle(
         color: Colors.black,
@@ -66,6 +67,10 @@ class AppTheme {
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
       ),
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(AppColors.primaryColor),
+      trackColor: MaterialStateProperty.all(LightColor.scaffoldBackground),
     ),
   );
 }

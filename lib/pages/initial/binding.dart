@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:pinker_project/pages/initial/library.dart';
+import 'package:pinker/pages/initial/library.dart';
 
 class InitialBinding implements Bindings {
   @override

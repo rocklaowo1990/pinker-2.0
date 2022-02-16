@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker_project/common/lang/translation_service.dart';
-import 'package:pinker_project/common/utils/library.dart';
-import 'package:pinker_project/common/widgets/text.dart';
+import 'package:pinker/common/lang/translation_service.dart';
+import 'package:pinker/common/utils/library.dart';
+import 'package:pinker/common/widgets/text.dart';
 
 /// 顶部弹窗封装，文字版
 ///

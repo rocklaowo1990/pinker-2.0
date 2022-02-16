@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker_project/common/theme/colors.dart';
-import 'package:pinker_project/common/widgets/text.dart';
+import 'package:pinker/common/theme/colors.dart';
+import 'package:pinker/common/widgets/text.dart';
 
 /// 按钮封装
 ///
@@ -49,7 +49,7 @@ Widget getButton({
 
   return Obx(
     () => TextButton(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       onPressed: !enable.value
           ? () {
               if (onPressed != null) onPressed();
