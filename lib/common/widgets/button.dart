@@ -118,3 +118,44 @@ Widget getInfinityButton(
     onPressed: onPressed,
   );
 }
+
+Widget getSmallButton(
+  String text, {
+  void Function()? onPressed,
+}) {
+  return getButton(
+    child: Container(
+      child: Center(
+        child: getText(text, color: Colors.white),
+      ),
+      color: AppColors.primaryColor,
+    ),
+    onPressed: onPressed,
+    padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
+  );
+}
+
+Widget getBarButton(
+  String text, {
+  void Function()? onPressed,
+}) {
+  return getButton(
+    child: Center(
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(40),
+          ),
+          color: AppColors.primaryColor,
+        ),
+        height: 32,
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+        child: Center(
+          child: getText(text, color: Colors.white),
+        ),
+      ),
+    ),
+    onPressed: onPressed,
+    padding: const EdgeInsets.only(right: 10, left: 10),
+  );
+}

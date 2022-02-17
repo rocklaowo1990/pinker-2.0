@@ -8,10 +8,22 @@ abstract class Lang {
   static const next = 'next';
   static const success = 'success';
   static const reminder = 'reminder';
+  static const password = 'password';
+  static const phone = 'phone';
+  static const email = 'email';
+  static const count = 'count';
+  static const search = 'search';
 
   /// 欢迎页面
   static const welcomeTitle = "welcomeTitle";
   static const welcomeGoSignUp = 'welcomeGoSignUp';
   static const welcomeHint = 'welcomeHint';
   static const welcomeGoSignIn = 'welcomeGoSignIn';
+
+  /// 设置页面
+  static const setTitle = 'setTitle';
+  static const setLang = 'setLang';
+  static const setDark = 'setDark';
+  static const setLableSystem = 'setLableSystem';
+  static const setLangTitle = 'setLangTitle';
 }

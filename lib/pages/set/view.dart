@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/lang/translation_service.dart';
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/colors.dart';
 import 'package:pinker/common/theme/library.dart';
@@ -14,15 +15,15 @@ class SetView extends GetView<SetController> {
   @override
   Widget build(BuildContext context) {
     var setLang = getListRight(
-      title: '语言设置',
+      title: Lang.setLang.tr,
       icon: 'set_lang',
       onTap: controller.handleSetLang,
     );
     var setTheme = getListSwitch(
-      title: '夜间模式',
-      icon: 'set_lang',
+      title: Lang.setDark.tr,
+      icon: 'set_dark',
       onChanged: controller.handleSetTheme,
-      isChooise: ConfigStore.to.state.isDarkModeRx,
+      isCheck: ConfigStore.to.state.isDarkModeRx,
     );
 
     var system = Obx(
@@ -45,18 +46,31 @@ class SetView extends GetView<SetController> {
       ),
     );
 
-    var body = ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: getText('系统设置', color: AppColors.primaryColor),
-        ),
-        system,
-      ],
-    );
+    var body = controller.arguments == null
+        ? ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: getText(Lang.setLableSystem.tr,
+                    color: AppColors.primaryColor),
+              ),
+              system,
+            ],
+          )
+        : ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: getText(Lang.setLableSystem.tr,
+                    color: AppColors.primaryColor),
+              ),
+              system,
+              getText('text'),
+            ],
+          );
 
     return Scaffold(
-      appBar: getAppBar(title: '设置'),
+      appBar: getAppBar(title: Lang.setTitle.tr),
       body: body,
     );
   }

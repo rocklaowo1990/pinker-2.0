@@ -8,9 +8,6 @@ class SignInView extends GetView<SignInController> {
   const SignInView({Key? key}) : super(key: key);
 
   @override
-  SignInController get controller => Get.put(SignInController());
-
-  @override
   Widget build(BuildContext context) {
     var body = Container(
       color: Colors.green,

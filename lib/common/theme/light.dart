@@ -12,4 +12,10 @@ class LightColor {
 
   /// 线条颜色
   static const Color line = Color(0x20949cbd);
+
+  /// 输入框颜色
+  static const Color inputFiled = Color(0xffdddddd);
+
+  /// hint
+  static const Color hint = Color(0xff787878);
 }

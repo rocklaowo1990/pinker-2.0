@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/lang/translation_service.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/text.dart';
 
@@ -8,13 +7,11 @@ import 'package:pinker/common/widgets/text.dart';
 ///
 /// 消息提示默认展示纯文本信息
 Future<SnackbarController> getSnackbar({
-  String? title,
-  String? message,
+  required String title,
+  required String message,
   bool? isError,
 }) async {
   // 初始化默认值
-  title ??= Lang.success.tr;
-  message ??= Lang.reminder.tr;
   isError ??= true;
 
   // 因为是懒加载，所以要等页面加载完再展示，页面动画一般是300ms，这里等待500ms

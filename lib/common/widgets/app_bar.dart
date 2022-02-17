@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/class/library.dart';
+
 import 'package:pinker/common/routes/library.dart';
 
 import 'package:pinker/common/store/library.dart';
@@ -22,7 +23,7 @@ AppBar getFrameAppBar({
 
   return AppBar(
     elevation: 0,
-    title: getIconLogo(),
+    title: AppIcons.logo,
     leading: leading,
     flexibleSpace: Obx(
       () => Container(
@@ -33,14 +34,7 @@ AppBar getFrameAppBar({
     ),
     actions: [
       getButton(
-        child: Obx(
-          () => SvgPicture.asset(
-            'assets/svg/set.svg',
-            color: ConfigStore.to.state.isDarkMode
-                ? LightColor.scaffoldBackground
-                : DarkColor.scaffoldBackground,
-          ),
-        ),
+        child: AppIcons.set,
         onPressed: _onPressed,
         width: 56.0,
         height: 56.0,
@@ -56,23 +50,18 @@ AppBar getFrameAppBar({
 AppBar getAppBar({
   required String title,
   List<Widget>? actions,
+  void Function()? onPressed,
 }) {
   /// 设置按钮的点击事件：点击后去往设置页面
-  void _onPressed() {
+  void _onPressed() async {
     Get.back();
   }
 
   return AppBar(
     title: getText(title),
     leading: getButton(
-      child: Obx(
-        () => getIconBack(
-          color: ConfigStore.to.state.isDarkMode
-              ? LightColor.scaffoldBackground
-              : DarkColor.scaffoldBackground,
-        ),
-      ),
-      onPressed: _onPressed,
+      child: AppIcons.back,
+      onPressed: onPressed ?? _onPressed,
     ),
     actions: actions,
   );

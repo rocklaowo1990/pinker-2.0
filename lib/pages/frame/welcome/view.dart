@@ -11,9 +11,6 @@ class WelcomeView extends GetView<WelcomeController> {
   const WelcomeView({Key? key}) : super(key: key);
 
   @override
-  WelcomeController get controller => Get.put(WelcomeController());
-
-  @override
   Widget build(BuildContext context) {
     /// 标题和注册按钮
     var signUp = Column(

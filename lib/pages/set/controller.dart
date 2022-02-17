@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/utils/library.dart';
@@ -9,6 +9,7 @@ import 'package:pinker/pages/set/library.dart';
 
 class SetController extends GetxController {
   final state = SetState();
+  final arguments = Get.arguments;
 
   void handleSetTheme(bool isChooise) {
     Get.changeTheme(
@@ -22,10 +23,6 @@ class SetController extends GetxController {
   }
 
   void handleSetLang() {
-    Get.updateLocale(
-      Get.locale == const Locale('zh', 'CN')
-          ? const Locale('en', 'US')
-          : const Locale('zh', 'CN'),
-    );
+    Get.toNamed(AppRoutes.set + AppRoutes.setLanguage);
   }
 }

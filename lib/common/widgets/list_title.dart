@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/state_manager.dart';
-import 'package:pinker/common/store/library.dart';
-import 'package:pinker/common/theme/library.dart';
+import 'package:pinker/common/class/library.dart';
+
 import 'package:pinker/common/widgets/library.dart';
 
 Widget getListRight({
@@ -11,16 +11,8 @@ Widget getListRight({
   String? subtitle,
   void Function()? onTap,
 }) {
-  var iconRight = Obx(
-    () => SvgPicture.asset(
-      'assets/svg/right.svg',
-      color: ConfigStore.to.state.isDarkMode
-          ? LightColor.scaffoldBackground
-          : DarkColor.scaffoldBackground,
-      height: 14,
-      width: 14,
-    ),
-  );
+  var iconRight = AppIcons.right;
+
   return ListTile(
     contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
     leading: SvgPicture.asset('assets/svg/$icon.svg'),
@@ -43,7 +35,7 @@ Widget getListSwitch({
   required String icon,
   String? title,
   required void Function(bool)? onChanged,
-  required RxBool isChooise,
+  required RxBool isCheck,
 }) {
   return ListTile(
     contentPadding: const EdgeInsets.fromLTRB(20, 0, 8, 0),
@@ -51,9 +43,24 @@ Widget getListSwitch({
     title: getText(title),
     trailing: Obx(
       () => Switch(
-        value: isChooise.value,
+        value: isCheck.value,
         onChanged: onChanged,
       ),
     ),
+  );
+}
+
+Widget getListCheck({
+  String? icon,
+  String? title,
+  required void Function()? onTap,
+  required bool isCheck,
+}) {
+  return ListTile(
+    contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+    leading: icon != null ? SvgPicture.asset('assets/svg/$icon.svg') : null,
+    title: getText(title),
+    trailing: isCheck ? AppIcons.check_2 : AppIcons.check_1,
+    onTap: onTap,
   );
 }

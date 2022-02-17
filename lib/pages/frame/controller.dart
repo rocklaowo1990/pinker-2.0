@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/pages/frame/library.dart';
 import 'package:pinker/pages/frame/welcome/view.dart';
 
@@ -11,12 +12,10 @@ class FrameController extends GetxController {
     const WelcomeView(),
   ];
 
-  void handleLeading() {
+  void handleLeading(BuildContext context) async {
+    FocusScope.of(context).requestFocus(FocusNode());
+    await futureMill(200);
     if (state.pageIndex > 0) state.pageIndex--;
-    pageController.previousPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-    children.removeLast();
+    Get.back(id: 1);
   }
 }
