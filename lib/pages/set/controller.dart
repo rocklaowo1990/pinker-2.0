@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:pinker/common/class/library.dart';
 import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
-import 'package:pinker/common/utils/library.dart';
+
 import 'package:pinker/common/values/library.dart';
 
 import 'package:pinker/pages/set/library.dart';

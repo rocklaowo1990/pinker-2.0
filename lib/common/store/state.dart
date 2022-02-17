@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pinker/common/utils/storage.dart';
+import 'package:pinker/common/class/storage.dart';
 import 'package:pinker/common/values/storage.dart';
 
 class StoreState {

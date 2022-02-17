@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pinker/common/class/library.dart';
-import 'package:pinker/common/routes/library.dart';
 
 import 'package:pinker/common/widgets/library.dart';
 
@@ -14,28 +13,31 @@ class FrameView extends GetView<FrameController> {
   @override
   Widget build(BuildContext context) {
     /// body
-    var body = GetNavigator(
+    var body = Navigator(
       key: Get.nestedKey(1),
-      pages: [AppPages.framePages],
+      initialRoute: FrameRouter.welcome,
+      onGenerateRoute: FrameRouter.onGenerateRoute,
     );
 
     /// AppBar
     var appBar = getFrameAppBar(
-      leading: Obx(
-        () => AnimatedOpacity(
-          opacity: controller.state.pageIndex > 0 ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 500),
-          child: getButton(
-            child: AppIcons.back,
-            onPressed: controller.state.pageIndex > 0
-                ? () {
-                    controller.handleLeading(context);
-                  }
-                : null,
+        leading: Obx(
+          () => AnimatedOpacity(
+            opacity: controller.state.pageIndex > 0 ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 500),
+            child: getButton(
+              child: AppIcons.back,
+              onPressed: controller.state.pageIndex > 0
+                  ? () {
+                      controller.handleLeading(context);
+                    }
+                  : null,
+            ),
           ),
         ),
-      ),
-    );
+        onPressed: () {
+          controller.handleSet(context);
+        });
 
     return Scaffold(
       appBar: appBar,

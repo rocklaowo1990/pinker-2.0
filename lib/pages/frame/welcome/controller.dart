@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-import 'package:pinker/common/routes/library.dart';
+import 'package:pinker/common/class/library.dart';
+import 'package:pinker/common/utils/library.dart';
+
 import 'package:pinker/pages/frame/library.dart';
 
 import 'package:pinker/pages/frame/welcome/library.dart';
@@ -10,13 +12,12 @@ class WelcomeController extends GetxController {
 
   void handleSignIn() {
     frameController.state.pageIndex++;
-
-    Get.toNamed(AppRoutes.welcome + AppRoutes.signIn, id: 1);
+    Get.toNamed(FrameRouter.signIn, id: 1);
   }
 
-  void handleSignUp() {
+  void handleSignUp() async {
     frameController.state.pageIndex++;
 
-    Get.toNamed(AppRoutes.welcome + AppRoutes.signUp, id: 1);
+    Get.toNamed(FrameRouter.signUp, id: 1);
   }
 }

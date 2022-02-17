@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/class/library.dart';
 
-import 'package:pinker/common/routes/library.dart';
-
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
@@ -15,12 +13,8 @@ import 'package:pinker/common/widgets/library.dart';
 /// 一般只用在登陆注册那一套页面上
 AppBar getFrameAppBar({
   Widget? leading,
+  void Function()? onPressed,
 }) {
-  /// 设置按钮的点击事件：点击后去往设置页面
-  void _onPressed() {
-    Get.toNamed(AppRoutes.set);
-  }
-
   return AppBar(
     elevation: 0,
     title: AppIcons.logo,
@@ -35,7 +29,7 @@ AppBar getFrameAppBar({
     actions: [
       getButton(
         child: AppIcons.set,
-        onPressed: _onPressed,
+        onPressed: onPressed,
         width: 56.0,
         height: 56.0,
       )

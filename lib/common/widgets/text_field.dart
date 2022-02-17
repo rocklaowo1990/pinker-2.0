@@ -84,16 +84,16 @@ Widget getTextField({
   };
 
   /// 根据不同的类型 初始化
-  if (RegExp(r"密码").hasMatch(type)) {
+  if (RegExp(r"密码|Password").hasMatch(type)) {
     onPressed = passwordText;
     isPassword.value = true;
     keyboardType = TextInputType.visiblePassword;
     suffixIcon.value = Icons.visibility_off;
-  } else if (type == Lang.phone.tr || RegExp(r"数量").hasMatch(type)) {
+  } else if (type == Lang.phone.tr || RegExp(r"数量|Number").hasMatch(type)) {
     keyboardType = TextInputType.number;
   } else if (type == Lang.email.tr) {
     keyboardType = TextInputType.emailAddress;
-  } else if (RegExp(r"新鲜事").hasMatch(type)) {
+  } else if (RegExp(r"新鲜事|News").hasMatch(type)) {
     keyboardType = TextInputType.multiline;
   }
 

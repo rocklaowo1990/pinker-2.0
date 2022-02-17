@@ -37,12 +37,26 @@ class SignUpView extends GetView<SignUpController> {
       color: Colors.red,
       width: double.infinity,
     );
-    var body = Column(
+    var padding = Column(
       children: [
         top,
         const Spacer(),
         bottom,
       ],
+    );
+
+    /// body：需要判断遮罩层什么时候现实
+    var body = Obx(
+      () => controller.frameController.state.pageIndex != 1
+          ? Stack(
+              children: [
+                padding,
+                Container(
+                  color: Colors.black12,
+                ),
+              ],
+            )
+          : padding,
     );
     return Scaffold(
       body: body,
