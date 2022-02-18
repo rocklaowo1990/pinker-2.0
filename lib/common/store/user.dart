@@ -11,8 +11,8 @@ class UserStore extends GetxController {
   bool isLogin = false;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     token = StorageService.to.getString(storageUserTokenKey);
     if (token.isNotEmpty) isLogin = true;
   }

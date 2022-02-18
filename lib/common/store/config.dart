@@ -23,8 +23,8 @@ class ConfigStore extends GetxController {
   PackageInfo? packageInfo;
 
   @override
-  void onInit() async {
-    super.onInit();
+  void onReady() async {
+    super.onReady();
 
     /// 读取设备信息
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

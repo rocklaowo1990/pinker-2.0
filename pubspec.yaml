@@ -39,7 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.4
 
   # 屏幕适配
-  flutter_screenutil: ^5.2.0
+  # flutter_screenutil: ^5.2.0
 
   # Getx
   get: ^4.6.1

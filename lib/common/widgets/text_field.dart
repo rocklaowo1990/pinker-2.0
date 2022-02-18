@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/lang/library.dart';
@@ -157,7 +156,7 @@ Widget getTextFieldSearch(
 }) {
   return getTextField(
     height: Get.width * 0.12,
-    contentPadding: EdgeInsets.only(left: 20.w),
+    contentPadding: const EdgeInsets.only(left: 20),
     type: Lang.search.tr,
     controller: controller,
     focusNode: focusNode,
@@ -165,8 +164,8 @@ Widget getTextFieldSearch(
     onSubmitted: onSubmitted,
     textInputAction: TextInputAction.search,
     prefixIcon: SizedBox(
-      width: 10.h,
-      height: 10.h,
+      width: 10,
+      height: 10,
       child: Center(
         child: SvgPicture.asset(
           'assets/svg/icon_search_2.svg',

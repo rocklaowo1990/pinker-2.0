@@ -6,7 +6,6 @@ import 'package:pinker/common/class/library.dart';
 import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
-import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/global.dart';
 import 'common/lang/translation_service.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// 屏幕适配初始化
-    screenInit(context);
+    // screenInit(context);
 
     return GetMaterialApp(
       /// 关闭debug角标
