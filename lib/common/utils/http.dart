@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide FormData;
-import 'package:pinker/common/store/user.dart';
-import 'package:pinker/common/values/library.dart';
+import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/public/library.dart';
 
 class HttpUtil {
   static final HttpUtil _instance = HttpUtil._internal();

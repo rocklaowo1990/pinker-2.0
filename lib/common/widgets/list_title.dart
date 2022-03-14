@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/state_manager.dart';
-import 'package:pinker/common/class/library.dart';
 
 import 'package:pinker/common/widgets/library.dart';
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/lang/translation_service.dart';
-import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/public/library.dart';
+
 import 'package:pinker/common/theme/colors.dart';
 import 'package:pinker/common/theme/library.dart';
 

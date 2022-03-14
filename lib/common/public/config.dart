@@ -1,7 +1,7 @@
 import 'package:device_info/device_info.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
-import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/public/library.dart';
 
 class ConfigStore extends GetxController {
   static ConfigStore get to => Get.find();

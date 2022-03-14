@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/public/library.dart';
 import 'package:pinker/common/theme/colors.dart';
 import 'package:pinker/common/theme/library.dart';
 

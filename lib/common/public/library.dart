@@ -1,4 +1,4 @@
-library store;
+library public;
 
 export 'config.dart';
 export 'state.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:pinker/common/values/library.dart';
+import 'package:pinker/common/constant/library.dart';
 
 /// MD5加密
 String duMD5(String string) {

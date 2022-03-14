@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/class/library.dart';
+import 'package:pinker/common/public/library.dart';
 
-import 'package:pinker/common/store/library.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 

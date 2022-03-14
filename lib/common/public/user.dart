@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
-import 'package:pinker/common/class/library.dart';
-
-import 'package:pinker/common/values/library.dart';
+import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/utils/library.dart';
 
 class UserStore extends GetxController {
   static UserStore get to => Get.find();

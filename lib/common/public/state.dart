@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:pinker/common/class/storage.dart';
-import 'package:pinker/common/values/storage.dart';
+import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/utils/storage.dart';
 
 class StoreState {
   final isDarkModeRx = StorageService.to.getBool(storageIsDarkModeKey).obs;

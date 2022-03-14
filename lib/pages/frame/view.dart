@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker/common/class/library.dart';
+
+import 'package:pinker/common/routes/library.dart';
 
 import 'package:pinker/common/widgets/library.dart';
 

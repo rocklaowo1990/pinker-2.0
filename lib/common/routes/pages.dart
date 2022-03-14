@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pinker/common/middlewares/library.dart';
-import 'package:pinker/common/routes/observers.dart';
+
 import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/frame/library.dart';
 
@@ -30,6 +30,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.initial,
       page: () => const InitialView(),
+      customTransition: MyRouterEnterDirBottomToTop(),
       binding: InitialBinding(),
       middlewares: [
         MiddlewareInitial(),
@@ -38,6 +39,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.frame,
       page: () => const FrameView(),
+      customTransition: MyRouterEnterDirBottomToTop(),
       binding: FrameBinding(),
     ),
     GetPage(
@@ -47,12 +49,14 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.set,
+      customTransition: MyRouterEnterDirBottomToTop(),
       page: () => const SetView(),
       binding: SetBinding(),
       children: [
         GetPage(
           name: AppRoutes.setLanguage,
           page: () => const SetLanguageView(),
+          customTransition: MyRouterEnterDirRightToLft(),
           binding: SetLanguageBinding(),
         ),
       ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pinker/common/public/library.dart';
 import 'package:pinker/common/routes/library.dart';
-import 'package:pinker/common/store/library.dart';
 
 /// 第一次欢迎页面
 class MiddlewareInitial extends GetMiddleware {

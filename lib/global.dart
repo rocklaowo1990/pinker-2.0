@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/class/library.dart';
 
-import 'package:pinker/common/store/library.dart';
+import 'package:pinker/common/public/library.dart';
+
+import 'package:pinker/common/utils/library.dart';
 
 /// 全局静态数据
 class Global {
@@ -16,25 +17,13 @@ class Global {
     await SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    // _setSystemUi();
-
+    // 硬盘储存初始化
     await Get.putAsync<StorageService>(() => StorageService().init());
 
+    // 导入用户全局 和 系统全局
+    // config：是系统信息
+    // user：用户信息
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
   }
-
-  // static void _setSystemUi() {
-  //   if (GetPlatform.isAndroid) {
-  //     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-  //       statusBarColor: Colors.transparent,
-  //       statusBarBrightness: Brightness.light,
-  //       statusBarIconBrightness: Brightness.dark,
-  //       systemNavigationBarDividerColor: Colors.transparent,
-  //       systemNavigationBarColor: Colors.white,
-  //       systemNavigationBarIconBrightness: Brightness.dark,
-  //     );
-  //     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  //   }
-  // }
 }
