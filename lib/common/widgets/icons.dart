@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/theme/colors.dart';
 import 'package:pinker/common/theme/library.dart';
 
@@ -28,7 +28,7 @@ class AppIcons {
             ? Obx(
                 () => SvgPicture.asset(
                   'assets/svg/$svg.svg',
-                  color: ConfigStore.to.state.isDarkMode
+                  color: ConfigStore.to.isDarkMode
                       ? LightColor.scaffoldBackground
                       : DarkColor.scaffoldBackground,
                 ),

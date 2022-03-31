@@ -1,11 +1,15 @@
 import 'package:device_info/device_info.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/utils/library.dart';
 
 class ConfigStore extends GetxController {
   static ConfigStore get to => Get.find();
-  final state = StoreState();
+
+  final isDarkModeRx = StorageService.to.getBool(storageIsDarkModeKey).obs;
+  set isDarkMode(bool value) => isDarkModeRx.value = value;
+  bool get isDarkMode => isDarkModeRx.value;
 
   /// 系统类型
   String? platform;

@@ -16,13 +16,13 @@ class FrameController extends GetxController {
   void handleLeading(BuildContext context) async {
     if (state.pageIndex > 0) state.pageIndex--;
     FocusScope.of(context).requestFocus(FocusNode());
-    await futureMill(200);
+    await MyTimer.futureMill(200);
     Get.back(id: 1);
   }
 
   void handleSet(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    await futureMill(200);
+    await MyTimer.futureMill(200);
     Get.toNamed(AppRoutes.set);
   }
 }

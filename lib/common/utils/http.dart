@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/global/library.dart';
 
 class HttpUtil {
   static final HttpUtil _instance = HttpUtil._internal();
@@ -65,7 +65,7 @@ class HttpUtil {
         // 如果token过期将直接退出登陆
         // ResponseEntity responseEntity = ResponseEntity.fromJson(response.data);
         // if (responseEntity.code == 1) {
-        //   await futureMill(500);
+        //   await MyTimer.futureMill(500);
         //   goLoginPage();
         // }
 

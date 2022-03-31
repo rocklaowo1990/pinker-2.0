@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
 
 /// 第一次欢迎页面

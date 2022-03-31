@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/lang/translation_service.dart';
-import 'package:pinker/common/public/library.dart';
 
 import 'package:pinker/common/theme/colors.dart';
 import 'package:pinker/common/theme/library.dart';
@@ -24,7 +24,7 @@ class SetView extends GetView<SetController> {
       title: Lang.setDark.tr,
       icon: 'set_dark',
       onChanged: controller.handleSetTheme,
-      isCheck: ConfigStore.to.state.isDarkModeRx,
+      isCheck: ConfigStore.to.isDarkModeRx,
     );
 
     var system = Obx(
@@ -36,12 +36,10 @@ class SetView extends GetView<SetController> {
               setTheme,
             ],
             context: context,
-            color: ConfigStore.to.state.isDarkMode
-                ? Colors.white12
-                : Colors.black12,
+            color: ConfigStore.to.isDarkMode ? Colors.white12 : Colors.black12,
           ).toList(),
         ),
-        color: ConfigStore.to.state.isDarkMode
+        color: ConfigStore.to.isDarkMode
             ? DarkColor.primaryBackground
             : LightColor.primaryBackground,
       ),

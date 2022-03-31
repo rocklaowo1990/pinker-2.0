@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/global/library.dart';
 
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
@@ -20,7 +20,7 @@ AppBar getFrameAppBar({
     leading: leading,
     flexibleSpace: Obx(
       () => Container(
-        color: ConfigStore.to.state.isDarkMode
+        color: ConfigStore.to.isDarkMode
             ? DarkColor.scaffoldBackground
             : LightColor.scaffoldBackground,
       ),

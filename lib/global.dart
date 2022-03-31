@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import 'package:pinker/common/public/library.dart';
-
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/utils/library.dart';
 
 /// 全局静态数据

@@ -1,5 +1,4 @@
-library public;
+library global;
 
 export 'config.dart';
-export 'state.dart';
 export 'user.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/lang/translation_service.dart';
-import 'package:pinker/common/public/library.dart';
 
 import 'package:pinker/common/theme/library.dart';
 
@@ -61,12 +61,11 @@ class SetLanguageView extends GetView<SetLanguageController> {
                   enUS,
                 ],
                 context: context,
-                color: ConfigStore.to.state.isDarkMode
-                    ? Colors.white12
-                    : Colors.black12,
+                color:
+                    ConfigStore.to.isDarkMode ? Colors.white12 : Colors.black12,
               ).toList(),
             ),
-            color: ConfigStore.to.state.isDarkMode
+            color: ConfigStore.to.isDarkMode
                 ? DarkColor.primaryBackground
                 : LightColor.primaryBackground,
           ),

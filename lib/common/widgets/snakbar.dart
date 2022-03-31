@@ -15,7 +15,7 @@ Future<SnackbarController> getSnackbar({
   isError ??= true;
 
   // 因为是懒加载，所以要等页面加载完再展示，页面动画一般是300ms，这里等待500ms
-  await futureMill(500);
+  await MyTimer.futureMill(500);
 
   // 返回一个snackbar
   return Get.snackbar(

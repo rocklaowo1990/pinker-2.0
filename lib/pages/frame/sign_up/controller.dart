@@ -17,7 +17,7 @@ class SignUpController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    await futureMill(200);
+    await MyTimer.futureMill(200);
     countFocusNode.requestFocus();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/public/library.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
 
 import 'package:pinker/common/theme/library.dart';
@@ -15,12 +15,12 @@ class SetController extends GetxController {
 
   void handleSetTheme(bool isChooise) {
     Get.changeTheme(
-      ConfigStore.to.state.isDarkMode ? AppTheme.light : AppTheme.dark,
+      ConfigStore.to.isDarkMode ? AppTheme.light : AppTheme.dark,
     );
-    ConfigStore.to.state.isDarkMode = isChooise;
+    ConfigStore.to.isDarkMode = isChooise;
     StorageService.to.setBool(
       storageIsDarkModeKey,
-      ConfigStore.to.state.isDarkMode,
+      ConfigStore.to.isDarkMode,
     );
   }
 

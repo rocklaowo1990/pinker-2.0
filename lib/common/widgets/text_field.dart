@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/lang/library.dart';
-import 'package:pinker/common/public/library.dart';
 import 'package:pinker/common/theme/library.dart';
 
 import 'package:pinker/common/widgets/library.dart';
@@ -117,7 +117,7 @@ Widget getTextField({
                     child: Icon(
                       suffixIcon.value,
                       size: 18,
-                      color: ConfigStore.to.state.isDarkMode
+                      color: ConfigStore.to.isDarkMode
                           ? DarkColor.hint
                           : LightColor.hint,
                     ),
@@ -139,7 +139,7 @@ Widget getTextField({
       decoration: BoxDecoration(
         borderRadius:
             borderRadius ?? BorderRadius.all(Radius.circular(Get.width)),
-        color: ConfigStore.to.state.isDarkMode
+        color: ConfigStore.to.isDarkMode
             ? DarkColor.inputFiled
             : LightColor.inputFiled,
       ),
