@@ -66,8 +66,8 @@ class SetLanguageView extends GetView<SetLanguageController> {
               ).toList(),
             ),
             color: ConfigStore.to.isDarkMode
-                ? DarkColor.primaryBackground
-                : LightColor.primaryBackground,
+                ? AppColors.primaryBackgroundDark
+                : AppColors.primaryBackgroundLight,
           ),
         )
       ],

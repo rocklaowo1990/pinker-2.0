@@ -118,8 +118,8 @@ Widget getTextField({
                       suffixIcon.value,
                       size: 18,
                       color: ConfigStore.to.isDarkMode
-                          ? DarkColor.hint
-                          : LightColor.hint,
+                          ? AppColors.primaryBackgroundDark
+                          : AppColors.primaryBackgroundLight,
                     ),
                     onPressed: onPressed,
                   ),
@@ -140,8 +140,8 @@ Widget getTextField({
         borderRadius:
             borderRadius ?? BorderRadius.all(Radius.circular(Get.width)),
         color: ConfigStore.to.isDarkMode
-            ? DarkColor.inputFiled
-            : LightColor.inputFiled,
+            ? AppColors.primaryBackgroundDark
+            : AppColors.primaryBackgroundLight,
       ),
     ),
   );

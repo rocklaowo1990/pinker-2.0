@@ -1,21 +1,52 @@
-import 'package:flutter/widgets.dart';
+part of 'theme.dart';
 
-class LightColor {
-  /// 页面背景颜色
-  static const Color scaffoldBackground = Color(0xfff0f0f0);
+ThemeData themeLight = ThemeData(
+  // 模式：亮色模式
+  brightness: Brightness.light,
 
-  /// 主要背景颜色 Light
-  static const Color primaryBackground = Color(0xffffffff);
+  // 页面背景色
+  scaffoldBackgroundColor: AppColors.primaryColor,
 
-  /// Switch
-  static const Color switchBacground = Color(0xffdddddd);
+  // 主要背景色
+  backgroundColor: AppColors.primaryColor,
 
-  /// 线条颜色
-  static const Color line = Color(0x20949cbd);
+  // 提示颜色
+  hintColor: AppColors.primaryColor,
 
-  /// 输入框颜色
-  static const Color inputFiled = Color(0xffdddddd);
+  // AppBar
+  appBarTheme: const AppBarTheme(
+    backgroundColor: AppColors.primaryColor,
+    elevation: 1,
+    shadowColor: Colors.black26,
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      color: AppColors.primaryColor,
+      fontSize: 17,
+    ),
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    ),
+  ),
 
-  /// hint
-  static const Color hint = Color(0xff787878);
-}
+  colorScheme: const ColorScheme(
+    brightness: Brightness.light,
+    primary: AppColors.primaryColor,
+    onPrimary: Colors.red,
+    secondary: Colors.red,
+    onSecondary: Colors.red,
+    background: Colors.red,
+    onBackground: Colors.red,
+    error: Colors.red,
+    onError: Colors.red,
+    surface: Colors.red,
+    onSurface: Colors.red,
+  ),
+
+  // Switch
+  switchTheme: SwitchThemeData(
+    thumbColor: MaterialStateProperty.all(AppColors.primaryColor),
+    trackColor: MaterialStateProperty.all(AppColors.switchBacground),
+  ),
+);

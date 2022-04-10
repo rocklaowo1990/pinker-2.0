@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 
 import 'package:pinker/pages/frame/sign_in/library.dart';
@@ -16,9 +15,7 @@ class SignInView extends GetView<SignInController> {
       child: Center(
         child: getButton(
           child: getText('text'),
-          onPressed: () async {
-            var i = await HttpServer().get('https://wwww.baidu.com');
-          },
+          onPressed: () async {},
         ),
       ),
     );

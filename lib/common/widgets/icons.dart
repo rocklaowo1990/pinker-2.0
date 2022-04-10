@@ -29,8 +29,8 @@ class AppIcons {
                 () => SvgPicture.asset(
                   'assets/svg/$svg.svg',
                   color: ConfigStore.to.isDarkMode
-                      ? LightColor.scaffoldBackground
-                      : DarkColor.scaffoldBackground,
+                      ? AppColors.primaryBackgroundDark
+                      : AppColors.primaryBackgroundLight,
                 ),
               )
             : SvgPicture.asset('assets/svg/$svg.svg', color: color)

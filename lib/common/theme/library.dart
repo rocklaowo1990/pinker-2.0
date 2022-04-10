@@ -1,5 +1,4 @@
 library theme;
 
-export 'dark.dart';
-export 'light.dart';
+export 'colors.dart';
 export 'theme.dart';

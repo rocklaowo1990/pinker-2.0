@@ -1,4 +1,4 @@
-part of "translation_service.dart";
+part of 'translation_service.dart';
 
 const Map<String, String> en = {
   /// 公共

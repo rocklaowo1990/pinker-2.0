@@ -40,8 +40,8 @@ class SetView extends GetView<SetController> {
           ).toList(),
         ),
         color: ConfigStore.to.isDarkMode
-            ? DarkColor.primaryBackground
-            : LightColor.primaryBackground,
+            ? AppColors.primaryBackgroundDark
+            : AppColors.primaryBackgroundLight,
       ),
     );
 

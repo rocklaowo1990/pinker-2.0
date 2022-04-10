@@ -21,8 +21,8 @@ AppBar getFrameAppBar({
     flexibleSpace: Obx(
       () => Container(
         color: ConfigStore.to.isDarkMode
-            ? DarkColor.scaffoldBackground
-            : LightColor.scaffoldBackground,
+            ? AppColors.primaryBackgroundDark
+            : AppColors.primaryBackgroundLight,
       ),
     ),
     actions: [
