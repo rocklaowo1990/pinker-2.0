@@ -48,7 +48,7 @@ dependencies:
   shared_preferences: ^2.0.13
 
   # http 请求
-  dio: ^4.0.4
+  dio: ^4.0.6
 
   # 加密安全 SHA
   crypto: ^3.0.1

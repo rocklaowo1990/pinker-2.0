@@ -7,9 +7,6 @@ class SetLanguageController extends GetxController {
   final state = SetLanguageState();
 
   void handleSetLanguage() async {
-    await Get.updateLocale(
-      state.local ?? const Locale('zh', 'CN'),
-    );
     Get.back();
   }
 
@@ -19,5 +16,13 @@ class SetLanguageController extends GetxController {
 
   void handleCheckUS() {
     state.local = const Locale('en', 'US');
+  }
+
+  @override
+  void onClose() async {
+    await Get.updateLocale(
+      state.local ?? const Locale('zh', 'CN'),
+    );
+    super.onClose();
   }
 }
