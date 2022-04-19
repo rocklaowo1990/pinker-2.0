@@ -2,60 +2,90 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 
-import 'package:pinker/common/theme/library.dart';
-import 'package:pinker/common/widgets/library.dart';
+class MyAppBar extends StatelessWidget {
+  const MyAppBar({
+    Key? key,
+    this.isTransparent = false,
+    this.isShowLine = false,
+    this.left,
+    this.center,
+    this.right,
+  }) : super(key: key);
 
-/// 初始页面的 AppBar
-///
-/// 带有一个logo，一个设置按钮和根据要求展示返回按钮
-///
-/// 一般只用在登陆注册那一套页面上
-AppBar getFrameAppBar({
-  Widget? leading,
-  void Function()? onPressed,
-}) {
-  return AppBar(
-    elevation: 0,
-    title: AppIcons.logo,
-    leading: leading,
-    flexibleSpace: Obx(
-      () => Container(
-        color: ConfigStore.to.isDarkMode
-            ? AppColors.primaryBackgroundDark
-            : AppColors.primaryBackgroundLight,
-      ),
-    ),
-    actions: [
-      getButton(
-        child: AppIcons.set,
-        onPressed: onPressed,
-        width: 56.0,
-        height: 56.0,
-      )
-    ],
-  );
-}
+  final bool isTransparent;
+  final bool isShowLine;
+  final Widget? left;
+  final Widget? center;
+  final Widget? right;
 
-/// 默认的 AppBar
-///
-/// 带有一个返回键，title，和自定义设置actions
+  @override
+  Widget build(BuildContext context) {
+    /// 左侧
+    /// 用row包裹是为了保持组建的原有大小
+    var leftWidget = Row(
+      children: [left ?? const SizedBox()],
+    );
 
-AppBar getAppBar({
-  required String title,
-  List<Widget>? actions,
-  void Function()? onPressed,
-}) {
-  /// 设置按钮的点击事件：点击后去往设置页面
-  void _onPressed() async {
-    Get.back();
+    /// 中间
+    var centerWidget = Center(
+      child: center ?? const SizedBox(),
+    );
+
+    /// 右侧
+    var rightWidget = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [right ?? const SizedBox()],
+    );
+
+    var children = [
+      Expanded(child: leftWidget),
+      Expanded(child: centerWidget),
+      Expanded(child: rightWidget),
+    ];
+
+    /// 有左侧 或着 有右侧
+    var leftOrRight = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: children,
+    );
+
+    var padding = Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      child: left == null && right == null ? centerWidget : leftOrRight,
+    );
+
+    /// 内容组装
+    var content = SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: padding,
+    );
+
+    Widget obxBuilder() {
+      var theme = ConfigStore.to.isDarkMode ? Colors.red : Colors.yellow;
+
+      var bottomSide = BorderSide(
+        color: ConfigStore.to.isDarkMode ? Colors.white : Colors.black,
+      );
+
+      var border = Border(bottom: bottomSide);
+
+      var decoration = BoxDecoration(
+        color: isTransparent ? null : theme,
+        border: isShowLine ? border : null,
+      );
+
+      var safeArea = SafeArea(
+        bottom: false,
+        child: content,
+      );
+
+      return Container(
+        decoration: decoration,
+        child: safeArea,
+      );
+    }
+
+    return Obx(() => obxBuilder());
   }
-
-  return AppBar(
-    title: getText(title),
-    leading: getButton(
-      child: AppIcons.back,
-      onPressed: onPressed ?? _onPressed,
-    ),
-    actions: actions,
-  );
 }

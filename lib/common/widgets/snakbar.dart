@@ -21,8 +21,8 @@ Future<SnackbarController> getSnackbar({
   return Get.snackbar(
     title,
     message,
-    titleText: getText(title, fontSize: 17),
-    messageText: getText(message),
+    titleText: MyText.title(title),
+    messageText: MyText(message),
     icon: Icon(
       isError ? Icons.error : Icons.check_circle,
       color: isError ? Colors.red : Colors.green,

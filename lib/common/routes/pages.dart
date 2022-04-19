@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:pinker/common/middlewares/library.dart';
 
 import 'package:pinker/pages/application/library.dart';
-import 'package:pinker/pages/frame/library.dart';
 
 import 'package:pinker/pages/initial/library.dart';
 import 'package:pinker/pages/set/binding.dart';
@@ -12,6 +11,8 @@ import 'package:pinker/pages/set/language/binding.dart';
 import 'package:pinker/pages/set/language/view.dart';
 import 'package:pinker/pages/set/view.dart';
 import 'package:pinker/pages/unknown/library.dart';
+import 'package:pinker/pages/welcome/binding.dart';
+import 'package:pinker/pages/welcome/view.dart';
 
 import 'library.dart';
 
@@ -30,17 +31,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.initial,
       page: () => const InitialView(),
-      customTransition: MyRouterEnterDirBottomToTop(),
       binding: InitialBinding(),
       middlewares: [
         MiddlewareInitial(),
       ],
-    ),
-    GetPage(
-      name: AppRoutes.frame,
-      page: () => const FrameView(),
-      customTransition: MyRouterEnterDirBottomToTop(),
-      binding: FrameBinding(),
     ),
     GetPage(
       name: AppRoutes.application,
@@ -48,15 +42,18 @@ class AppPages {
       binding: ApplicationBinding(),
     ),
     GetPage(
+      name: AppRoutes.welcome,
+      page: () => const WelcomeView(),
+      binding: WelcomeBinding(),
+    ),
+    GetPage(
       name: AppRoutes.set,
-      customTransition: MyRouterEnterDirBottomToTop(),
       page: () => const SetView(),
       binding: SetBinding(),
       children: [
         GetPage(
           name: AppRoutes.setLanguage,
           page: () => const SetLanguageView(),
-          customTransition: MyRouterEnterDirRightToLft(),
           binding: SetLanguageBinding(),
         ),
       ],

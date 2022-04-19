@@ -1,161 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pinker/common/theme/colors.dart';
-import 'package:pinker/common/widgets/text.dart';
+import 'package:pinker/common/widgets/library.dart';
 
-/// 按钮封装
-///
-/// 基本上所有的按钮都可以用到
-///
-/// 这个按钮是全局的，任何按钮都可以调用该方法
-Widget getButton({
-  /// 按钮的点击事件
-  VoidCallback? onPressed,
+class MyButton extends StatefulWidget {
+  const MyButton({
+    Key? key,
+    this.width = double.infinity,
+    this.height = 50,
+    this.isAnimation = true,
+    this.onTap,
+    this.child,
+  }) : super(key: key);
 
-  /// 子组件
-  required Widget child,
+  final double width;
+  final double height;
+  final bool isAnimation;
+  final void Function()? onTap;
+  final Widget? child;
 
-  /// 按钮高度
-  double? height,
-
-  /// 按钮宽度
-  double? width,
-
-  /// 按钮宽度
-  BorderRadiusGeometry? borderRadius,
-
-  /// 子组件对齐方式
-  AlignmentGeometry alignment = Alignment.center,
-
-  /// padding
-  EdgeInsetsGeometry padding = EdgeInsets.zero,
-
-  /// 边框
-  BorderSide? borderSide,
-}) {
-  /// 按钮的填充大小，表示的是按钮的总大小
-  MaterialStateProperty<Size?>? fixedSize;
-  if (width != null && height != null) {
-    fixedSize = MaterialStateProperty.all(Size(width, height));
-  } else if (width != null) {
-    fixedSize = MaterialStateProperty.all(Size.fromWidth(width));
-  } else if (height != null) {
-    fixedSize = MaterialStateProperty.all(Size.fromHeight(height));
+  /// 返回按钮
+  static Widget back({void Function()? onTap}) {
+    return MyButton(onTap: onTap, width: 100, child: MyIcons.back());
   }
 
-  /// 按钮点击一次后会重置为禁用状态，防止重复点击
-  final enable = true.obs;
-  if (onPressed != null) enable.value = false;
+  @override
+  State<MyButton> createState() => _MyButtonState();
+}
 
-  return Obx(
-    () => TextButton(
+class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+  bool isEnable = false;
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      value: 1.0,
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+      reverseDuration: const Duration(milliseconds: 100),
+      lowerBound: 0.7,
+      upperBound: 1.0,
+    );
+  }
+
+  void _onTap() {
+    if (widget.onTap != null) {
+      controller.reverse();
+      widget.onTap!();
+
+      setState(() => isEnable = true);
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        controller.forward();
+        setState(() => isEnable = false);
+      });
+    }
+  }
+
+  void _onTapDown(value) {
+    if (widget.onTap != null) {
+      controller.reverse();
+    }
+  }
+
+  void _onTapCancel() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      controller.forward();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var decoration = const BoxDecoration(
+      color: Colors.blue,
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    );
+
+    var less = Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: decoration,
       clipBehavior: Clip.antiAlias,
-      onPressed: !enable.value
-          ? () {
-              if (onPressed != null) onPressed();
-              enable.value = true;
-              Future.delayed(const Duration(seconds: 1), () {
-                enable.value = false;
-              });
-            }
-          : null,
-      style: ButtonStyle(
-        /// 对其方式，默认居中对齐
-        alignment: alignment,
+      child: Center(child: widget.child),
+    );
 
-        /// 这里是设置按钮的大小，高度和宽度
-        fixedSize: fixedSize,
+    var ful = FadeTransition(
+      opacity: controller,
+      child: less,
+    );
 
-        /// 按钮的最小大小：最小可以是 0 ，看不到
-        minimumSize: MaterialStateProperty.all(Size.zero),
+    var body = GestureDetector(
+      onTap: isEnable ? null : _onTap,
+      onTapDown: isEnable ? null : _onTapDown,
+      onTapCancel: _onTapCancel,
+      child: widget.isAnimation ? ful : less,
+    );
 
-        /// 响应触摸的区域: 这里是表示收缩后的空间，表示按钮不需要多余的空间
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-        /// 按钮文字样式
-        textStyle: MaterialStateProperty.all(
-          const TextStyle(fontWeight: FontWeight.normal),
-        ),
-
-        /// 按钮圆角
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(Get.width),
-          ),
-        ),
-
-        /// 按钮的边框，这个好理解
-        side: borderSide == null ? null : MaterialStateProperty.all(borderSide),
-
-        /// 清空按钮的padding
-        padding: MaterialStateProperty.all(padding),
-
-        /// 按钮背景色，默认主色
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-      ),
-      child: child,
-    ),
-  );
-}
-
-Widget getInfinityButton(
-  String text, {
-  void Function()? onPressed,
-}) {
-  return getButton(
-    child: Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(
-        child: getText(text, color: Colors.white),
-      ),
-      decoration: const BoxDecoration(
-        gradient: AppColors.decorationColors,
-      ),
-    ),
-    width: double.infinity,
-    height: Get.width * 0.12,
-    onPressed: onPressed,
-  );
-}
-
-Widget getSmallButton(
-  String text, {
-  void Function()? onPressed,
-}) {
-  return getButton(
-    child: Container(
-      child: Center(
-        child: getText(text, color: Colors.white),
-      ),
-      color: AppColors.primaryColor,
-    ),
-    onPressed: onPressed,
-    padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
-  );
-}
-
-Widget getBarButton(
-  String text, {
-  void Function()? onPressed,
-}) {
-  return getButton(
-    child: Center(
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(40),
-          ),
-          color: AppColors.primaryColor,
-        ),
-        height: 32,
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Center(
-          child: getText(text, color: Colors.white),
-        ),
-      ),
-    ),
-    onPressed: onPressed,
-    padding: const EdgeInsets.only(right: 10, left: 10),
-  );
+    return body;
+  }
 }

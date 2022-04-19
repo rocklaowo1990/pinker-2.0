@@ -13,6 +13,7 @@ abstract class Lang {
   static const email = 'email';
   static const count = 'count';
   static const search = 'search';
+  static const enter = 'enter';
 
   /// 欢迎页面
   static const welcomeTitle = "welcomeTitle";

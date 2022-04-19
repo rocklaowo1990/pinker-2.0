@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
-import 'package:pinker/common/lang/translation_service.dart';
 
 import 'package:pinker/common/theme/library.dart';
 
 import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/main.dart';
 
 import 'package:pinker/pages/set/language/library.dart';
 
@@ -14,23 +14,7 @@ class SetLanguageView extends GetView<SetLanguageController> {
 
   @override
   Widget build(BuildContext context) {
-    var appBar = getAppBar(
-      title: Lang.setLangTitle.tr,
-      actions: [
-        Obx(
-          () => AnimatedOpacity(
-            opacity: controller.state.local != Get.locale ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 500),
-            child: getBarButton(
-              Lang.sure.tr,
-              onPressed: controller.state.local != Get.locale
-                  ? controller.handleSetLanguage
-                  : null,
-            ),
-          ),
-        ),
-      ],
-    );
+    var appBar = const MyApp();
 
     var zhCN = Obx(
       () => getListCheck(
@@ -73,8 +57,8 @@ class SetLanguageView extends GetView<SetLanguageController> {
       ],
     );
 
-    return Scaffold(
-      appBar: appBar,
+    return MyScaffold(
+      header: appBar,
       body: body,
     );
   }

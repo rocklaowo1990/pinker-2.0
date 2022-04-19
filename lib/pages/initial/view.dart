@@ -12,7 +12,7 @@ class InitialView extends GetView<InitialController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: getText(Lang.edit.tr),
+        title: MyText(Lang.edit.tr),
       ),
     );
   }

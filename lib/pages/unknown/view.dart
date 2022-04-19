@@ -10,7 +10,7 @@ class UnknownView extends GetView<UnknownController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: getText('UnknowView'),
+        title: MyText.title('UnknowView'),
       ),
     );
   }

@@ -13,6 +13,7 @@ const Map<String, String> zh = {
   Lang.count: '账号',
   Lang.search: '搜索',
   Lang.password: '密码',
+  Lang.enter: '请输入文本',
 
   /// 欢迎页面：WelcomeView
   Lang.welcomeGoSignIn: ' 去登陆',

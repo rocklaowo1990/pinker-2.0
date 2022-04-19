@@ -10,10 +10,10 @@ class MiddlewareInitial extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (UserStore.to.isLogin == true) {
+    if (UserStore.to.isHaveUsed) {
       return const RouteSettings(name: AppRoutes.application);
     } else {
-      return const RouteSettings(name: AppRoutes.frame);
+      return const RouteSettings(name: AppRoutes.welcome);
     }
   }
 }

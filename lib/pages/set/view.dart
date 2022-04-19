@@ -50,7 +50,7 @@ class SetView extends GetView<SetController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: getText(Lang.setLableSystem.tr,
+                child: MyText(Lang.setLableSystem.tr,
                     color: AppColors.primaryColor),
               ),
               system,
@@ -60,16 +60,16 @@ class SetView extends GetView<SetController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: getText(Lang.setLableSystem.tr,
+                child: MyText(Lang.setLableSystem.tr,
                     color: AppColors.primaryColor),
               ),
               system,
-              getText('text'),
+              const MyText('text'),
             ],
           );
 
-    return Scaffold(
-      appBar: getAppBar(title: Lang.setTitle.tr),
+    return MyScaffold(
+      header: const MyAppBar(),
       body: body,
     );
   }

@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/lang/library.dart';
 import 'package:pinker/common/theme/library.dart';
-
 import 'package:pinker/common/widgets/library.dart';
+
+class MyTextField extends TextField {
+  const MyTextField({Key? key}) : super(key: key);
+}
 
 Widget getTextField({
   /// 键盘的类型
@@ -113,15 +116,8 @@ Widget getTextField({
             prefixIcon: prefixIcon,
             suffixIcon: textObs.value.isEmpty
                 ? null
-                : getButton(
-                    child: Icon(
-                      suffixIcon.value,
-                      size: 18,
-                      color: ConfigStore.to.isDarkMode
-                          ? AppColors.primaryBackgroundDark
-                          : AppColors.primaryBackgroundLight,
-                    ),
-                    onPressed: onPressed,
+                : MyButton.back(
+                    onTap: onPressed,
                   ),
             contentPadding: contentPadding ?? const EdgeInsets.only(left: 20),
             border: const OutlineInputBorder(borderSide: BorderSide.none),

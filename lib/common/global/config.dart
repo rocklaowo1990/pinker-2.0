@@ -1,4 +1,5 @@
 import 'package:device_info/device_info.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pinker/common/constant/library.dart';
@@ -46,5 +47,12 @@ class ConfigStore extends GetxController {
 
     /// 包信息
     packageInfo = await PackageInfo.fromPlatform();
+
+    /// 更改状态栏的颜色
+    if (ConfigStore.to.isDarkMode) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    }
   }
 }

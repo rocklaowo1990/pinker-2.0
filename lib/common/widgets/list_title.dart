@@ -10,18 +10,18 @@ Widget getListRight({
   String? subtitle,
   void Function()? onTap,
 }) {
-  var iconRight = AppIcons.right;
+  var iconRight = MyIcons.right();
 
   return ListTile(
     contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
     leading: SvgPicture.asset('assets/svg/$icon.svg'),
-    title: getText(title),
-    subtitle: subtitle == null ? null : getText(subtitle),
+    title: MyText.title(title ?? ''),
+    subtitle: subtitle == null ? null : MyText(subtitle),
     trailing: subtitle == null
         ? iconRight
         : Row(
             children: [
-              getText(subtitle),
+              MyText(subtitle),
               const SizedBox(width: 10),
               iconRight,
             ],
@@ -39,7 +39,7 @@ Widget getListSwitch({
   return ListTile(
     contentPadding: const EdgeInsets.fromLTRB(20, 0, 8, 0),
     leading: SvgPicture.asset('assets/svg/$icon.svg'),
-    title: getText(title),
+    title: MyText(title!),
     trailing: Obx(
       () => Switch(
         value: isCheck.value,
@@ -58,8 +58,8 @@ Widget getListCheck({
   return ListTile(
     contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
     leading: icon != null ? SvgPicture.asset('assets/svg/$icon.svg') : null,
-    title: getText(title),
-    trailing: isCheck ? AppIcons.check_2 : AppIcons.check_1,
+    title: MyText(title!),
+    trailing: isCheck ? MyIcons.check_2() : MyIcons.check_1(),
     onTap: onTap,
   );
 }

@@ -4,7 +4,7 @@ class AppRoutes {
   static const unknownRoute = '/unknownRoute';
 
   /// frame
-  static const frame = '/frame';
+  static const welcome = '/welcome';
 
   /// application
   static const application = '/application';

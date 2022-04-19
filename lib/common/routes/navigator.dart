@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/pages/application/home/library.dart';
 
-import 'package:pinker/pages/frame/sign_in/library.dart';
-import 'package:pinker/pages/frame/sign_up/library.dart';
-import 'package:pinker/pages/frame/welcome/library.dart';
-
-class FrameRouter {
-  static const welcome = '/welcome';
-  static const signUp = '/signUp';
-  static const signIn = '/signIn';
+class ApplicationRoute {
+  static const home = '/home';
+  static const find = '/find';
+  static const proxy = '/proxy';
+  static const mine = '/mine';
 
   /// 嵌套路由设置
   static Route? onGenerateRoute(RouteSettings settings) {
     Get.routing.args = settings.arguments;
-    if (settings.name == welcome) {
+    if (settings.name == home) {
       return _getPageRoute(
-        page: const WelcomeView(),
+        page: const HomeView(),
         settings: settings,
-        binding: WelcomeBinding(),
-      );
-    } else if (settings.name == signIn) {
-      return _getPageRoute(
-        page: const SignInView(),
-        settings: settings,
-        binding: SignInBinding(),
-      );
-    } else if (settings.name == signUp) {
-      return _getPageRoute(
-        page: const SignUpView(),
-        settings: settings,
-        binding: SignUpBinding(),
+        binding: HomeBinding(),
       );
     }
     return null;

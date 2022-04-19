@@ -13,6 +13,7 @@ const Map<String, String> en = {
   Lang.count: 'Count',
   Lang.search: 'Search',
   Lang.password: 'Password',
+  Lang.enter: 'Please enter text',
 
   /// 欢迎页面
   Lang.welcomeGoSignIn: ' Sign In',
