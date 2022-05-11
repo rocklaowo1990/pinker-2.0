@@ -14,12 +14,12 @@ abstract class Lang {
   static const count = 'count';
   static const search = 'search';
   static const enter = 'enter';
+  static const defaultHintText = 'defaultHintText';
 
   /// 欢迎页面
   static const welcomeTitle = "welcomeTitle";
-  static const welcomeGoSignUp = 'welcomeGoSignUp';
-  static const welcomeHint = 'welcomeHint';
-  static const welcomeGoSignIn = 'welcomeGoSignIn';
+  static const welcomeSecondTitle = 'welcomeSecondTitle';
+  static const welcomeButton = 'welcomeButton';
 
   /// 设置页面
   static const setTitle = 'setTitle';

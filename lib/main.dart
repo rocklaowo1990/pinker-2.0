@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/global/library.dart';
-
 import 'package:pinker/common/routes/library.dart';
-import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/global.dart';
 import 'common/lang/translation_service.dart';
@@ -59,7 +56,7 @@ class MyApp extends StatelessWidget {
       ],
 
       /// 主题
-      theme: ConfigStore.to.isDarkMode ? AppTheme.dark : AppTheme.light,
+      // theme: ConfigStore.to.isDarkMode ? AppTheme.dark : AppTheme.light,
     );
   }
 }

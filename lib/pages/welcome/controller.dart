@@ -1,26 +1,26 @@
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/constant/storage.dart';
-import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
-import 'package:pinker/common/utils/storage.dart';
-
 import 'package:pinker/pages/welcome/library.dart';
 
 class WelcomeController extends GetxController {
   final state = WelcomeState();
 
-  void handleSignIn() {
-    Get.toNamed(AppRoutes.application);
-  }
+  void handleHome() {
+    /// 进入首页
+    Get.offAllNamed(AppRoutes.application);
+    // StorageService.to.setBool(storageIsHaveUsed, true);
 
-  void handleSignUp() {
-    ConfigStore.to.isDarkMode = !ConfigStore.to.isDarkMode;
-    StorageService.to.setBool(storageIsDarkModeKey, ConfigStore.to.isDarkMode);
-    if (ConfigStore.to.isDarkMode) {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    } else {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    }
+    /// 改变主题
+    // ConfigStore.to.isLightMode = !ConfigStore.to.isLightMode;
+    // StorageService.to.setBool(
+    //   storageIsLightModeKey,
+    //   ConfigStore.to.isLightMode,
+    // );
+    // ConfigStore.changeSystem();
+
+    /// 更改语言
+    // const zhCN = Locale('zh', 'CN');
+    // const enUS = Locale('en', 'US');
+    // Get.updateLocale(Get.locale == zhCN ? enUS : zhCN);
   }
 }

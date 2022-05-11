@@ -1,172 +1,95 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
-import 'package:pinker/common/lang/library.dart';
+import 'package:pinker/common/lang/translation_service.dart';
 import 'package:pinker/common/theme/library.dart';
-import 'package:pinker/common/widgets/library.dart';
 
-class MyTextField extends TextField {
-  const MyTextField({Key? key}) : super(key: key);
-}
+class MyInput extends StatelessWidget {
+  const MyInput({
+    Key? key,
+    this.controller,
+    this.focusNode,
+    this.maxLines = 1,
+    this.onSubmitted,
+    this.textInputAction,
+    this.keyboardType,
+    this.contentPadding = const EdgeInsets.only(left: 20),
+    this.prefixIcon,
+    this.suffixIcon,
+    this.hintText = Lang.defaultHintText,
+    this.obscureText = false,
+    this.onChanged,
+    this.width = double.infinity,
+    this.height = 40,
+    this.borderRadius = MyTheme.borderRadius,
+    this.onTap,
+  }) : super(key: key);
 
-Widget getTextField({
-  /// 键盘的类型
-  required String type,
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final void Function(String)? onSubmitted;
+  final TextInputType? keyboardType;
+  final int maxLines;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final EdgeInsetsGeometry? contentPadding;
+  final String hintText;
+  final bool obscureText;
+  final void Function(String)? onChanged;
+  final double width;
+  final double height;
+  final BorderRadiusGeometry borderRadius;
+  final void Function()? onTap;
 
-  /// 控制器
-  required TextEditingController controller,
+  @override
+  Widget build(BuildContext context) {
+    Widget obxBuild() {
+      const dark = Color(0x50000000);
+      const light = Color(0x50ffffff);
+      TextStyle textStyle = TextStyle(
+        fontSize: 14,
+        color: ConfigStore.to.isLightMode ? dark : light,
+      );
+      var inputDecoration = InputDecoration(
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        contentPadding: contentPadding,
+        border: const OutlineInputBorder(borderSide: BorderSide.none),
+        hintText: hintText.tr,
+        hintStyle: textStyle,
+      );
+      var textField = TextField(
+        textInputAction: textInputAction,
+        focusNode: focusNode,
+        controller: controller,
+        onSubmitted: onSubmitted,
+        maxLines: maxLines,
+        keyboardType: keyboardType,
+        decoration: inputDecoration,
+        obscureText: obscureText,
+        onChanged: onChanged,
+        onTap: onTap,
+      );
+      var edge = Clip.hardEdge;
+      var alias = Clip.antiAlias;
+      var clipBehavior = borderRadius == BorderRadius.zero ? edge : alias;
 
-  /// 焦点
-  required FocusNode focusNode,
+      var boxDecoration = BoxDecoration(
+        borderRadius: borderRadius,
+        shape: BoxShape.rectangle,
+        color: ConfigStore.to.isLightMode ? Colors.white : Colors.black,
+      );
+      return Container(
+        child: textField,
+        width: width,
+        height: height,
+        clipBehavior: clipBehavior,
+        decoration: boxDecoration,
+      );
+    }
 
-  /// 键盘右下角的按钮类型
-  TextInputAction? textInputAction,
-
-  /// 左侧按钮
-  Widget? prefixIcon,
-
-  /// 输入框宽度
-  double? width,
-
-  /// 输入框高度
-  double? height,
-
-  /// padding
-  EdgeInsetsGeometry? contentPadding,
-
-  /// radius
-  BorderRadius? borderRadius,
-
-  /// 键盘确认时间
-  void Function(String)? onSubmitted,
-
-  /// 最大行
-  int? maxLines = 1,
-}) {
-  /// 判断是否显示密码
-  final isPassword = false.obs;
-
-  /// 根据不同的类型给予不同的键盘类型
-  var keyboardType = TextInputType.emailAddress;
-
-  /// 右侧按钮状态管理
-  final textObs = controller.text.obs;
-
-  /// 右侧按钮图标
-  final suffixIcon = Icons.cancel.obs;
-
-  /// 右侧按钮点击事件
-  void Function()? onPressed;
-
-  /// 显示密码 和 隐藏密码
-  void passwordText() {
-    isPassword.value = !isPassword.value;
-    focusNode.requestFocus();
-    suffixIcon.value =
-        isPassword.value ? Icons.visibility_off : Icons.visibility;
+    return Obx(obxBuild);
   }
-
-  /// 文本改变事件
-  void onChanged(String value) {
-    textObs.value = value;
-  }
-
-  /// 文本改变监听
-  controller.addListener(() {
-    textObs.value = controller.text;
-  });
-
-  /// 清除文本
-  onPressed = () {
-    controller.clear();
-    textObs.value = controller.text;
-    focusNode.requestFocus();
-  };
-
-  /// 根据不同的类型 初始化
-  if (RegExp(r"密码|Password").hasMatch(type)) {
-    onPressed = passwordText;
-    isPassword.value = true;
-    keyboardType = TextInputType.visiblePassword;
-    suffixIcon.value = Icons.visibility_off;
-  } else if (type == Lang.phone.tr || RegExp(r"数量|Number").hasMatch(type)) {
-    keyboardType = TextInputType.number;
-  } else if (type == Lang.email.tr) {
-    keyboardType = TextInputType.emailAddress;
-  } else if (RegExp(r"新鲜事|News").hasMatch(type)) {
-    keyboardType = TextInputType.multiline;
-  }
-
-  /// 组件
-  return Obx(
-    () => Container(
-      clipBehavior:
-          borderRadius == BorderRadius.zero ? Clip.hardEdge : Clip.antiAlias,
-      child: Center(
-        child: TextField(
-          textInputAction: textInputAction,
-          focusNode: focusNode,
-          controller: controller,
-          onSubmitted: onSubmitted,
-          maxLines: maxLines,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            prefixIcon: prefixIcon,
-            suffixIcon: textObs.value.isEmpty
-                ? null
-                : MyButton.back(
-                    onTap: onPressed,
-                  ),
-            contentPadding: contentPadding ?? const EdgeInsets.only(left: 20),
-            border: const OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: type,
-            hintStyle: const TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          obscureText: isPassword.value,
-          onChanged: onChanged,
-        ),
-      ),
-      width: width ?? Get.width,
-      height: height ?? Get.width * 0.12,
-      decoration: BoxDecoration(
-        borderRadius:
-            borderRadius ?? BorderRadius.all(Radius.circular(Get.width)),
-        color: ConfigStore.to.isDarkMode
-            ? AppColors.primaryBackgroundDark
-            : AppColors.primaryBackgroundLight,
-      ),
-    ),
-  );
-}
-
-Widget getTextFieldSearch(
-  TextEditingController controller,
-  FocusNode focusNode, {
-  BorderRadius? borderRadius,
-  // Widget? prefixIcon,
-  void Function(String)? onSubmitted,
-}) {
-  return getTextField(
-    height: Get.width * 0.12,
-    contentPadding: const EdgeInsets.only(left: 20),
-    type: Lang.search.tr,
-    controller: controller,
-    focusNode: focusNode,
-    borderRadius: borderRadius,
-    onSubmitted: onSubmitted,
-    textInputAction: TextInputAction.search,
-    prefixIcon: SizedBox(
-      width: 10,
-      height: 10,
-      child: Center(
-        child: SvgPicture.asset(
-          'assets/svg/icon_search_2.svg',
-        ),
-      ),
-    ),
-  );
 }

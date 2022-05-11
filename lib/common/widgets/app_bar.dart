@@ -32,11 +32,13 @@ class MyAppBar extends StatelessWidget {
     );
 
     /// 右侧
+    /// 用row包裹是为了保持组建的原有大小
     var rightWidget = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [right ?? const SizedBox()],
     );
 
+    /// appBar 的组成成员
     var children = [
       Expanded(child: leftWidget),
       Expanded(child: centerWidget),
@@ -49,6 +51,7 @@ class MyAppBar extends StatelessWidget {
       children: children,
     );
 
+    /// AppBar的左右间距
     var padding = Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: left == null && right == null ? centerWidget : leftOrRight,
@@ -57,35 +60,38 @@ class MyAppBar extends StatelessWidget {
     /// 内容组装
     var content = SizedBox(
       width: double.infinity,
-      height: 50,
+      height: 44,
       child: padding,
     );
 
+    /// 动态组装
     Widget obxBuilder() {
-      var theme = ConfigStore.to.isDarkMode ? Colors.red : Colors.yellow;
+      /// 动态背景
+      var color = ConfigStore.to.isLightMode ? Colors.red : Colors.yellow;
 
+      /// 动态的下边框颜色
       var bottomSide = BorderSide(
-        color: ConfigStore.to.isDarkMode ? Colors.white : Colors.black,
+        color: ConfigStore.to.isLightMode ? Colors.black : Colors.white,
       );
-
       var border = Border(bottom: bottomSide);
 
-      var decoration = BoxDecoration(
-        color: isTransparent ? null : theme,
-        border: isShowLine ? border : null,
-      );
-
+      /// 安全区
       var safeArea = SafeArea(
         bottom: false,
         child: content,
       );
 
+      /// 样式
+      var decoration = BoxDecoration(
+        color: isTransparent ? null : color,
+        border: isShowLine ? border : null,
+      );
       return Container(
         decoration: decoration,
         child: safeArea,
       );
     }
 
-    return Obx(() => obxBuilder());
+    return Obx(obxBuilder);
   }
 }

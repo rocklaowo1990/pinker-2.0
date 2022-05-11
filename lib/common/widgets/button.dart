@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:pinker/common/theme/library.dart';
+import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 
 class MyButton extends StatefulWidget {
   const MyButton({
     Key? key,
-    this.width = double.infinity,
-    this.height = 50,
+    this.width,
+    this.height,
     this.isAnimation = true,
     this.onTap,
     this.child,
   }) : super(key: key);
 
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final bool isAnimation;
   final void Function()? onTap;
   final Widget? child;
@@ -20,6 +22,36 @@ class MyButton extends StatefulWidget {
   /// 返回按钮
   static Widget back({void Function()? onTap}) {
     return MyButton(onTap: onTap, width: 100, child: MyIcons.back());
+  }
+
+  /// 长按钮
+  static MyButton infinity(
+    String data, {
+    void Function()? onTap,
+    bool? isAnimation,
+  }) {
+    const gradient = LinearGradient(
+      colors: [Color.fromARGB(255, 46, 224, 30), Color(0xFF02be02)],
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+    );
+
+    const decoration = BoxDecoration(gradient: gradient);
+
+    var child = Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: decoration,
+      child: Center(child: MyText(data, colors: const [Colors.white])),
+    );
+
+    return MyButton(
+      onTap: onTap,
+      width: double.infinity,
+      height: 50,
+      child: child,
+      isAnimation: isAnimation ?? false,
+    );
   }
 
   @override
@@ -44,17 +76,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     );
   }
 
-  void _onTap() {
+  void _onTap() async {
     if (widget.onTap != null) {
-      controller.reverse();
-      widget.onTap!();
-
+      await controller.reverse();
       setState(() => isEnable = true);
-
-      Future.delayed(const Duration(milliseconds: 500), () {
-        controller.forward();
-        setState(() => isEnable = false);
-      });
+      widget.onTap!();
+      if (widget.isAnimation) {
+        await MyTimer.futureMill(500);
+        if (mounted) {
+          await controller.forward();
+          setState(() => isEnable = false);
+        }
+      }
     }
   }
 
@@ -73,8 +106,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var decoration = const BoxDecoration(
-      color: Colors.blue,
-      borderRadius: BorderRadius.all(Radius.circular(8)),
+      borderRadius: MyTheme.borderRadius,
     );
 
     var less = Container(
@@ -85,18 +117,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       child: Center(child: widget.child),
     );
 
-    var ful = FadeTransition(
+    var child = FadeTransition(
       opacity: controller,
       child: less,
     );
 
-    var body = GestureDetector(
+    var build = GestureDetector(
       onTap: isEnable ? null : _onTap,
       onTapDown: isEnable ? null : _onTapDown,
       onTapCancel: _onTapCancel,
-      child: widget.isAnimation ? ful : less,
+      child: child,
     );
 
-    return body;
+    return build;
   }
 }

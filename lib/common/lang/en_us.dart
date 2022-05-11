@@ -14,12 +14,12 @@ const Map<String, String> en = {
   Lang.search: 'Search',
   Lang.password: 'Password',
   Lang.enter: 'Please enter text',
+  Lang.defaultHintText: 'Please enter hint text',
 
   /// 欢迎页面
-  Lang.welcomeGoSignIn: ' Sign In',
-  Lang.welcomeGoSignUp: 'Sign Up',
-  Lang.welcomeHint: 'Alreday have an account?',
-  Lang.welcomeTitle: 'See what is happening in the world',
+  Lang.welcomeButton: 'Try it now',
+  Lang.welcomeSecondTitle: 'Play without ads forever',
+  Lang.welcomeTitle: 'The artifact of watching movies for free',
 
   /// 设置页面
   Lang.setDark: 'Dark mode',

@@ -11,9 +11,12 @@ class Global {
     /// 运行初始
     WidgetsFlutterBinding.ensureInitialized();
 
+    //显示顶部栏(隐藏底部栏，没有这个的话底部状态栏的透明度无法实现)
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     // 强制竖屏
-    await SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    var option = [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown];
+    await SystemChrome.setPreferredOrientations(option);
 
     // 硬盘储存初始化
     await Get.putAsync<StorageService>(() => StorageService().init());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 
 class MyScaffold extends StatelessWidget {
@@ -8,37 +8,51 @@ class MyScaffold extends StatelessWidget {
     this.header,
     this.body,
     this.footer,
+    this.background,
   }) : super(key: key);
 
   final Widget? header;
   final Widget? body;
   final Widget? footer;
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
+    /// 默认的页面背景：黑白颜色交替
     Widget obxBuild() {
-      var color = ConfigStore.to.isDarkMode ? Colors.black : Colors.white;
+      const darkBac = Color(0XFF0E0E11);
+      const lightBac = Color(0XFFCCCCCC);
+      var color = ConfigStore.to.isLightMode ? lightBac : darkBac;
       return Container(color: color);
     }
 
-    /// 页面背景
-    var background = Obx(() => obxBuild());
+    /// 页面背景:默认是黑白交替的颜色
+    var backgroundColor = Obx(obxBuild);
 
-    var columnChildren = [
+    /// AppBar和Body的组合成员
+    var headerAndBodyChildren = [
       if (header != null) header!,
       if (body != null) Expanded(child: body!),
+    ];
+    var headerAndBody = Column(children: headerAndBodyChildren);
+
+    /// AppBar，Body 和 Footer的组合成员
+    var bodyChildren = [
+      if (headerAndBodyChildren.isNotEmpty) Expanded(child: headerAndBody),
       if (footer != null) footer!,
     ];
-
-    var column = Column(
+    var bodyWidget = Column(
+      children: bodyChildren,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: columnChildren,
     );
 
-    var stackChildren = [background, column];
-
+    /// 页面的背景和Body的组成方式
+    var stackChildren = [background ?? backgroundColor, bodyWidget];
     var stack = Stack(children: stackChildren);
 
+    /// 根据参数返回页面的形态
+    /// 如果有AppBar或者Body或者是Fotter里的任何一个则返回stack
+    /// 如果都没有就返回页面背景
     return Material(child: stack);
   }
 }

@@ -13,14 +13,16 @@ class SetController extends GetxController {
   final state = SetState();
   final arguments = Get.arguments;
 
+  static SetController get to => Get.find();
+
   void handleSetTheme(bool isChooise) {
     Get.changeTheme(
-      ConfigStore.to.isDarkMode ? AppTheme.light : AppTheme.dark,
+      ConfigStore.to.isLightMode ? MyTheme.light : MyTheme.dark,
     );
-    ConfigStore.to.isDarkMode = isChooise;
+    ConfigStore.to.isLightMode = isChooise;
     StorageService.to.setBool(
-      storageIsDarkModeKey,
-      ConfigStore.to.isDarkMode,
+      storageIsLightModeKey,
+      ConfigStore.to.isLightMode,
     );
   }
 

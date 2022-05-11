@@ -14,12 +14,12 @@ const Map<String, String> zh = {
   Lang.search: '搜索',
   Lang.password: '密码',
   Lang.enter: '请输入文本',
+  Lang.defaultHintText: '请输入提示文本',
 
   /// 欢迎页面：WelcomeView
-  Lang.welcomeGoSignIn: ' 去登陆',
-  Lang.welcomeGoSignUp: '创建账号',
-  Lang.welcomeHint: '已有账号了?',
-  Lang.welcomeTitle: '查看世界正在发生的新鲜事情',
+  Lang.welcomeTitle: '永久免费看电影的神器',
+  Lang.welcomeSecondTitle: '播放永久无广告',
+  Lang.welcomeButton: '立即体验',
 
   /// 设置页面
   Lang.setDark: '夜间模式',

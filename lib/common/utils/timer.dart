@@ -1,25 +1,25 @@
 class MyTimer {
   /// 时间戳转时间
   static String getDate(int value) {
-    String valueString = value.toString().substring(0, 13);
-    int valueInt = int.parse(valueString);
-
-    DateTime valueTime = DateTime.fromMillisecondsSinceEpoch(valueInt);
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(value);
     DateTime now = DateTime.now();
-    Duration cha = now.difference(valueTime);
+    Duration cha = now.difference(time);
 
-    String month =
-        valueTime.month < 10 ? '0${valueTime.month}' : '${valueTime.month}';
-    String day = valueTime.day < 10 ? '0${valueTime.day}' : '${valueTime.day}';
+    String month = time.month < 10 ? '0${time.month}' : '${time.month}';
+    String day = time.day < 10 ? '0${time.day}' : '${time.day}';
 
-    if (now.year > valueTime.year) {
-      return '${valueTime.year}-$month-$day';
+    if (cha.inDays > 365) {
+      return '${time.year}-$month-$day';
     } else if (cha.inDays > 30) {
       return '${cha.inDays ~/ 30} 月前';
+    } else if (cha.inHours > 72) {
+      return '${cha.inDays} 天前';
+    } else if (cha.inHours > 48) {
+      return '前天';
     } else if (cha.inHours > 24) {
-      return '${cha.inHours ~/ 24} 天前';
+      return '昨天';
     } else if (cha.inMinutes > 60) {
-      return '${cha.inMinutes ~/ 60} 分钟前';
+      return '${cha.inHours} 小时前';
     } else if (cha.inMinutes > 5) {
       return '${cha.inMinutes} 分钟前';
     } else {
@@ -28,7 +28,6 @@ class MyTimer {
   }
 
   /// 时间格式化
-  ///
   /// 把秒数转成：00:00:00的格式
   static String getDuration(int value) {
     // 初始化

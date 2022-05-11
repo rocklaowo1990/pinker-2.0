@@ -45,11 +45,12 @@ class SetLanguageView extends GetView<SetLanguageController> {
                   enUS,
                 ],
                 context: context,
-                color:
-                    ConfigStore.to.isDarkMode ? Colors.white12 : Colors.black12,
+                color: ConfigStore.to.isLightMode
+                    ? Colors.white12
+                    : Colors.black12,
               ).toList(),
             ),
-            color: ConfigStore.to.isDarkMode
+            color: ConfigStore.to.isLightMode
                 ? AppColors.primaryBackgroundDark
                 : AppColors.primaryBackgroundLight,
           ),

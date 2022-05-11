@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:pinker/common/middlewares/library.dart';
-
 import 'package:pinker/pages/application/library.dart';
-
 import 'package:pinker/pages/initial/library.dart';
-import 'package:pinker/pages/set/binding.dart';
 import 'package:pinker/pages/set/language/binding.dart';
 import 'package:pinker/pages/set/language/view.dart';
-import 'package:pinker/pages/set/view.dart';
+import 'package:pinker/pages/set/library.dart';
 import 'package:pinker/pages/unknown/library.dart';
 import 'package:pinker/pages/welcome/binding.dart';
 import 'package:pinker/pages/welcome/view.dart';
