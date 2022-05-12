@@ -3,6 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/utils/library.dart';
+import 'package:pinker/pages/application/act/library.dart';
+import 'package:pinker/pages/application/community/library.dart';
+import 'package:pinker/pages/application/home/aldult/library.dart';
+import 'package:pinker/pages/application/home/cartoon/library.dart';
+import 'package:pinker/pages/application/home/drama/library.dart';
+import 'package:pinker/pages/application/home/library.dart';
+import 'package:pinker/pages/application/home/movie/library.dart';
+import 'package:pinker/pages/application/home/show/library.dart';
+import 'package:pinker/pages/application/my/library.dart';
 
 /// 全局静态数据
 class Global {
@@ -26,5 +35,30 @@ class Global {
     // user：用户信息
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
+
+    Get.put<HomeController>(HomeController());
+    Get.put<CommunityController>(CommunityController());
+    Get.put<ActController>(ActController());
+    Get.put<MyController>(MyController());
+
+    Get.put<MovieController>(MovieController());
+    Get.put<DramaController>(DramaController());
+    Get.put<CartoomController>(CartoomController());
+    Get.put<AldultController>(AldultController());
+    Get.put<ShowController>(ShowController());
+
+    // Get.lazyPut<MovieController>(() => MovieController());
+    // Get.lazyPut<DramaController>(() => DramaController());
+    // Get.lazyPut<CartoomController>(() => CartoomController());
+    // Get.lazyPut<AldultController>(() => AldultController());
+    // Get.lazyPut<ShowController>(() => ShowController());
+
+    // Get.lazyPut<ConfigStore>(() => ConfigStore());
+    // Get.lazyPut<UserStore>(() => UserStore());
+
+    // Get.lazyPut<HomeController>(() => HomeController());
+    // Get.lazyPut<CommunityController>(() => CommunityController());
+    // Get.lazyPut<ActController>(() => ActController());
+    // Get.lazyPut<MyController>(() => MyController());
   }
 }

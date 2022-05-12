@@ -43,7 +43,7 @@ class MyFooterBar extends StatelessWidget {
 
       /// 按钮的间距
       var padding = Padding(
-        padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 4.0),
+        padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
         child: Obx(() => indexObx.value == index ? _image_2 : _image_1),
       );
 
