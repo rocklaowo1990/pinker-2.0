@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/pages/application/home/aldult/view.dart';
+import 'package:pinker/pages/application/home/cartoon/view.dart';
+import 'package:pinker/pages/application/home/drama/view.dart';
 import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/home/movie/view.dart';
+import 'package:pinker/pages/application/home/show/view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -26,7 +30,7 @@ class HomeView extends GetView<HomeController> {
       ),
     );
 
-    const tabs = ['电影', '电视剧', '综艺', '动漫', '午夜剧场', '其他的'];
+    const tabs = ['电影', '电视剧', '综艺', '动漫', '午夜剧场'];
 
     Widget itemBuilder(BuildContext buildContext, int index) {
       const space = SizedBox(width: 16);
@@ -51,8 +55,14 @@ class HomeView extends GetView<HomeController> {
         );
       }
 
-      void onTap() {
+      void onTap() async {
+        await controller.scrollController.animateTo(
+          0.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
         controller.state.pageIndex = index;
+        controller.pageController.jumpToPage(index);
       }
 
       var button = MyButton(
@@ -90,16 +100,23 @@ class HomeView extends GetView<HomeController> {
 
     var header = Obx(obxBuild);
 
+    const pages = [
+      MovieView(),
+      DramaView(),
+      ShowView(),
+      CartoomView(),
+      AldultView(),
+    ];
+
     /// 这里开始是整个页面的组合部分
-    var background = PageView(
+    var body = PageView(
       controller: controller.pageController,
-      children: const [
-        MovieView(),
-      ],
+      onPageChanged: controller.pageChanged,
+      children: pages,
     );
 
     var scaffold = MyScaffold(
-      background: background,
+      background: body,
       header: header,
     );
 

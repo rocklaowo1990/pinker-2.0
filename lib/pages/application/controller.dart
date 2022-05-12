@@ -15,9 +15,9 @@ class ApplicationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => CommunityController());
-    Get.lazyPut(() => ActController());
-    Get.lazyPut(() => MyController());
+    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<CommunityController>(() => CommunityController());
+    Get.lazyPut<ActController>(() => ActController());
+    Get.lazyPut<MyController>(() => MyController());
   }
 }

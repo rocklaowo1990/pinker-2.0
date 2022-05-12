@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/pages/application/home/movie/library.dart';
+import 'package:pinker/pages/application/home/aldult/library.dart';
 
-class MovieView extends GetView<MovieController> {
-  const MovieView({Key? key}) : super(key: key);
+class AldultView extends GetView<AldultController> {
+  const AldultView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

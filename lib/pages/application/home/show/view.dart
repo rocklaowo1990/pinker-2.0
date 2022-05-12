@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinker/common/theme/library.dart';
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/pages/application/home/movie/library.dart';
+import 'package:pinker/pages/application/home/show/library.dart';
 
-class MovieView extends GetView<MovieController> {
-  const MovieView({Key? key}) : super(key: key);
+class ShowView extends GetView<ShowController> {
+  const ShowView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,6 @@ class MovieView extends GetView<MovieController> {
       'assets/lottie/home.zip',
       fit: BoxFit.fitWidth,
     );
-
     var loading = SingleChildScrollView(
       child: lottie,
       controller: controller.homeController.scrollController,
