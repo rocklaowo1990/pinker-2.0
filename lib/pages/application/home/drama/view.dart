@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-import 'package:pinker/common/theme/library.dart';
+import 'package:pinker/common/global/library.dart';
+import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/application/home/drama/library.dart';
 
@@ -10,66 +10,97 @@ class DramaView extends GetView<DramaController> {
 
   @override
   Widget build(BuildContext context) {
-    var lottie = LottieBuilder.asset(
-      'assets/lottie/home.zip',
-      fit: BoxFit.fitWidth,
-    );
-
-    var loading = SingleChildScrollView(
-      child: lottie,
-      controller: controller.homeController.scrollController,
-    );
-
     /// 背景部分
     /// 背景是该页面的下层，也就是主要的内容展示区
     /// 因此背景的排版就是页面的排版
     /// 下方是背景部分的banner顶层的播放按钮和文字
-    var playIcon = MyIcons.play();
-    var bannerText = MyText.obxOpcity('最新高分电影《二郎神》抢先观看');
-    const space = SizedBox(height: 10);
-    var column = Column(
-      children: [playIcon, space, bannerText],
-      crossAxisAlignment: CrossAxisAlignment.start,
-    );
-    var bannerContent = Padding(
-      padding: const EdgeInsets.all(20),
-      child: column,
-    );
-
-    /// 下方是背景部分的背景图层
-    var assetImage = Image.asset(
-      'assets/images/home_banner.jpg',
-      fit: BoxFit.fitWidth,
-    );
-
-    var bannerBacground = Container(
-      decoration: MyTheme.decoration,
-      clipBehavior: Clip.hardEdge,
-      child: assetImage,
-    );
-
     /// 下方是背景部分：banner的组合
+
+    final _data = ResourceController.to.homeDramaData;
+    final _medias = ResourceController.to.homeDramaList;
+
+    Widget itemBuilder(context, index) {
+      var banner = HomeBanner(
+        imageUrl: _data.value.banner[index].image,
+        title: _data.value.banner[index].title,
+      );
+
+      return banner;
+    }
+
+    var bannerPage = PageView.builder(
+      itemBuilder: itemBuilder,
+      itemCount: _data.value.banner.length,
+      onPageChanged: controller.onPageChanged,
+      controller: controller.pageController,
+      scrollDirection: Axis.horizontal,
+    );
+
+    var bannerPageBox = SizedBox(height: 480, child: bannerPage);
+
+    const noChanceDecoration = BoxDecoration(
+      color: MyColors.text,
+      borderRadius: MyStyle.borderRadius,
+    );
+
+    var noChance = Container(
+      width: 8,
+      height: 8,
+      decoration: noChanceDecoration,
+    );
+
+    const chanceDecoration = BoxDecoration(
+      color: MyColors.primary,
+      borderRadius: MyStyle.borderRadius,
+    );
+
+    var chance = Container(
+      width: 16,
+      height: 8,
+      decoration: chanceDecoration,
+    );
+
+    Widget toElement(int index) {
+      var children = [
+        Obx(() => index == controller.state.pageIndex ? chance : noChance),
+        if (index < _data.value.banner.length - 1) const SizedBox(width: 10),
+        if (index == _data.value.banner.length - 1) const SizedBox(width: 20),
+      ];
+      return Row(children: children);
+    }
+
+    var indexBox = Row(
+      children: _data.value.banner.asMap().keys.map(toElement).toList(),
+      mainAxisAlignment: MainAxisAlignment.end,
+    );
+
     var bannerBox = Stack(
-      alignment: AlignmentDirectional.bottomStart,
-      children: [bannerBacground, bannerContent],
+      children: [bannerPageBox, Positioned(child: indexBox, bottom: 28)],
+      alignment: AlignmentDirectional.bottomEnd,
     );
 
-    var body = Column(
-      children: [
-        bannerBox,
-        Container(
-          width: double.infinity,
-          height: 5000,
-          color: Colors.black,
-        ),
-      ],
-    );
+    var bodyChildren = [
+      bannerBox,
+      for (int i = 0; i < _data.value.types.length; i++)
+        Obx(() {
+          return MediaBox(
+            mediaDataList: _medias.value.list,
+            title: _data.value.types[i].typeName,
+          );
+        })
+    ];
 
-    var scaffold = SingleChildScrollView(
-      child: body,
+    var bodyChild = SingleChildScrollView(
+      child: Column(children: bodyChildren),
       controller: controller.homeController.scrollController,
     );
 
-    return Obx(() => controller.state.isLoading ? loading : scaffold);
+    var body = Container(child: bodyChild, color: MyColors.background);
+
+    // Widget obxBuild() {
+    //   return controller.state.title.isEmpty ? lottie : body;
+    // }
+
+    return body;
   }
 }

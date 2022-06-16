@@ -1,4 +1,4 @@
-library drama;
+library application_drama;
 
 export 'binding.dart';
 export 'controller.dart';

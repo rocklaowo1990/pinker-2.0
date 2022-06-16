@@ -1,17 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart' hide FormData;
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/global/library.dart';
+import 'package:pinker/common/data/response_data.dart';
 
-class HttpServer {
-  static final HttpServer _instance = HttpServer._internal();
-  factory HttpServer() => _instance;
+class MyHttp {
+  static final MyHttp _instance = MyHttp._internal();
+  factory MyHttp() => _instance;
 
   Dio dio = Dio();
   CancelToken cancelToken = CancelToken();
 
-  HttpServer._internal() {
+  MyHttp._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
@@ -173,9 +172,7 @@ class HttpServer {
   /// 读取本地配置
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
-    if (Get.isRegistered<UserStore>() && UserStore.to.token.isNotEmpty) {
-      headers['Authorization'] = 'Bearer ${UserStore.to.token}';
-    }
+
     return headers;
   }
 
@@ -185,7 +182,7 @@ class HttpServer {
   /// list 是否列表 默认 false
   /// cacheKey 缓存key
   /// cacheDisk 是否磁盘缓存
-  Future get(
+  Future<ResponseData> get(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -194,8 +191,9 @@ class HttpServer {
     bool list = false,
     String cacheKey = '',
     bool cacheDisk = false,
+    void Function(int, int)? onReceiveProgress,
   }) async {
-    Options requestOptions = options ?? Options();
+    var requestOptions = options ?? Options();
     requestOptions.extra ??= {};
     requestOptions.extra!.addAll({
       "refresh": refresh,
@@ -215,8 +213,15 @@ class HttpServer {
       queryParameters: queryParameters,
       options: options,
       cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
     );
-    return response.data;
+
+    if (response.statusCode == 200) {
+      return ResponseData.fromJson(response.data);
+    } else {
+      var erroData = {'code': -200, 'data': {}, 'msg': '服务器连接失败'};
+      return ResponseData.fromJson(erroData);
+    }
   }
 
   /// restful post 操作

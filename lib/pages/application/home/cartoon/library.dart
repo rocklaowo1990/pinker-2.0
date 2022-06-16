@@ -1,4 +1,4 @@
-library cartoon;
+library application_cartoon;
 
 export 'binding.dart';
 export 'controller.dart';

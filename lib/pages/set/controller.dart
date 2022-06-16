@@ -1,12 +1,5 @@
 import 'package:get/get.dart';
-
-import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
-
-import 'package:pinker/common/theme/library.dart';
-import 'package:pinker/common/utils/library.dart';
-
 import 'package:pinker/pages/set/library.dart';
 
 class SetController extends GetxController {
@@ -16,17 +9,16 @@ class SetController extends GetxController {
   static SetController get to => Get.find();
 
   void handleSetTheme(bool isChooise) {
-    Get.changeTheme(
-      ConfigStore.to.isLightMode ? MyTheme.light : MyTheme.dark,
-    );
-    ConfigStore.to.isLightMode = isChooise;
-    StorageService.to.setBool(
-      storageIsLightModeKey,
-      ConfigStore.to.isLightMode,
-    );
+    /// 改变主题
+    // ConfigController.to.isLightMode = !ConfigController.to.isLightMode;
+    // StorageService.to.setBool(
+    //   storageIsLightModeKey,
+    //   ConfigController.to.isLightMode,
+    // );
+    // ConfigController.changeSystem();
   }
 
   void handleSetLang() {
-    Get.toNamed(AppRoutes.set + AppRoutes.setLanguage);
+    Get.toNamed(MyRoutes.set + MyRoutes.setLanguage);
   }
 }

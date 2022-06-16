@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/home/show/library.dart';
 
@@ -8,11 +8,7 @@ class ShowController extends GetxController {
 
   final HomeController homeController = Get.find();
 
-  @override
-  void onReady() async {
-    super.onReady();
+  final pageController = PageController();
 
-    await MyTimer.futureMill(3000);
-    state.isLoading = false;
-  }
+  void onPageChanged(int index) => state.pageIndex = index;
 }

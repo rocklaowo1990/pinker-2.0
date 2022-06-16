@@ -1,11 +1,14 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
+import 'package:pinker/common/style/colors.dart';
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/pages/application/home/aldult/view.dart';
 import 'package:pinker/pages/application/home/cartoon/view.dart';
 import 'package:pinker/pages/application/home/drama/view.dart';
 import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/home/movie/view.dart';
+import 'package:pinker/pages/application/home/sex/library.dart';
 import 'package:pinker/pages/application/home/show/view.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -17,95 +20,101 @@ class HomeView extends GetView<HomeController> {
     /// 包含 AppBar 和 TabBar
     /// 下方是 Appbar
     var logo = MyIcons.logo();
-    const input = MyInput();
+
+    var searchText = MyText.gray14(ResourceController.to.searchWord);
+
+    var lineDark = Container(
+      width: 1,
+      height: 24,
+      color: Colors.black26,
+    );
+
+    var lineLight = Container(
+      width: 1,
+      height: 24,
+      color: Colors.white12,
+    );
+
+    var lineChildren = [lineDark, lineLight];
+
+    var line = Row(children: lineChildren);
+
+    var searchIcon = MyIcons.search();
+
+    const searchSpace = SizedBox(width: 16);
+
+    var searchRightChildren = [line, searchSpace, searchIcon];
+
+    var searchRight = Row(children: searchRightChildren);
+
+    var searchChildren = [searchText, const Spacer(), searchRight];
+
+    var searchButtonChild = Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: Row(children: searchChildren),
+    );
+
+    var searchButton = MyButton(
+      child: searchButtonChild,
+      width: double.infinity,
+      height: 35,
+      onTap: controller.search,
+      color: Colors.white10,
+    );
+
+    var rowChildren = [
+      logo,
+      const SizedBox(width: 20),
+      Expanded(child: searchButton)
+    ];
+
+    var appBarChild = Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: Row(children: rowChildren),
+    );
 
     var appBar = MyAppBar(
       isTransparent: true,
-      center: Row(
-        children: [
-          logo,
-          const SizedBox(width: 10),
-          const Expanded(child: input)
-        ],
-      ),
+      center: appBarChild,
     );
 
-    const tabs = ['电影', '电视剧', '综艺', '动漫', '午夜剧场'];
-
-    Widget itemBuilder(BuildContext buildContext, int index) {
-      const space = SizedBox(width: 16);
-
-      Widget obxBuild() {
-        const borderSide = BorderSide(color: Colors.green, width: 2);
-        const border = Border(bottom: borderSide);
-        var boxBorder = controller.state.pageIndex == index ? border : null;
-        var green = Colors.green;
-        var white = Colors.white;
-        var textColor = controller.state.pageIndex == index ? [green] : [white];
-        var myText = MyText(
-          tabs[index],
-          fontSize: 16,
-          colors: textColor,
-        );
-        var decoration = BoxDecoration(border: boxBorder);
-        return Container(
-          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-          decoration: decoration,
-          child: myText,
-        );
-      }
-
-      void onTap() async {
-        await controller.scrollController.animateTo(
-          0.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-        controller.state.pageIndex = index;
-        controller.pageController.jumpToPage(index);
-      }
-
-      var button = MyButton(
-        child: Obx(obxBuild),
-        onTap: onTap,
-      );
-
-      var haveSpace = Row(children: [button, space]);
-
-      return index == tabs.length ? button : haveSpace;
-    }
-
-    var listView = ListView.builder(
-      itemBuilder: itemBuilder,
-      itemCount: tabs.length,
-      scrollDirection: Axis.horizontal,
-    );
-
-    var tabBar = SizedBox(
-      width: Get.width,
-      height: 55,
-      child: listView,
+    var tabBar = MyTabBar(
+      pageController: controller.pageController,
+      pageIndex: controller.state.pageIndexRx,
+      tabs: ResourceController.to.types.value.list,
+      scrollController: controller.scrollController,
     );
 
     var headerColumn = Column(children: [appBar, tabBar]);
 
     Widget obxBuild() {
-      var color = Color.fromARGB(controller.state.opacity, 14, 14, 17);
+      var container = Container(color: MyColors.input);
 
-      return Container(
-        child: headerColumn,
-        color: color,
+      var opcatiy = Opacity(opacity: 0.5, child: container);
+
+      var filter = ImageFilter.blur(sigmaX: 16, sigmaY: 16);
+
+      var backdropFilter = BackdropFilter(filter: filter, child: opcatiy);
+
+      var clipRect = ClipRect(child: backdropFilter);
+
+      return Positioned(
+        child: Opacity(opacity: controller.state.opacity, child: clipRect),
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
       );
     }
 
-    var header = Obx(obxBuild);
+    var header = Stack(children: [Obx(obxBuild), headerColumn]);
 
     const pages = [
       MovieView(),
       DramaView(),
       ShowView(),
       CartoomView(),
-      AldultView(),
+      SexView(),
     ];
 
     /// 这里开始是整个页面的组合部分
@@ -113,6 +122,7 @@ class HomeView extends GetView<HomeController> {
       controller: controller.pageController,
       onPageChanged: controller.pageChanged,
       children: pages,
+      physics: const NeverScrollableScrollPhysics(),
     );
 
     var scaffold = MyScaffold(

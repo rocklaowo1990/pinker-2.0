@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
@@ -8,10 +7,10 @@ import 'package:pinker/common/routes/library.dart';
 class MiddlewareInitial extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    if (ConfigStore.to.isHaveUsed) {
-      return const RouteSettings(name: AppRoutes.application);
+    if (ConfigController.to.isHaveUsed) {
+      return const RouteSettings(name: MyRoutes.application);
     } else {
-      return const RouteSettings(name: AppRoutes.welcome);
+      return const RouteSettings(name: MyRoutes.welcome);
     }
   }
 }

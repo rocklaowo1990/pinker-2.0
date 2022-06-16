@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:pinker/common/constant/library.dart';
 
-class Security {
+class MySecurity {
   /// MD5加密
   static String duMD5(String string) {
     var bytes = utf8.encode(string + salt);

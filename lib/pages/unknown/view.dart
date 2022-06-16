@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/widgets/text.dart';
+import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/unknown/library.dart';
 
 class UnknownView extends GetView<UnknownController> {
@@ -8,9 +8,11 @@ class UnknownView extends GetView<UnknownController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: MyText.title('UnknowView'),
+    return MyScaffold(
+      header: MyAppBar(
+        isShowLine: true,
+        center: MyText.text20('未知页面'),
+        left: MyButton.back(),
       ),
     );
   }

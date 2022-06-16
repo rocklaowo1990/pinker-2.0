@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:pinker/common/lang/translation_service.dart';
-
-import 'package:pinker/common/theme/colors.dart';
-import 'package:pinker/common/theme/library.dart';
-
 import 'package:pinker/common/widgets/library.dart';
-
 import 'package:pinker/pages/set/library.dart';
 
 class SetView extends GetView<SetController> {
@@ -50,8 +44,7 @@ class SetView extends GetView<SetController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: MyText(Lang.setLableSystem.tr,
-                    colors: const [AppColors.primaryColor]),
+                child: MyText(Lang.setLableSystem.tr),
               ),
               // system,
             ],
@@ -60,8 +53,7 @@ class SetView extends GetView<SetController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: MyText(Lang.setLableSystem.tr,
-                    colors: const [AppColors.primaryColor]),
+                child: MyText(Lang.setLableSystem.tr),
               ),
               // system,
               const MyText('text'),

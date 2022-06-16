@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
+  sdk: ">=2.16.2 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,40 +30,53 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # 多语言支持
   flutter_localizations: 
     sdk: flutter
     version: ^0.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
+
+  # flutter最强大的siwiper, 多种布局方式，无限轮播，Android和IOS双端适配.
+  flutter_swiper: ^1.1.6
 
   # 屏幕适配
   # flutter_screenutil: ^5.2.0
 
-  # Getx
-  get: ^4.6.1
+  # CachedNetworkImage 可以直接使用，也可以通过 ImageProvider 使用。
+  # CachedNetworkImage 作为 CachedNetworkImageProvider 对 web 的支持最少。它目前不包括缓存。
+  cached_network_image: ^3.2.1
+
+  # GetX is an extra-light and powerful solution for Flutter. 
+  # It combines high-performance state management, intelligent dependency injection, and route management quickly and practically.
+  get: ^4.6.5
 
   # 本地储存
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.0.15
 
   # http 请求
   dio: ^4.0.6
 
   # 加密安全 SHA
-  crypto: ^3.0.1
+  crypto: ^3.0.2
 
-   # 读取设备信息
-  device_info: ^2.0.3
+  # 读取设备信息
+  device_info_plus: ^3.2.4
 
   # 读取APP相关信息
-  package_info: ^2.0.2
+  package_info_plus: ^1.4.2
 
   # svg 文件支持
-  flutter_svg: ^1.0.3
+  flutter_svg: ^1.1.0
 
   # lottie 动画支持
   lottie: ^1.3.0
+
+  # A Flutter plugin for iOS, Android and Web for playing back video on a Widget surface.
+  video_player: ^2.4.4
+  chewie: ^1.3.3
   
 
 dev_dependencies:

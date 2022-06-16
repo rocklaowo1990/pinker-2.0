@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:pinker/common/lang/library.dart';
-import 'package:pinker/common/widgets/text.dart';
+import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/initial/library.dart';
 
 class InitialView extends GetView<InitialController> {
@@ -10,10 +9,6 @@ class InitialView extends GetView<InitialController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: MyText(Lang.edit.tr),
-      ),
-    );
+    return const MyScaffold();
   }
 }

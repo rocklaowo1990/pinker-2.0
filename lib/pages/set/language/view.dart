@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/global/library.dart';
-
-import 'package:pinker/common/theme/library.dart';
-
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/main.dart';
-
 import 'package:pinker/pages/set/language/library.dart';
 
 class SetLanguageView extends GetView<SetLanguageController> {
@@ -14,7 +8,7 @@ class SetLanguageView extends GetView<SetLanguageController> {
 
   @override
   Widget build(BuildContext context) {
-    var appBar = const MyApp();
+    var appBar = const MyAppBar();
 
     var zhCN = Obx(
       () => getListCheck(
@@ -36,25 +30,18 @@ class SetLanguageView extends GetView<SetLanguageController> {
 
     var body = ListView(
       children: [
-        Obx(
-          () => Container(
-            child: Column(
-              children: ListTile.divideTiles(
-                tiles: [
-                  zhCN,
-                  enUS,
-                ],
-                context: context,
-                color: ConfigStore.to.isLightMode
-                    ? Colors.white12
-                    : Colors.black12,
-              ).toList(),
-            ),
-            color: ConfigStore.to.isLightMode
-                ? AppColors.primaryBackgroundDark
-                : AppColors.primaryBackgroundLight,
+        SizedBox(
+          child: Column(
+            children: ListTile.divideTiles(
+              tiles: [
+                zhCN,
+                enUS,
+              ],
+              context: context,
+              color: Colors.black12,
+            ).toList(),
           ),
-        )
+        ),
       ],
     );
 

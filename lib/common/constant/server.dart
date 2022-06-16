@@ -1,5 +1,2 @@
 /// 接口地址
-const String serverApiUrl = 'http://54.169.110.115';
-
-/// 资源服务器端口
-const String serverPort = ':8082/files/';
+const String serverApiUrl = 'https://mock.apifox.cn/m1/648476-0-default';

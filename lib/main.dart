@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/global.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
 
       /// 日志
       enableLog: true,
-      logWriterCallback: Logger.write,
+      logWriterCallback: MyLogger.write,
 
       /// 默认页面切换动画
       defaultTransition: Transition.rightToLeftWithFade,
@@ -33,10 +34,14 @@ class MyApp extends StatelessWidget {
 
       /// 路由
       getPages: AppPages.getPages,
+
+      /// 未知页面
       unknownRoute: AppPages.unknownRoute,
 
       /// 启动页面
-      initialRoute: AppPages.initial,
+      initialRoute: ConfigController.to.isHaveUsed
+          ? MyRoutes.application
+          : MyRoutes.welcome,
 
       /// APP字典，多语言切换
       translations: TranslationService(), //字典

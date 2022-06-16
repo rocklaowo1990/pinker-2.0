@@ -9,6 +9,10 @@ part 'zh_cn.dart';
 class TranslationService extends Translations {
   static const locale = Locale('zh', 'CN');
   static const fallbackLocale = Locale('en', 'US');
+  var language = {
+    'zh_CN': zh,
+    'en_US': en,
+  };
   @override
-  Map<String, Map<String, String>> get keys => {'zh_CN': zh, 'en_US': en};
+  Map<String, Map<String, String>> get keys => language;
 }
