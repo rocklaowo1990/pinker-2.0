@@ -22,22 +22,12 @@ class MyButton extends StatefulWidget {
   final bool isRadius;
   final Color? color;
 
-  /// 返回按钮
-  static MyButton back({void Function()? onTap}) {
-    void _onTap() => Get.back();
-    return MyButton(
-      onTap: onTap ?? _onTap,
-      child: MyIcons.back(),
-      width: 50,
-    );
-  }
-
   /// 关闭按钮
-  static MyButton close({void Function()? onTap}) {
-    return MyButton(onTap: onTap, child: MyIcons.close());
+  static MyButton close({void Function()? onTap, double? size}) {
+    return MyButton(onTap: onTap, child: MyIcons.close(size: size));
   }
 
-  /// 客服按钮
+  /// 消息按钮
   static MyButton email({void Function()? onTap}) {
     return MyButton(onTap: onTap, child: MyIcons.emial());
   }
@@ -47,7 +37,7 @@ class MyButton extends StatefulWidget {
     return MyButton(onTap: onTap, child: MyIcons.customer());
   }
 
-  /// 客服按钮
+  /// 我的页面哪些功能按钮的样式
   static MyButton my({
     required Widget icon,
     required String text,
@@ -69,7 +59,7 @@ class MyButton extends StatefulWidget {
       child: child,
       width: (Get.width - 32 - 20) / 3,
       height: (Get.width - 32 - 20) / 3,
-      color: MyColors.appBar,
+      color: MyColors.input,
     );
   }
 
@@ -89,6 +79,45 @@ class MyButton extends StatefulWidget {
       onTap: onTap,
       child: buttonChild,
       color: MyColors.input,
+    );
+  }
+
+  /// 返回按钮
+  static MyButton back({void Function()? onTap}) {
+    void _onTap() => Get.back();
+    return MyButton(
+      onTap: onTap ?? _onTap,
+      child: MyIcons.back(),
+      width: 50,
+    );
+  }
+
+  /// 网络连接失败后，重新连接的按钮
+  static MyButton retry({void Function()? onTap}) {
+    const errorText = MyText(
+      '网络连接失败',
+      textAlign: TextAlign.center,
+      color: MyColors.secondText,
+    );
+
+    const retryText = MyText(
+      '点击重试',
+      textAlign: TextAlign.center,
+      color: MyColors.secondText,
+    );
+
+    var noDataChildren = [
+      const SizedBox(height: 20),
+      MyIcons.retry(),
+      const SizedBox(height: 10),
+      errorText,
+      retryText,
+    ];
+
+    return MyButton(
+      onTap: onTap,
+      child: Column(children: noDataChildren),
+      width: 50,
     );
   }
 
@@ -116,7 +145,7 @@ class MyButton extends StatefulWidget {
     return MyButton(
       onTap: onTap,
       width: double.infinity,
-      height: 50,
+      height: 46,
       child: child,
     );
   }

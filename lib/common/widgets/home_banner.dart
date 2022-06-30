@@ -21,7 +21,7 @@ class HomeBanner extends StatelessWidget {
       width: Get.width,
     );
 
-    var dark = [MyColors.background, Colors.transparent];
+    var dark = [MyColors.background, MyColors.transparent];
 
     var colorTop = LinearGradient(
       colors: dark,

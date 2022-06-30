@@ -4,8 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:pinker/common/style/colors.dart';
 
 class MyIcons {
-  static Widget play() => SvgPicture.asset('assets/svg/play.svg');
-
   static Widget diamond() => SvgPicture.asset('assets/svg/diamond.svg');
 
   static Widget right() => SvgPicture.asset('assets/svg/right.svg');
@@ -28,6 +26,24 @@ class MyIcons {
 
   static Widget exit() => Image.asset('assets/images/my_exit.png', width: 28);
 
+  static Widget like() => SvgPicture.asset('assets/svg/like.svg', width: 28);
+
+  static Widget play({double? size}) {
+    return SvgPicture.asset('assets/svg/play.svg', width: size);
+  }
+
+  static Widget error() {
+    return SvgPicture.asset('assets/svg/error_3.svg', width: 80);
+  }
+
+  static Widget retry() {
+    return SvgPicture.asset('assets/svg/error_2.svg', width: 80);
+  }
+
+  static Widget likePress() {
+    return SvgPicture.asset('assets/svg/like_press.svg', width: 28);
+  }
+
   static Widget password() {
     return Image.asset('assets/images/my_password.png', width: 28);
   }
@@ -37,7 +53,7 @@ class MyIcons {
   }
 
   static Widget logo() {
-    return SvgPicture.asset('assets/svg/logo.svg', color: Colors.green);
+    return SvgPicture.asset('assets/svg/logo.svg', color: MyColors.primary);
   }
 
   static Widget lottie(String url, {BoxFit? fit}) {
@@ -47,8 +63,8 @@ class MyIcons {
     );
   }
 
-  static Widget close() {
-    return const Icon(Icons.cancel, color: MyColors.primary, size: 16);
+  static Widget close({double? size}) {
+    return Icon(Icons.cancel, color: MyColors.primary, size: size ?? 16);
   }
 
   static Widget search() {
@@ -64,10 +80,10 @@ class MyIcons {
     const loadingBox = CircularProgressIndicator(
       backgroundColor: MyColors.secondText,
       color: MyColors.primary,
-      strokeWidth: 2,
+      strokeWidth: 3,
     );
 
-    const child = SizedBox(width: 20, height: 20, child: loadingBox);
+    const child = SizedBox(width: 24, height: 24, child: loadingBox);
 
     return const Center(child: child);
   }

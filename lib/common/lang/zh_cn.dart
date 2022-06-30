@@ -17,7 +17,7 @@ const Map<String, String> zh = {
   Lang.defaultHintText: '请输入提示文本',
 
   /// 欢迎页面：WelcomeView
-  Lang.welcomeTitle: '永久免费看电影的神器',
+  Lang.welcomeTitle: '免费看电影的神器',
   Lang.welcomeSecondTitle: '播放永久无广告',
   Lang.welcomeButton: '立即体验',
 

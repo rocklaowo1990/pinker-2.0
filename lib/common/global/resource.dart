@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
+import 'package:pinker/common/constant/storage.dart';
 import 'package:pinker/common/data/home_data.dart';
 import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/routes/library.dart';
+import 'package:pinker/common/services/librart.dart';
 
 class ResourceController extends GetxController {
   static ResourceController get to => Get.find();
 
   /// 首页电影列表
   /// 首页电影数据
-  final homeMoveData = HomeData.fromJson(HomeData.child).obs;
+  final homeMoiveData = HomeData.fromJson(HomeData.child).obs;
   final homeMoiveList = ResourceDataList.fromJson(ResourceDataList.child).obs;
 
   /// 成人影院
@@ -32,6 +35,11 @@ class ResourceController extends GetxController {
   /// 影片类型的名称
   final types = TypeList.fromJson(TypeList.child).obs;
 
-  /// 热门搜索
-  final hot = ResourceDataList.fromJson(ResourceDataList.child).obs;
+  /// 视频播放
+  static void videoPlay(ResourceData resourceData) {
+    Get.toNamed(MyRoutes.videoPlay, arguments: resourceData);
+  }
+
+  /// 观看历史
+  final favoritesId = MyStorageService.to.getList(storageFavoritesIdKey).obs;
 }

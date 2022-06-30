@@ -4,6 +4,8 @@ class ResourceData {
     required this.image,
     required this.playUrls,
     required this.id,
+    required this.isCanSee,
+    required this.payType,
     this.introduction,
     this.introduce,
     this.score,
@@ -15,6 +17,7 @@ class ResourceData {
     this.actors,
     this.director,
     this.pubTime,
+    this.price,
   });
 
   /// 影片的名字
@@ -53,14 +56,23 @@ class ResourceData {
   /// 影片的导演
   String? director;
 
-  /// 集数
-  List<String> playUrls;
+  /// 播放地址
+  List<PlayUrls> playUrls;
 
   /// id
   int id;
 
   /// 发布时间
   int? pubTime;
+
+  /// 是否能观看
+  bool isCanSee;
+
+  /// 资源的价格
+  int? price;
+
+  /// 收费方式
+  int payType;
 
   factory ResourceData.fromJson(Map<String, dynamic> json) => ResourceData(
         name: json['name'],
@@ -75,9 +87,13 @@ class ResourceData {
         mediaType: json['mediaType'],
         actors: json['actors'],
         director: json['director'],
-        playUrls: List<String>.from(json['playUrls'].map((e) => e)),
+        playUrls: List<PlayUrls>.from(
+            json["playUrls"].map((x) => PlayUrls.fromJson(x))),
         id: json['id'],
         pubTime: json['pubTime'],
+        isCanSee: json['isCanSee'],
+        price: json['price'],
+        payType: json['payType'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -93,15 +109,20 @@ class ResourceData {
         'mediaType': mediaType,
         'actors': actors,
         'director': director,
-        'playUrls': List<String>.from(playUrls.map((e) => e)),
+        'playUrls': List<dynamic>.from(playUrls.map((x) => x.toJson())),
         'id': id,
         'pubTime': pubTime,
+        'isCanSee': isCanSee,
+        'price': price,
+        'payType': payType,
       };
   static Map<String, dynamic> child = {
-    'name': 'name',
-    'image': 'image',
-    'parts': <String>[],
+    'name': '',
+    'image': '',
+    'playUrls': <PlayUrls>[],
+    'isCanSee': true,
     'id': 0,
+    'payType': 0,
   };
 }
 
@@ -138,12 +159,12 @@ class MediaTypeList {
     required this.size,
   });
 
-  List<ListElement> list;
+  List<MediaType> list;
   int size;
 
   factory MediaTypeList.fromJson(Map<String, dynamic> json) => MediaTypeList(
-        list: List<ListElement>.from(
-            json["list"].map((x) => ListElement.fromJson(x))),
+        list: List<MediaType>.from(
+            json["list"].map((x) => MediaType.fromJson(x))),
         size: json["size"],
       );
 
@@ -152,13 +173,13 @@ class MediaTypeList {
         "size": size,
       };
   static Map<String, dynamic> child = {
-    "list": <ListElement>[],
+    "list": <MediaType>[],
     "size": 0,
   };
 }
 
-class ListElement {
-  ListElement({
+class MediaType {
+  MediaType({
     required this.mediaTypeId,
     required this.mediaTypeName,
     required this.typelist,
@@ -168,7 +189,7 @@ class ListElement {
   String mediaTypeName;
   List<String> typelist;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+  factory MediaType.fromJson(Map<String, dynamic> json) => MediaType(
         mediaTypeId: json["mediaTypeId"],
         mediaTypeName: json["mediaTypeName"],
         typelist: List<String>.from(json["typelist"].map((x) => x)),
@@ -248,4 +269,24 @@ class ResourceResponseData {
       };
 
   static Map<String, dynamic> child = {'type': 0};
+}
+
+class PlayUrls {
+  PlayUrls({
+    required this.title,
+    required this.urls,
+  });
+
+  String title;
+  List<String> urls;
+
+  factory PlayUrls.fromJson(Map<String, dynamic> json) => PlayUrls(
+        title: json['title'],
+        urls: List<String>.from(json["urls"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "urls": List<String>.from(urls.map((x) => x)),
+      };
 }

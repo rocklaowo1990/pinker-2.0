@@ -43,6 +43,6 @@ class MyScaffold extends StatelessWidget {
     /// 根据参数返回页面的形态
     /// 如果有AppBar或者Body或者是Fotter里的任何一个则返回stack
     /// 如果都没有就返回页面背景
-    return Material(child: stack);
+    return Scaffold(body: stack);
   }
 }

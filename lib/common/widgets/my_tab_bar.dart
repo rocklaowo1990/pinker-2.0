@@ -23,6 +23,27 @@ class MyTabBar extends StatelessWidget {
       const space = SizedBox(width: 16);
 
       Widget obxBuild() {
+        void onTap() async {
+          // if (scrollController != null) {
+          //   await scrollController!.animateTo(
+          //     0.0,
+          //     duration: const Duration(milliseconds: 200),
+          //     curve: Curves.ease,
+          //   );
+          // }
+
+          if (scrollController != null) {
+            scrollController!.jumpTo(0);
+          }
+
+          pageIndex.value = index;
+          pageController.jumpToPage(
+            index,
+            // duration: const Duration(milliseconds: 300),
+            // curve: Curves.ease,
+          );
+        }
+
         const borderSide = BorderSide(color: MyColors.primary, width: 2);
 
         const border = Border(bottom: borderSide);
@@ -36,40 +57,21 @@ class MyTabBar extends StatelessWidget {
 
         var decoration = BoxDecoration(border: boxBorder);
 
-        return Container(
+        var child = Container(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           decoration: decoration,
           child: Center(child: myText),
           height: 50,
         );
-      }
 
-      void onTap() async {
-        // if (scrollController != null) {
-        //   await scrollController!.animateTo(
-        //     0.0,
-        //     duration: const Duration(milliseconds: 200),
-        //     curve: Curves.ease,
-        //   );
-        // }
-
-        if (scrollController != null) {
-          scrollController!.jumpTo(0);
-        }
-
-        pageIndex.value = index;
-        await pageController.animateToPage(
-          index,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.ease,
+        return MyButton(
+          child: child,
+          onTap: pageIndex.value == index ? null : onTap,
+          isRadius: false,
         );
       }
 
-      var button = MyButton(
-        child: Obx(obxBuild),
-        onTap: onTap,
-        isRadius: false,
-      );
+      var button = Obx(obxBuild);
 
       var haveSpace = Row(children: [button, space]);
 

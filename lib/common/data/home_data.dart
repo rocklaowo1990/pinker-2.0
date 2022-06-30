@@ -33,24 +33,28 @@ class HomeData {
 class HomeDataBanner {
   HomeDataBanner({
     required this.image,
-    required this.mediaId,
+    required this.bannerType,
     required this.title,
+    this.bannerUrl,
   });
 
   String image;
-  int mediaId;
+  int bannerType;
   String title;
+  String? bannerUrl;
 
   factory HomeDataBanner.fromJson(Map<String, dynamic> json) => HomeDataBanner(
         image: json["image"],
-        mediaId: json["mediaId"],
+        bannerType: json["bannerType"],
         title: json["title"],
+        bannerUrl: json["bannerUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "image": image,
-        "mediaId": mediaId,
+        "bannerType": bannerType,
         "title": title,
+        "bannerUrl": bannerUrl,
       };
 }
 

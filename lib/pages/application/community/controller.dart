@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/pages/application/community/aldult/library.dart';
 import 'package:pinker/pages/application/community/cartoon/library.dart';
 import 'package:pinker/pages/application/community/drama/library.dart';
 import 'package:pinker/pages/application/community/library.dart';
 import 'package:pinker/pages/application/community/movie/library.dart';
+import 'package:pinker/pages/application/community/sex/library.dart';
+
 import 'package:pinker/pages/application/community/show/library.dart';
 
 class CommunityController extends GetxController {
@@ -19,7 +20,7 @@ class CommunityController extends GetxController {
     Get.lazyPut<CommunityMovieController>(() => CommunityMovieController());
     Get.lazyPut<CommunityDramaController>(() => CommunityDramaController());
     Get.lazyPut<CommunityCartoomController>(() => CommunityCartoomController());
-    Get.lazyPut<CommunityAldultController>(() => CommunityAldultController());
+    Get.lazyPut<CommunitySexController>(() => CommunitySexController());
     Get.lazyPut<CommunityShowController>(() => CommunityShowController());
   }
 

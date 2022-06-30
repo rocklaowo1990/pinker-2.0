@@ -82,16 +82,14 @@ class DramaView extends GetView<DramaController> {
     var bodyChildren = [
       bannerBox,
       for (int i = 0; i < _data.value.types.length; i++)
-        Obx(() {
-          return MediaBox(
-            mediaDataList: _medias.value.list,
-            title: _data.value.types[i].typeName,
-          );
-        })
+        MediaBox(
+          mediaDataList: _medias.value.list,
+          title: _data.value.types[i].typeName,
+        )
     ];
 
-    var bodyChild = SingleChildScrollView(
-      child: Column(children: bodyChildren),
+    var bodyChild = ListView(
+      children: bodyChildren,
       controller: controller.homeController.scrollController,
     );
 

@@ -9,10 +9,12 @@ class MediaBox extends StatelessWidget {
     Key? key,
     this.title,
     required this.mediaDataList,
+    this.onTap,
   }) : super(key: key);
 
   final String? title;
   final List<ResourceData> mediaDataList;
+  final void Function(ResourceData resourceData)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +40,10 @@ class MediaBox extends StatelessWidget {
       /// 影片的图片、名称、说明文字的组装
       var children = [
         movieImage,
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         MyText(resourceData.name),
         if (resourceData.introduction != null)
-          MyText.gray14(resourceData.introduction!)
+          MyText.gray14(resourceData.introduction!, lineHeight: 1.5)
       ];
 
       /// 返回
@@ -50,13 +52,17 @@ class MediaBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
       );
 
-      void _videoPlay() {
-        Get.toNamed(MyRoutes.videoPlay, arguments: resourceData);
+      void _onTap() {
+        if (onTap != null) {
+          onTap!(resourceData);
+        } else {
+          Get.toNamed(MyRoutes.videoPlay, arguments: resourceData);
+        }
       }
 
       return MyButton(
         child: child,
-        onTap: _videoPlay,
+        onTap: _onTap,
       );
     }
 

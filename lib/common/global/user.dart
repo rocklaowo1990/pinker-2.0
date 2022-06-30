@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/utils/library.dart';
+import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/services/librart.dart';
 
 class UserController extends GetxController {
   static UserController get to => Get.find();
@@ -9,8 +10,11 @@ class UserController extends GetxController {
   var token = MyStorageService.to.getString(storageUserTokenKey);
 
   /// 保存 token
-  Future<void> setToken(String value) async {
-    await MyStorageService.to.setString(storageUserTokenKey, value);
+  void setToken(String value) {
     token = value;
+    MyStorageService.to.setString(storageUserTokenKey, value);
   }
+
+  /// 用户信息
+  var userInfo = UserInfo.fromJson(UserInfo.child).obs;
 }

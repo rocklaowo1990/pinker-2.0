@@ -27,6 +27,8 @@ class AddBankView extends GetView<AddBankController> {
       MyInput.getInfo('银行卡号', '622848 0000 0000'),
       const SizedBox(height: 10),
       MyInput.getInfo('银行名称', '招商银行'),
+      const SizedBox(height: 32),
+      MyButton.infinity('提交'),
     ];
 
     var bodyChild = Column(children: bodyChildren);

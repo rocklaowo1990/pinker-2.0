@@ -1,17 +1,19 @@
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
 import 'package:pinker/common/data/library.dart';
-import 'package:pinker/pages/application/community/library.dart';
 import 'package:pinker/pages/application/community/movie/library.dart';
 
 class CommunityMovieController extends GetxController {
   final state = CommunityMovieState();
-  final CommunityController communityController = Get.find();
+  final type = 1;
 
   List<int> chooseIndex = [];
 
   void typesClick(int typeIndex, String typaName, int index) {
+    state.isRetry = false;
+
     chooseIndex[typeIndex] = index;
+
     state.data.update((val) {
       val!.country = index;
     });
@@ -38,13 +40,34 @@ class CommunityMovieController extends GetxController {
       sort: sort,
     );
 
-    var medias = ResourceDataList.fromJson(getMedias.data);
+    if (getMedias != null && getMedias.code == 200) {
+      var medias = ResourceDataList.fromJson(getMedias.data);
 
-    if (getMedias.code == 200) {
       state.resourceList.update((val) {
         val!.list = medias.list;
         val.size = medias.size;
       });
+
+      state.isRetry = false;
+    } else {
+      state.isRetry = true;
+    }
+  }
+
+  Future<void> getTypes() async {
+    var getTypes = await ResourceApi.getResourceType();
+
+    if (getTypes != null && getTypes.code == 200) {
+      var types = MediaTypeList.fromJson(getTypes.data);
+
+      state.mediaTypeList.update((val) {
+        val!.list = types.list;
+        val.size = types.size;
+      });
+
+      for (int i = 0; i < state.mediaTypeList.value.list.length; i++) {
+        chooseIndex.add(0);
+      }
     }
   }
 
@@ -52,22 +75,9 @@ class CommunityMovieController extends GetxController {
   void onReady() async {
     super.onReady();
 
-    var getTypes = await ResourceApi.getResourceType();
+    await getTypes();
 
-    var types = MediaTypeList.fromJson(getTypes.data);
-
-    if (getTypes.code == 200) {
-      state.mediaTypeList.update((val) {
-        val!.list = types.list;
-        val.size = types.size;
-      });
-    }
-
-    for (int i = 0; i < state.mediaTypeList.value.list.length; i++) {
-      chooseIndex.add(0);
-    }
-
-    await getMedias(type: 1);
+    await getMedias(type: type);
 
     debounce(state.data, (ResourceResponseData value) async {
       state.resourceList.update((val) {

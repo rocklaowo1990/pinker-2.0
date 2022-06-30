@@ -1,4 +1,4 @@
-library community_aldult;
+library favorites;
 
 export 'binding.dart';
 export 'controller.dart';

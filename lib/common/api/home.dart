@@ -1,25 +1,32 @@
+import 'package:dio/dio.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/utils/library.dart';
 
 class HomeApi {
   /// 获取首页数据
-  static Future<ResponseData> getHomeData({
+  static Future<ResponseData?> getHomeData({
     required int type,
     void Function(int, int)? onReceiveProgress,
+    Future<void> Function(ErrorEntity)? errorCallBack,
   }) async {
-    var response = await MyHttp().get(
+    Response? response = await MyHttp().get(
       '/home/getHomeData',
-      queryParameters: {
-        'type': type,
-      },
+      queryParameters: {'type': type},
       onReceiveProgress: onReceiveProgress,
+      errorCallBack: errorCallBack,
     );
-    return response;
+
+    return response != null ? ResponseData.fromJson(response.data) : null;
   }
 
   /// 获取搜索关键字
-  static Future<ResponseData> getSearchWord() async {
-    var response = await MyHttp().get('/home/searchWord');
-    return response;
+  static Future<ResponseData?> getSearchWord({
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().get(
+      '/home/searchWord',
+      errorCallBack: errorCallBack,
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
   }
 }

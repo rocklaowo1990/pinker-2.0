@@ -9,3 +9,6 @@ const String storageIsHaveUsedKey = 'is_first';
 
 /// 主题设置：isDarkMode
 const String storageIsLightModeKey = 'is_light_mode';
+
+/// 观看历史
+const String storageFavoritesIdKey = 'favorites_id';

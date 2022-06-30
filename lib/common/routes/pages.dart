@@ -7,8 +7,7 @@ import 'package:pinker/pages/add_usdt/view.dart';
 import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/bank/binding.dart';
 import 'package:pinker/pages/bank/view.dart';
-import 'package:pinker/pages/history/binding.dart';
-import 'package:pinker/pages/history/view.dart';
+import 'package:pinker/pages/favorites/library.dart';
 import 'package:pinker/pages/initial/library.dart';
 import 'package:pinker/pages/phone/binding.dart';
 import 'package:pinker/pages/phone/view.dart';
@@ -63,8 +62,8 @@ class AppPages {
     /// 观看历史页面
     GetPage(
       name: MyRoutes.history,
-      page: () => const HistoryView(),
-      binding: HistoryBinding(),
+      page: () => const FavoritesView(),
+      binding: FavoritesBinding(),
     ),
 
     /// 欢迎页面

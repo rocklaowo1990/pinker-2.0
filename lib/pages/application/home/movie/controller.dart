@@ -8,6 +8,4 @@ class MovieController extends GetxController {
   final state = MovieState();
   final HomeController homeController = Get.find();
   final pageController = PageController();
-
-  void onPageChanged(int index) => state.pageIndex = index;
 }

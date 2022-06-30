@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/widgets/library.dart';
-import 'package:pinker/pages/application/community/aldult/library.dart';
 import 'package:pinker/pages/application/community/cartoon/library.dart';
 import 'package:pinker/pages/application/community/drama/library.dart';
 import 'package:pinker/pages/application/community/library.dart';
 import 'package:pinker/pages/application/community/movie/library.dart';
+import 'package:pinker/pages/application/community/sex/library.dart';
 import 'package:pinker/pages/application/community/show/library.dart';
 
 class CommunityView extends GetView<CommunityController> {
@@ -27,7 +27,7 @@ class CommunityView extends GetView<CommunityController> {
       CommunityDramaView(),
       CommunityShowView(),
       CommunityCartoomView(),
-      CommunityAldultView(),
+      CommunitySexView(),
     ];
 
     /// 这里开始是整个页面的组合部分

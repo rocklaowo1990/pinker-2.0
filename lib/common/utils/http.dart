@@ -1,26 +1,28 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/data/response_data.dart';
+import 'package:pinker/common/global/library.dart';
 
 class MyHttp {
-  static final MyHttp _instance = MyHttp._internal();
-  factory MyHttp() => _instance;
+  // final Function errorCallBack;
 
   Dio dio = Dio();
   CancelToken cancelToken = CancelToken();
+
+  static final MyHttp _instance = MyHttp._internal();
+
+  factory MyHttp() => MyHttp._instance;
 
   MyHttp._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
-      baseUrl: serverApiUrl,
+      baseUrl: baseUrl,
 
       //连接服务器超时时间，单位是毫秒.
-      connectTimeout: 10000,
+      connectTimeout: 50000,
 
       // 响应流上前后两次接受到数据的间隔，单位为毫秒。
-      receiveTimeout: 5000,
+      receiveTimeout: 30000,
 
       // Http请求头.
       headers: {},
@@ -46,58 +48,59 @@ class MyHttp {
     // dio.interceptors.add(CookieManager(cookieJar));
 
     // 添加拦截器
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        // Do something before request is sent
-        return handler.next(options); //continue
-        // 如果你想完成请求并返回一些自定义数据，你可以resolve一个Response对象 `handler.resolve(response)`。
-        // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
-        //
-        // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象,如`handler.reject(error)`，
-        // 这样请求将被中止并触发异常，上层catchError会被调用。
-      },
-      onResponse: (response, handler) async {
-        // Do something with response data
-        // 如果token过期将直接退出登陆
-        // ResponseEntity responseEntity = ResponseEntity.fromJson(response.data);
-        // if (responseEntity.code == 1) {
-        //   await MyTimer.futureMill(500);
-        //   goLoginPage();
-        // }
+    // dio.interceptors.add(InterceptorsWrapper(
+    //   onRequest: (options, handler) {
+    //     // Do something before request is sent
+    //     return handler.next(options); //continue
+    //     // 如果你想完成请求并返回一些自定义数据，你可以resolve一个Response对象 `handler.resolve(response)`。
+    //     // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
+    //     //
+    //     // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象,如`handler.reject(error)`，
+    //     // 这样请求将被中止并触发异常，上层catchError会被调用。
+    //   },
+    //   onResponse: (response, handler) async {
+    //     // Do something with response data
+    //     // 如果token过期将直接退出登陆
+    //     // ResponseEntity responseEntity = ResponseEntity.fromJson(response.data);
+    //     // if (responseEntity.code == 1) {
+    //     //   await MyTimer.futureMill(500);
+    //     //   goLoginPage();
+    //     // }
 
-        return handler.next(response); // continue
-        // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
-        // 这样请求将被中止并触发异常，上层catchError会被调用。
-      },
-      onError: (DioError e, handler) {
-        // Do something with response error
-        ErrorEntity eInfo = createErrorEntity(e);
-        onError(eInfo);
-        return handler.next(e); //continue
-        // 如果你想完成请求并返回一些自定义数据，可以resolve 一个`Response`,如`handler.resolve(response)`。
-        // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
-      },
-    ));
+    //     return handler.next(response);
+
+    //     // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
+    //     // 这样请求将被中止并触发异常，上层catchError会被调用。
+    //   },
+    //   onError: (DioError err, handler) {
+    //     // Do something with response error
+
+    //     // Get.dialog(AlertCenter(
+    //     //   child: AlertCenter.alert(
+    //     //     title: e.type.toString(),
+    //     //     content: e.message,
+    //     //   ),
+    //     // ));
+
+    //     var eInfo = createErrorEntity(err);
+    //     onError(eInfo);
+
+    //     // return;
+
+    //     // return handler.next(err);
+
+    //     // errorCallBack(eInfo);
+
+    //     //continue
+    //     // 如果你想完成请求并返回一些自定义数据，可以resolve 一个`Response`,如`handler.resolve(response)`。
+    //     // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
+    //   },
+    // ));
   }
 
-  /*
-   * error统一处理
-   */
-  // 错误处理
-  void onError(ErrorEntity eInfo) {
-    debugPrint('error.code -> ' +
-        eInfo.code.toString() +
-        ', error.message -> ' +
-        eInfo.message);
-    switch (eInfo.code) {
-      case 401:
-        // goLoginPage();
-        // EasyLoading.showError(eInfo.message);
-        break;
-      default:
-        // EasyLoading.showError('未知错误');
-        break;
-    }
+  /// 错误处理
+  void onError(ErrorEntity eInfo) async {
+    ConfigController.to.getSnakBar('错误码: ${eInfo.code}', eInfo.message);
   }
 
   // 错误信息
@@ -154,7 +157,7 @@ class MyHttp {
         }
       default:
         {
-          return ErrorEntity(code: -1, message: error.message);
+          return ErrorEntity(code: -1, message: '网络连接失败');
         }
     }
   }
@@ -182,16 +185,17 @@ class MyHttp {
   /// list 是否列表 默认 false
   /// cacheKey 缓存key
   /// cacheDisk 是否磁盘缓存
-  Future<ResponseData> get(
+  Future<Response?> get(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
-    bool refresh = false,
+    bool refresh = true,
     bool noCache = !cacheEnable,
     bool list = false,
     String cacheKey = '',
     bool cacheDisk = false,
     void Function(int, int)? onReceiveProgress,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     var requestOptions = options ?? Options();
     requestOptions.extra ??= {};
@@ -203,33 +207,37 @@ class MyHttp {
       "cacheDisk": cacheDisk,
     });
     requestOptions.headers = requestOptions.headers ?? {};
+
     Map<String, dynamic>? authorization = getAuthorizationHeader();
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
 
-    var response = await dio.get(
-      path,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-      onReceiveProgress: onReceiveProgress,
-    );
+    Response response;
 
-    if (response.statusCode == 200) {
-      return ResponseData.fromJson(response.data);
-    } else {
-      var erroData = {'code': -200, 'data': {}, 'msg': '服务器连接失败'};
-      return ResponseData.fromJson(erroData);
+    try {
+      response = await dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
     }
   }
 
   /// restful post 操作
-  Future post(
+  Future<Response?> post(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -237,14 +245,23 @@ class MyHttp {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.post(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 
   /// restful put 操作

@@ -16,7 +16,7 @@ class MovieView extends GetView<MovieController> {
     /// 下方是背景部分的banner顶层的播放按钮和文字
     /// 下方是背景部分：banner的组合
 
-    final _data = ResourceController.to.homeMoveData;
+    final _data = ResourceController.to.homeMoiveData;
     final _medias = ResourceController.to.homeMoiveList;
 
     Widget itemBuilder(context, index) {
@@ -31,7 +31,6 @@ class MovieView extends GetView<MovieController> {
     var bannerPage = PageView.builder(
       itemBuilder: itemBuilder,
       itemCount: _data.value.banner.length,
-      onPageChanged: controller.onPageChanged,
       controller: controller.pageController,
       scrollDirection: Axis.horizontal,
     );
@@ -80,16 +79,14 @@ class MovieView extends GetView<MovieController> {
     var bodyChildren = [
       bannerBox,
       for (int i = 0; i < _data.value.types.length; i++)
-        Obx(() {
-          return MediaBox(
-            mediaDataList: _medias.value.list,
-            title: _data.value.types[i].typeName,
-          );
-        })
+        MediaBox(
+          mediaDataList: _medias.value.list,
+          title: _data.value.types[i].typeName,
+        )
     ];
 
-    var bodyChild = SingleChildScrollView(
-      child: Column(children: bodyChildren),
+    var bodyChild = ListView(
+      children: bodyChildren,
       controller: controller.homeController.scrollController,
     );
 

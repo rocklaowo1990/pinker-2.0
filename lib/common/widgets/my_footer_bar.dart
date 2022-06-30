@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/style/colors.dart';
+import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/pages/application/home/library.dart';
 
 class MyFooterBar extends StatelessWidget {
   const MyFooterBar({
@@ -59,9 +61,17 @@ class MyFooterBar extends StatelessWidget {
       /// 按钮最终形态
       var child = Center(child: column);
 
-      void _onTap() {
+      void _onTap() async {
         indexObx.value = index;
         pageController.jumpToPage(index);
+        await MyTimer.futureMill(500);
+        if (index == 0) {
+          final HomeController homeController = Get.find();
+          homeController.scrollController.jumpTo(0.0);
+          homeController.pageController.jumpToPage(
+            homeController.state.pageIndex,
+          );
+        }
       }
 
       /// 返回按钮

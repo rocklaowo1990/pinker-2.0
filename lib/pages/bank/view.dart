@@ -29,7 +29,7 @@ class BankView extends GetView<BankController> {
       return MyButton(
         width: Get.width - 32,
         height: 120,
-        color: MyColors.appBar,
+        color: MyColors.input,
         child: child,
         onTap: onTap,
       );

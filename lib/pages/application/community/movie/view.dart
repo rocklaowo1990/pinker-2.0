@@ -19,6 +19,14 @@ class CommunityMovieView extends GetView<CommunityMovieController> {
     var _medias = controller.state.resourceList;
     var _types = controller.state.mediaTypeList;
 
+    void getData() async {
+      controller.state.isRetry = false;
+      if (controller.state.mediaTypeList.value.list.isEmpty) {
+        await controller.getTypes();
+      }
+      await controller.getMedias(type: controller.type);
+    }
+
     Widget obxBuild() {
       var loading = Padding(
         padding: const EdgeInsets.only(top: 20),
@@ -35,7 +43,12 @@ class CommunityMovieView extends GetView<CommunityMovieController> {
             typeIndex: i,
           ),
         MediaBox(mediaDataList: _medias.value.list),
-        if (_types.value.list.isEmpty || _medias.value.list.isEmpty) loading,
+        if (!controller.state.isRetry &&
+            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+          loading,
+        if (controller.state.isRetry &&
+            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+          MyButton.retry(onTap: getData),
       ];
 
       return MyListView(children: children);

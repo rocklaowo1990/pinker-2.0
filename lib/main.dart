@@ -3,7 +3,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
-import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/global.dart';
 import 'common/lang/translation_service.dart';
 
@@ -25,8 +24,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       /// 日志
-      enableLog: true,
-      logWriterCallback: MyLogger.write,
+      // enableLog: true,
+      // logWriterCallback: MyLogger.write,
 
       /// 默认页面切换动画
       defaultTransition: Transition.rightToLeftWithFade,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/utils/library.dart';
 
@@ -15,6 +16,8 @@ class MyView extends GetView<MyController> {
 
   @override
   Widget build(BuildContext context) {
+    var userInfo = UserController.to.userInfo;
+
     /// appBar 的子内容
     var appBarChildren = [
       MyButton.customer(),
@@ -64,18 +67,28 @@ class MyView extends GetView<MyController> {
     /// 钱包的样式
     const diamondBoxDecoration = BoxDecoration(
       borderRadius: MyStyle.borderRadius,
-      color: MyColors.appBar,
+      color: MyColors.input,
     );
 
     /// 钱包的标题
     const diamonTitle = MyText('钻石账户');
 
     /// 充值按钮
-    const rechargeButton = MyButton(
-      child: MyText('充值'),
-      width: 80,
+    var rechargeButton = MyButton(
+      child: const MyText('充值'),
+      width: 60,
       height: 36,
       color: MyColors.primary,
+      onTap: controller.recharge,
+    );
+
+    /// 提现按钮
+    var pickButton = MyButton(
+      child: const MyText('提现'),
+      width: 60,
+      height: 36,
+      color: const Color.fromARGB(255, 146, 62, 235),
+      onTap: controller.pick,
     );
 
     /// 钱包标题的子内容
@@ -88,10 +101,28 @@ class MyView extends GetView<MyController> {
     /// 钱包标题
     var diamonTitleBox = Row(children: diamonTitleBoxChildren);
 
+    var balance = Obx(() {
+      if (userInfo.value.balance <= 9999999.99) {
+        var balance = userInfo.value.balance;
+        return MyText.welcom(MyCharacter.getMoney(balance, fixed: 2));
+      } else {
+        var balance = (userInfo.value.balance ~/ 10000).toDouble();
+        return Row(
+          children: [
+            MyText.welcom(MyCharacter.getMoney(balance)),
+            const SizedBox(width: 10),
+            MyText.text24('万')
+          ],
+        );
+      }
+    });
+
     /// 钱包内容的子内容
     var diamonContentBoxChildren = [
-      MyText(MyCharacter.getMoney(1234121.987, fixed: 0), fontSize: 32),
+      balance,
       const Spacer(),
+      pickButton,
+      const SizedBox(width: 10),
       rechargeButton,
     ];
 
@@ -120,14 +151,29 @@ class MyView extends GetView<MyController> {
     var diamondBoxSafe = SafeArea(bottom: false, child: diamonBox);
 
     /// 钱包和顶部的距离
-    var diamondBoxPadding = Padding(
-      child: diamondBoxSafe,
-      padding: const EdgeInsets.only(top: 90),
+    var diamondBoxPadding = SafeArea(
+      child: Padding(
+        child: diamondBoxSafe,
+        padding: const EdgeInsets.only(top: 100),
+      ),
+      bottom: false,
+    );
+
+    var textNoLogin = MyText.text20('亲, 您还未登陆哦');
+    var textLogin = MyText.text20('欢迎回来, 亲');
+
+    var userName = Positioned(
+      child: SafeArea(
+        child: Obx(() => userInfo.value.userId == 0 ? textNoLogin : textLogin),
+      ),
+      top: 54,
+      left: 28,
     );
 
     /// 钱包和banner的结合
     var bannerChildren = [
       bannerImage,
+      userName,
       diamondBoxPadding,
     ];
 
@@ -137,32 +183,44 @@ class MyView extends GetView<MyController> {
       children: bannerChildren,
     );
 
-    /// 第一排按钮的内容
-    var commonChildren = [
-      MyButton.my(
-        icon: MyIcons.history(),
-        text: '观看记录',
-        onTap: controller.history,
-      ),
-      MyButton.my(
-        icon: MyIcons.bank(),
-        text: '银行卡',
-        onTap: controller.bank,
-      ),
-      MyButton.my(
-        icon: MyIcons.phone(),
-        text: '手机',
-        onTap: controller.phone,
-      ),
-      MyButton.my(icon: MyIcons.password(), text: '密码', onTap: () {}),
-      MyButton.my(icon: MyIcons.broken(), text: '注销账户', onTap: () {}),
-      MyButton.my(icon: MyIcons.exit(), text: '退出登录', onTap: () {}),
-    ];
-    var commonBox = Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      children: commonChildren,
-    );
+    Widget buttonBuild() {
+      /// 第一排按钮的内容
+      var commonChildren = [
+        MyButton.my(
+          icon: MyIcons.history(),
+          text: '收藏夹',
+          onTap: controller.history,
+        ),
+        MyButton.my(
+          icon: MyIcons.bank(),
+          text: '银行卡',
+          onTap: controller.bank,
+        ),
+        MyButton.my(
+          icon: MyIcons.phone(),
+          text: '手机',
+          onTap: controller.phone,
+        ),
+        MyButton.my(
+          icon: MyIcons.password(),
+          text: '密码',
+          onTap: controller.password,
+        ),
+        if (userInfo.value.userId != 0)
+          MyButton.my(
+            icon: MyIcons.exit(),
+            text: '退出登录',
+            onTap: controller.loginOut,
+          ),
+      ];
+      return Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: commonChildren,
+      );
+    }
+
+    var commonBox = Obx(buttonBuild);
 
     var bodyChildren = [
       banner,

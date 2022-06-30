@@ -61,7 +61,7 @@ class _CommunityButtonTabBarState extends State<CommunityButtonTabBar> {
       var button = MyButton(
         color: index == buttonIndex ? MyColors.input : null,
         child: buttonText,
-        onTap: onTap,
+        onTap: index == buttonIndex ? null : onTap,
         height: 40,
       );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 
@@ -41,16 +42,36 @@ class MediaSearch extends StatelessWidget {
     var mediaInfoChildren = <Widget>[
       mediaName,
       if (resourceData.score != null)
-        MyText.primary14('★ ${resourceData.score!}'),
-      if (yearChildren.isNotEmpty) MyText.gray14(yearString),
+        MyText.primary14(
+          '★ ${resourceData.score!}',
+          lineHeight: 1.2,
+        ),
+      if (yearChildren.isNotEmpty)
+        MyText.gray14(
+          yearString,
+          lineHeight: 1.2,
+        ),
       if (resourceData.actors != null)
-        MyText.gray14('演员: ${resourceData.actors!}'),
+        MyText.gray14(
+          '演员: ${resourceData.actors!}',
+          lineHeight: 1.2,
+        ),
       if (resourceData.director != null)
-        MyText.gray14('导演: ${resourceData.director!}'),
+        MyText.gray14(
+          '导演: ${resourceData.director!}',
+          lineHeight: 1.2,
+        ),
       if (resourceData.introduce != null)
-        MyText.gray14('剧情: ${resourceData.introduce!}', maxLines: 2),
+        MyText.gray14(
+          '剧情: ${resourceData.introduce!}',
+          maxLines: 2,
+          lineHeight: 1.2,
+        ),
       if (resourceData.ranking != null)
-        MyText.primary14('排名: ${resourceData.ranking!}'),
+        MyText.primary14(
+          '排名: ${resourceData.ranking!}',
+          lineHeight: 1.2,
+        ),
     ];
 
     var mediaInfoChild = Column(
@@ -70,8 +91,13 @@ class MediaSearch extends StatelessWidget {
     );
 
     var bodyChildren = [bodyRow, const SizedBox(height: 16)];
+
+    void _videoPlay() {
+      Get.toNamed(MyRoutes.videoPlay, arguments: resourceData);
+    }
+
     var body = MyButton(
-      onTap: () {},
+      onTap: _videoPlay,
       child: Column(children: bodyChildren),
     );
 

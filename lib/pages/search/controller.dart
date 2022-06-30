@@ -4,8 +4,9 @@ import 'package:pinker/common/api/library.dart';
 import 'package:pinker/common/constant/storage.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
+import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/utils/library.dart';
-import 'package:pinker/common/widgets/alert_center.dart';
+import 'package:pinker/common/widgets/dialog_child.dart';
 import 'package:pinker/pages/search/library.dart';
 
 class SearchController extends GetxController {
@@ -42,8 +43,8 @@ class SearchController extends GetxController {
 
   void showClear() {
     Get.dialog(
-      AlertCenter(
-        child: AlertCenter.alert(
+      DialogChild(
+        child: DialogChild.alert(
           title: '清除记录',
           content: '是否确认继续操作',
           onTap: clearHistory,
@@ -79,15 +80,44 @@ class SearchController extends GetxController {
       keyword: _text,
     );
 
-    var searchList = ResourceDataList.fromJson(getSearchList.data);
+    if (getSearchList != null && getSearchList.code == 200) {
+      var searchList = ResourceDataList.fromJson(getSearchList.data);
 
-    if (getSearchList.code == 200) {
       state.resault.update((val) {
         val!.list = searchList.list;
         val.size = searchList.size;
       });
 
-      state.isShowLoading = false;
+      state.isRetryResault = false;
+    } else {
+      state.isRetryResault = true;
+    }
+
+    state.isShowLoading = false;
+    state.isShowResault = true;
+  }
+
+  Future<void> getHotList() async {
+    state.isRetryHot = false;
+
+    if (state.hot.value.list.isEmpty) {
+      var getHotList = await ResourceApi.getResourceList(
+        pageNo: 1,
+        type: 0,
+        pageSize: 20,
+        sort: 4,
+      );
+
+      if (getHotList != null && getHotList.code == 200) {
+        var hotList = ResourceDataList.fromJson(getHotList.data);
+
+        state.hot.update((val) {
+          val!.list = hotList.list;
+          val.size = hotList.size;
+        });
+      } else {
+        state.isRetryHot = true;
+      }
     }
   }
 
@@ -99,7 +129,11 @@ class SearchController extends GetxController {
 
     inputController.addListener(() {
       if (inputController.text.isEmpty) {
-        state.resault.update((val) => val!.list.clear());
+        state.resault.update((val) {
+          val!.list.clear();
+          val.size = 0;
+        });
+        state.isShowResault = false;
       }
     });
 
@@ -115,22 +149,6 @@ class SearchController extends GetxController {
       if (inputFocusNode.hasFocus) state.offsetRx.value = 0.0;
     });
 
-    if (ResourceController.to.hot.value.list.isEmpty) {
-      var getHotList = await ResourceApi.getResourceList(
-        pageNo: 1,
-        type: 0,
-        pageSize: 20,
-        sort: 4,
-      );
-
-      var hotList = ResourceDataList.fromJson(getHotList.data);
-
-      if (getHotList.code == 200) {
-        ResourceController.to.hot.update((val) {
-          val!.list = hotList.list;
-          val.size = hotList.size;
-        });
-      }
-    }
+    await getHotList();
   }
 }

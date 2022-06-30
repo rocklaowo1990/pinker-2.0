@@ -3,60 +3,60 @@ import 'package:get/get.dart';
 import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/application/community/drama/library.dart';
+import 'package:pinker/pages/application/community/widgets/library.dart';
 
 class CommunityDramaView extends GetView<CommunityDramaController> {
   const CommunityDramaView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /// 背景部分
-    /// 背景是该页面的下层，也就是主要的内容展示区
-    /// 因此背景的排版就是页面的排版
-    /// 下方是背景部分的banner顶层的播放按钮和文字
-    var playIcon = MyIcons.play();
-    const bannerText = MyText('最新高分电影《二郎神》抢先观看');
-    const space = SizedBox(height: 10);
-    var column = Column(
-      children: [playIcon, space, bannerText],
-      crossAxisAlignment: CrossAxisAlignment.start,
-    );
-    var bannerContent = Padding(
-      padding: const EdgeInsets.all(20),
-      child: column,
-    );
+    /// 骨架动画
+    // var lottie = SingleChildScrollView(
+    //   child: MyIcons.lottie('home'),
+    //   controller: controller.communityController.scrollController,
+    // );
 
-    /// 下方是背景部分的背景图层
-    var assetImage = Image.asset(
-      'assets/images/home_banner.png',
-      fit: BoxFit.fitWidth,
-    );
+    var _medias = controller.state.resourceList;
+    var _types = controller.state.mediaTypeList;
 
-    var bannerBacground = Container(
-      decoration: MyStyle.decoration,
-      clipBehavior: Clip.hardEdge,
-      child: assetImage,
-    );
+    void getData() async {
+      controller.state.isRetry = false;
+      if (controller.state.mediaTypeList.value.list.isEmpty) {
+        await controller.getTypes();
+      }
+      await controller.getMedias(type: controller.type);
+    }
 
-    /// 下方是背景部分：banner的组合
-    var bannerBox = Stack(
-      alignment: AlignmentDirectional.bottomStart,
-      children: [bannerBacground, bannerContent],
-    );
+    Widget obxBuild() {
+      var loading = Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: MyIcons.loading(),
+      );
+      var children = [
+        const SizedBox(height: 20),
+        for (int i = 0; i < _types.value.list.length; i++)
+          CommunityButtonTabBar(
+            typeName: _types.value.list[i].mediaTypeName,
+            list: _types.value.list[i].typelist,
+            onTap: controller.typesClick,
+            chooseIndex: controller.chooseIndex[i],
+            typeIndex: i,
+          ),
+        MediaBox(mediaDataList: _medias.value.list),
+        if (!controller.state.isRetry &&
+            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+          loading,
+        if (controller.state.isRetry &&
+            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+          MyButton.retry(onTap: getData),
+      ];
 
-    var body = Column(
-      children: [
-        bannerBox,
-        Container(
-          width: double.infinity,
-          height: 5000,
-          color: Colors.black,
-        ),
-      ],
-    );
+      return MyListView(children: children);
+    }
 
-    return SingleChildScrollView(
-      child: body,
-      controller: controller.communityController.scrollController,
+    return Container(
+      child: Obx(obxBuild),
+      color: MyColors.background,
     );
   }
 }

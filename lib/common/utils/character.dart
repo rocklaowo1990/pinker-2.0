@@ -18,16 +18,23 @@ class MyCharacter {
     }
 
     // 用来装格式化好的数字
-    List<int> _list = [];
+    List<String> _list = [];
 
     // 把整数部分格式化成 1,234,56 的形式
     while (_value > 1000) {
-      _list.insert(0, _value % 1000);
+      if (_value % 1000 < 10) {
+        _list.insert(0, '00' + (_value % 1000).toString());
+      } else if (_value < 100) {
+        _list.insert(0, '0' + (_value % 1000).toString());
+      } else {
+        _list.insert(0, (_value % 1000).toString());
+      }
+
       _value = _value ~/ 1000;
     }
 
     // 把第一位放入容器
-    _list.insert(0, _value);
+    _list.insert(0, _value.toString());
 
     var intResault = getListToString(_list, spacer: ',');
 

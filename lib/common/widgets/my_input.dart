@@ -22,6 +22,8 @@ class MyInput extends StatefulWidget {
     this.height = 36,
     this.borderRadius = MyStyle.borderRadius,
     this.onTap,
+    this.autofocus = false,
+    this.enabled,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -39,6 +41,8 @@ class MyInput extends StatefulWidget {
   final double height;
   final BorderRadiusGeometry borderRadius;
   final void Function()? onTap;
+  final bool autofocus;
+  final bool? enabled;
 
   static Widget getInfo(
     String text,
@@ -90,7 +94,9 @@ class _MyInputState extends State<MyInput> {
       if (widget.suffixIcon == null || widget.suffixIcon == MyIcons.close()) {
         _suffixIcon = widget.controller.text.isEmpty ? null : clearButton;
       } else {
-        _suffixIcon = widget.suffixIcon;
+        _suffixIcon = widget.controller.text.isEmpty
+            ? null
+            : SizedBox(width: 30, height: 30, child: widget.suffixIcon);
       }
     }
 
@@ -118,6 +124,8 @@ class _MyInputState extends State<MyInput> {
       onTap: widget.onTap,
       cursorColor: MyColors.primary,
       style: style,
+      autofocus: widget.autofocus,
+      enabled: widget.enabled,
     );
     var edge = Clip.hardEdge;
     var alias = Clip.antiAlias;

@@ -9,57 +9,96 @@ import 'package:pinker/pages/welcome/library.dart';
 class WelcomeController extends GetxController {
   final state = WelcomeState();
 
-  // void handleHome() async {
-  //   /// 进入首页
+  Future<void> getType() async {
+    var _getType = await ResourceApi.getType(
+      errorCallBack: ConfigController.to.errorDaliog,
+    );
 
-  //   Get.offAllNamed(MyRoutes.application);
+    if (_getType != null && _getType.code == 200) {
+      var types = TypeList.fromJson(_getType.data);
 
-  //   if (getResourceList.statusCode == 200) {
-  //     print(getResourceList);
-  //     Get.offAllNamed(MyRoutes.application);
-  //   }
+      ResourceController.to.types.update((val) {
+        val!.list = types.list;
+        val.size = types.size;
+      });
+    } else {
+      await getType();
+    }
+  }
 
-  //   StorageService.to.setBool(storageIsHaveUsed, true);
+  /// 获取用户信息
+  Future<void> getUserInfo() async {
+    var _getUserInfo = await UserApi.getUserInfo(
+      errorCallBack: ConfigController.to.errorDaliog,
+    );
 
-  //   / 改变主题
-  //   ConfigStore.to.isLightMode = !ConfigStore.to.isLightMode;
-  //   StorageService.to.setBool(
-  //     storageIsLightModeKey,
-  //     ConfigStore.to.isLightMode,
-  //   );
-  //   ConfigStore.changeSystem();
+    if (_getUserInfo != null && _getUserInfo.code == 200) {
+      var userInfo = UserInfo.fromJson(_getUserInfo.data);
+      UserController.to.userInfo.value = userInfo;
+      UserController.to.userInfo.update((val) {});
+    } else {
+      await getUserInfo();
+    }
+  }
 
-  //   / 更改语言
-  //   const zhCN = Locale('zh', 'CN');
-  //   const enUS = Locale('en', 'US');
-  //   Get.updateLocale(Get.locale == zhCN ? enUS : zhCN);
-  // }
+  Future<void> getSearchWord() async {
+    var _getSearchWord = await HomeApi.getSearchWord(
+      errorCallBack: ConfigController.to.errorDaliog,
+    );
+
+    if (_getSearchWord != null && _getSearchWord.code == 200) {
+      var searchWord = SearchWordData.fromJson(_getSearchWord.data);
+      ResourceController.to.searchWord = searchWord.searchWord;
+    } else {
+      await getSearchWord();
+    }
+  }
 
   Future<void> getData({
     required int type,
     required Rx<HomeData> homeDataRx,
     required Rx<ResourceDataList> homeMediaListRx,
   }) async {
-    var getHomeData = await HomeApi.getHomeData(type: type);
-    var homeData = HomeData.fromJson(getHomeData.data);
-    if (getHomeData.code == 200) {
+    var getHomeData = await HomeApi.getHomeData(
+      type: type,
+      errorCallBack: ConfigController.to.errorDaliog,
+    );
+
+    if (getHomeData != null && getHomeData.code == 200) {
+      var homeData = HomeData.fromJson(getHomeData.data);
+
       homeDataRx.update((val) {
         val!.banner = homeData.banner;
         val.types = homeData.types;
       });
-    }
 
-    var getHomeMediaList = await ResourceApi.getResourceList(
-      pageNo: type,
-      type: 1,
-      pageSize: 15,
-    );
-    var homeMediaList = ResourceDataList.fromJson(getHomeMediaList.data);
-    if (getHomeMediaList.code == 200) {
-      homeMediaListRx.update((val) {
-        val!.list = homeMediaList.list;
-        val.size = homeMediaList.size;
-      });
+      var getHomeMediaList = await ResourceApi.getResourceList(
+        pageNo: type,
+        type: 1,
+        pageSize: 15,
+        errorCallBack: ConfigController.to.errorDaliog,
+      );
+
+      if (getHomeMediaList != null && getHomeMediaList.code == 200) {
+        var homeMediaList = ResourceDataList.fromJson(getHomeMediaList.data);
+
+        homeMediaListRx.update((val) {
+          val!.list = homeMediaList.list;
+          val.size = homeMediaList.size;
+        });
+      } else {
+        await getData(
+          type: type,
+          homeDataRx: homeDataRx,
+          homeMediaListRx: homeMediaListRx,
+        );
+      }
+    } else {
+      await getData(
+        type: type,
+        homeDataRx: homeDataRx,
+        homeMediaListRx: homeMediaListRx,
+      );
     }
   }
 
@@ -69,11 +108,11 @@ class WelcomeController extends GetxController {
 
     await getData(
       type: 0,
-      homeDataRx: ResourceController.to.homeMoveData,
+      homeDataRx: ResourceController.to.homeMoiveData,
       homeMediaListRx: ResourceController.to.homeMoiveList,
     );
 
-    state.loadingValue = 0.25;
+    state.loadingValue = 0.2;
 
     await getData(
       type: 1,
@@ -81,7 +120,7 @@ class WelcomeController extends GetxController {
       homeMediaListRx: ResourceController.to.homeDramaList,
     );
 
-    state.loadingValue = 0.3;
+    state.loadingValue = 0.7;
 
     await getData(
       type: 2,
@@ -89,7 +128,7 @@ class WelcomeController extends GetxController {
       homeMediaListRx: ResourceController.to.homeShowList,
     );
 
-    state.loadingValue = 0.5;
+    state.loadingValue = 0.75;
 
     await getData(
       type: 3,
@@ -97,7 +136,7 @@ class WelcomeController extends GetxController {
       homeMediaListRx: ResourceController.to.homeCartoonList,
     );
 
-    state.loadingValue = 0.6;
+    state.loadingValue = 0.8;
 
     await getData(
       type: 4,
@@ -105,26 +144,17 @@ class WelcomeController extends GetxController {
       homeMediaListRx: ResourceController.to.homeSexList,
     );
 
-    state.loadingValue = 0.8;
+    state.loadingValue = 0.85;
 
-    var getSearchWord = await HomeApi.getSearchWord();
-    var searchWord = SearchWordData.fromJson(getSearchWord.data);
-
-    if (getSearchWord.code == 200) {
-      ResourceController.to.searchWord = searchWord.searchWord;
-    }
+    await getSearchWord();
 
     state.loadingValue = 0.9;
 
-    var getType = await ResourceApi.getType();
-    var types = TypeList.fromJson(getType.data);
+    await getType();
 
-    if (getType.code == 200) {
-      ResourceController.to.types.update((val) {
-        val!.list = types.list;
-        val.size = types.size;
-      });
-    }
+    state.loadingValue = 0.95;
+
+    if (UserController.to.token != '') await getUserInfo();
 
     state.loadingValue = 1;
 

@@ -1,8 +1,10 @@
-import 'package:pinker/common/data/response_data.dart';
+import 'package:dio/dio.dart';
+import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/global/user.dart';
 import 'package:pinker/common/utils/library.dart';
 
 class ResourceApi {
-  static Future<ResponseData> getResourceList({
+  static Future<ResponseData?> getResourceList({
     required int type,
     int? pageNo,
     void Function(int, int)? onReceiveProgress,
@@ -12,9 +14,12 @@ class ResourceApi {
     int? country,
     String? keyword,
     int? year,
+    int? guessId,
+    Future<void> Function(ErrorEntity)? errorCallBack,
   }) async {
-    var response = await MyHttp().get(
+    Response? response = await MyHttp().get(
       '/resource/getResourceList',
+      options: Options(headers: {'token': UserController.to.token}),
       queryParameters: {
         'type': type,
         'pageNo': pageNo,
@@ -24,19 +29,45 @@ class ResourceApi {
         'country': country,
         'keyword': keyword,
         'year': year,
+        'guessId': guessId,
       },
       onReceiveProgress: onReceiveProgress,
+      errorCallBack: errorCallBack,
     );
-    return response;
+
+    return response != null ? ResponseData.fromJson(response.data) : null;
   }
 
-  static Future<ResponseData> getResourceType() async {
-    var response = await MyHttp().get('/resource/getResourceType');
-    return response;
+  static Future<ResponseData?> getResourceType({
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().get(
+      '/resource/getResourceType',
+      errorCallBack: errorCallBack,
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
   }
 
-  static Future<ResponseData> getType() async {
-    var response = await MyHttp().get('/resource/getType');
-    return response;
+  static Future<ResponseData?> getType({
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().get(
+      '/resource/getType',
+      errorCallBack: errorCallBack,
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
+  }
+
+  static Future<ResponseData?> getResourceData({
+    required int id,
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().get(
+      '/resource/getResourceData',
+      errorCallBack: errorCallBack,
+      queryParameters: {'id': id},
+      options: Options(headers: {'token': UserController.to.token}),
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
   }
 }

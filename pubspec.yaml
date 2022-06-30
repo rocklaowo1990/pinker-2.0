@@ -76,7 +76,12 @@ dependencies:
 
   # A Flutter plugin for iOS, Android and Web for playing back video on a Widget surface.
   video_player: ^2.4.4
+
+  # video_player 的一款皮肤
   chewie: ^1.3.3
+
+  # 点赞
+  like_button: ^2.0.4
   
 
 dev_dependencies:
