@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pinker/common/style/colors.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/pages/application/community/library.dart';
 import 'package:pinker/pages/application/home/library.dart';
 
 class MyFooterBar extends StatelessWidget {
@@ -67,10 +68,19 @@ class MyFooterBar extends StatelessWidget {
         await MyTimer.futureMill(500);
         if (index == 0) {
           final HomeController homeController = Get.find();
-          homeController.scrollController.jumpTo(0.0);
-          homeController.pageController.jumpToPage(
-            homeController.state.pageIndex,
-          );
+          if (homeController.state.pageIndex != 0) {
+            homeController.scrollController.jumpTo(0.0);
+            homeController.pageController.jumpToPage(
+              homeController.state.pageIndex,
+            );
+          }
+        } else if (index == 1) {
+          final CommunityController communityController = Get.find();
+          if (communityController.state.pageIndex != 0) {
+            communityController.pageController.jumpToPage(
+              communityController.state.pageIndex,
+            );
+          }
         }
       }
 

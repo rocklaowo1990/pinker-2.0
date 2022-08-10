@@ -17,7 +17,6 @@ class DramaView extends GetView<DramaController> {
     /// 下方是背景部分：banner的组合
 
     final _data = ResourceController.to.homeDramaData;
-    final _medias = ResourceController.to.homeDramaList;
 
     Widget itemBuilder(context, index) {
       var banner = HomeBanner(
@@ -81,10 +80,10 @@ class DramaView extends GetView<DramaController> {
 
     var bodyChildren = [
       bannerBox,
-      for (int i = 0; i < _data.value.types.length; i++)
+      for (int i = 0; i < _data.value.medias.length; i++)
         MediaBox(
-          mediaDataList: _medias.value.list,
-          title: _data.value.types[i].typeName,
+          mediaDataList: _data.value.medias[i].list,
+          title: _data.value.medias[i].title,
         )
     ];
 

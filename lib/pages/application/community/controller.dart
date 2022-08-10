@@ -12,7 +12,6 @@ class CommunityController extends GetxController {
   final state = CommunityState();
 
   final pageController = PageController();
-  final scrollController = ScrollController();
 
   @override
   void onInit() {

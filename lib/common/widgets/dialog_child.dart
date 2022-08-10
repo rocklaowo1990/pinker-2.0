@@ -52,7 +52,7 @@ class DialogChild extends StatelessWidget {
 
     var child = Container(
       child: bodyChild,
-      width: Get.width - 80,
+      width: Get.width - 32 - 64,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: MyColors.secondBackground,
@@ -115,19 +115,6 @@ class DialogChild extends StatelessWidget {
         return;
       }
 
-      var _getHomeSexList = await ResourceApi.getResourceList(
-        pageNo: 1,
-        type: 4,
-        pageSize: 15,
-        errorCallBack: ConfigController.to.errorSnakBar,
-      );
-
-      if (_getHomeSexList == null || _getHomeSexList.code != 200) {
-        isLoading.value = false;
-        isOnTap.value = true;
-        return;
-      }
-
       UserController.to.token = _signIn.data['token'];
       await MyStorageService.to.setString(
         storageUserTokenKey,
@@ -137,10 +124,6 @@ class DialogChild extends StatelessWidget {
       var userInfo = UserInfo.fromJson(_getUserInfo.data);
       UserController.to.userInfo.value = userInfo;
       UserController.to.userInfo.update((val) {});
-
-      var homeSexList = ResourceDataList.fromJson(_getHomeSexList.data);
-      ResourceController.to.homeSexList.value = homeSexList;
-      ResourceController.to.homeSexList.update((val) {});
 
       Get.back();
       ConfigController.to.getSnakBar('操作成功', '您已成功登陆');
@@ -344,7 +327,7 @@ class DialogChild extends StatelessWidget {
 
     var child = Container(
       child: body,
-      width: Get.width - 80,
+      width: Get.width - 32 - 64,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: MyColors.secondBackground,
@@ -363,7 +346,7 @@ class DialogChild extends StatelessWidget {
     var button = MyButton(
       width: Get.width,
       height: Get.height,
-      onTap: isAutoBack ? back : null,
+      onTap: back,
     );
 
     var body = SizedBox(
@@ -373,7 +356,7 @@ class DialogChild extends StatelessWidget {
     );
 
     return Scaffold(
-      body: Stack(children: [button, body]),
+      body: isAutoBack ? Stack(children: [button, body]) : body,
       backgroundColor: MyColors.background88,
     );
   }

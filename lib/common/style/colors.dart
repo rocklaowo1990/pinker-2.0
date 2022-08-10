@@ -31,6 +31,12 @@ class MyColors {
   /// 背景色88透明度
   static const background88 = Color(0X880E0E11);
 
+  /// 错误颜色
+  static const erro = Color(0XFFF92770);
+
+  /// 背景色40透明度
+  static const background50 = Color(0X500E0E11);
+
   /// 次要背景
   static const secondBackground = Color.fromARGB(255, 61, 61, 71);
 

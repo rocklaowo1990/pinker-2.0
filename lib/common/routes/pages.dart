@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:pinker/common/middlewares/library.dart';
 import 'package:pinker/pages/add_bank/binding.dart';
 import 'package:pinker/pages/add_bank/view.dart';
 import 'package:pinker/pages/add_usdt/binding.dart';
@@ -8,12 +7,11 @@ import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/bank/binding.dart';
 import 'package:pinker/pages/bank/view.dart';
 import 'package:pinker/pages/favorites/library.dart';
-import 'package:pinker/pages/initial/library.dart';
+import 'package:pinker/pages/phone/add_edit_phone/binding.dart';
+import 'package:pinker/pages/phone/add_edit_phone/view.dart';
 import 'package:pinker/pages/phone/binding.dart';
 import 'package:pinker/pages/phone/view.dart';
 import 'package:pinker/pages/search/library.dart';
-import 'package:pinker/pages/set/language/library.dart';
-import 'package:pinker/pages/set/library.dart';
 import 'package:pinker/pages/unknown/library.dart';
 import 'package:pinker/pages/video_play/binding.dart';
 import 'package:pinker/pages/video_play/view.dart';
@@ -21,12 +19,6 @@ import 'package:pinker/pages/welcome/library.dart';
 import 'names.dart';
 
 class AppPages {
-  /// 初始化路径
-  static const initial = MyRoutes.initial;
-
-  /// 历史路由
-  static List<String> history = [];
-
   /// 未知页面
   static final unknownRoute = GetPage(
     name: MyRoutes.unknownRoute,
@@ -35,16 +27,6 @@ class AppPages {
   );
 
   static final List<GetPage> getPages = [
-    /// 初始化页面
-    GetPage(
-      name: MyRoutes.initial,
-      page: () => const InitialView(),
-      binding: InitialBinding(),
-      middlewares: [
-        MiddlewareInitial(),
-      ],
-    ),
-
     /// 视频播放页面
     GetPage(
       name: MyRoutes.videoPlay,
@@ -92,6 +74,14 @@ class AppPages {
       name: MyRoutes.phone,
       page: () => const PhoneView(),
       binding: PhoneBinding(),
+      children: [
+        /// 更改或添加手机
+        GetPage(
+          name: MyRoutes.addOrEditPhone,
+          page: () => const AddOrEditPhoneView(),
+          binding: AddOrEditPhoneBinding(),
+        ),
+      ],
     ),
 
     /// 添加USDT页面
@@ -106,21 +96,6 @@ class AppPages {
       name: MyRoutes.search,
       page: () => const SearchView(),
       binding: SearchBinding(),
-    ),
-
-    /// 设置页面
-    GetPage(
-      name: MyRoutes.set,
-      page: () => const SetView(),
-      binding: SetBinding(),
-      children: [
-        /// 设置语言
-        GetPage(
-          name: MyRoutes.setLanguage,
-          page: () => const SetLanguageView(),
-          binding: SetLanguageBinding(),
-        ),
-      ],
     ),
   ];
 }

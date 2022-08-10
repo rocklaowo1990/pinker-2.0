@@ -7,18 +7,20 @@ import 'package:pinker/common/services/librart.dart';
 class Global {
   /// 初始化
   static Future<void> init() async {
-    /// 运行初始
-    /// 用到了servis就需要处初始化，否则会报错
+    /// 运行初始, 用到了servis就需要处初始化，否则会报错
     WidgetsFlutterBinding.ensureInitialized();
 
-    /// 硬盘储存初始化
+    /// 本地储存初始化
     await Get.putAsync<MyStorageService>(() => MyStorageService().init());
 
-    /// 导入用户全局 和 系统全局
-    /// config：是系统信息
-    /// user：用户信息
+    /// 导入全局控制器
+    /// config：系统控制器
     Get.put(ConfigController());
+
+    /// user：户信息控制器
     Get.put(UserController());
+
+    /// resource：影片信息控制器
     Get.put(ResourceController());
   }
 }

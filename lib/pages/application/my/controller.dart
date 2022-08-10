@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/api/library.dart';
 import 'package:pinker/common/constant/storage.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
@@ -42,29 +41,9 @@ class MyController extends GetxController {
 
       UserController.to.token = '';
 
-      var _getHomeSexList = await ResourceApi.getResourceList(
-        pageNo: 1,
-        type: 4,
-        pageSize: 15,
-        errorCallBack: ConfigController.to.errorSnakBar,
-      );
-
-      // if (!Get.isSnackbarOpen) Get.back();
-
-      if (_getHomeSexList == null || _getHomeSexList.code != 200) {
-        UserController.to.token = MyStorageService.to.getString(
-          storageUserTokenKey,
-        );
-        return;
-      }
-
       await MyStorageService.to.remove(storageUserTokenKey);
       UserController.to.userInfo.value = UserInfo.fromJson(UserInfo.child);
       UserController.to.userInfo.update((val) {});
-
-      var homeSexList = ResourceDataList.fromJson(_getHomeSexList.data);
-      ResourceController.to.homeSexList.value = homeSexList;
-      ResourceController.to.homeSexList.update((val) {});
 
       Get.back();
       ConfigController.to.getSnakBar('操作成功', '您已成功退出登陆');

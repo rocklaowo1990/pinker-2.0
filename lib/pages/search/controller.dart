@@ -16,6 +16,7 @@ class SearchController extends GetxController {
   final inputFocusNode = FocusNode();
   final scrollController = ScrollController();
 
+  /// 点击搜索历史记录的关键词的处理方法
   void history(int index) {
     /// 将内容放入输入框，并且把焦点置于文本末端
     // var textPosition = TextPosition(
@@ -35,13 +36,16 @@ class SearchController extends GetxController {
     search(state.history[index]);
   }
 
+  /// 清楚搜索历史记录的执行方法，弹窗确认后的真正清除
   void clearHistory() {
     state.history.clear();
     MyStorageService.to.remove(storageSearchHistoryKey);
     Get.back();
   }
 
-  void showClear() {
+  /// 清除搜索历史记录的按钮的点击事件
+  /// 点击后显示确认弹窗
+  void clear() {
     Get.dialog(
       DialogChild(
         child: DialogChild.alert(
@@ -54,6 +58,7 @@ class SearchController extends GetxController {
     );
   }
 
+  /// 搜索方法
   void search(String text) async {
     String _text = text;
 
@@ -62,6 +67,7 @@ class SearchController extends GetxController {
       inputController.text = _text;
     }
 
+    /// 开始搜索的时候，需要展示loading
     state.isShowLoading = true;
 
     // 添加记录
@@ -73,6 +79,7 @@ class SearchController extends GetxController {
     // 保存
     MyStorageService.to.setList(storageSearchHistoryKey, state.history);
 
+    /// 开始调用接口
     var getSearchList = await ResourceApi.getResourceList(
       type: 0,
       pageNo: 1,
@@ -80,52 +87,35 @@ class SearchController extends GetxController {
       keyword: _text,
     );
 
+    /// 如果拿到数据
     if (getSearchList != null && getSearchList.code == 200) {
+      /// 格式化拿到的数据
       var searchList = ResourceDataList.fromJson(getSearchList.data);
 
+      /// 更新结果
       state.resault.update((val) {
         val!.list = searchList.list;
         val.size = searchList.size;
       });
 
+      /// 拿到数据就不需要重试了
       state.isRetryResault = false;
-    } else {
+    }
+
+    /// 如果没有拿到数据
+    else {
+      /// 没有拿到数据需要重试
       state.isRetryResault = true;
     }
 
+    /// 搜索完成后，不管有没有拿到谁，关闭laoding的显示，展示搜索结果
     state.isShowLoading = false;
     state.isShowResault = true;
-  }
-
-  Future<void> getHotList() async {
-    state.isRetryHot = false;
-
-    if (state.hot.value.list.isEmpty) {
-      var getHotList = await ResourceApi.getResourceList(
-        pageNo: 1,
-        type: 0,
-        pageSize: 20,
-        sort: 4,
-      );
-
-      if (getHotList != null && getHotList.code == 200) {
-        var hotList = ResourceDataList.fromJson(getHotList.data);
-
-        state.hot.update((val) {
-          val!.list = hotList.list;
-          val.size = hotList.size;
-        });
-      } else {
-        state.isRetryHot = true;
-      }
-    }
   }
 
   @override
   void onReady() async {
     super.onReady();
-    await MyTimer.futureMill(300);
-    inputFocusNode.requestFocus();
 
     inputController.addListener(() {
       if (inputController.text.isEmpty) {
@@ -149,6 +139,7 @@ class SearchController extends GetxController {
       if (inputFocusNode.hasFocus) state.offsetRx.value = 0.0;
     });
 
-    await getHotList();
+    await MyTimer.futureMill(300);
+    inputFocusNode.requestFocus();
   }
 }

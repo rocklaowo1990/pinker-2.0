@@ -6,7 +6,7 @@ import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/global.dart';
 import 'common/lang/translation_service.dart';
 
-Future<void> main() async {
+void main() async {
   /// 初始化
   await Global.init();
 
@@ -54,6 +54,8 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+
+      /// 语言列表
       supportedLocales: const [
         Locale('zh', 'CN'), // 中文简体
         Locale('en', 'US'), // 美国英语

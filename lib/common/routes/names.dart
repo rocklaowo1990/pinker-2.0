@@ -1,6 +1,5 @@
 class MyRoutes {
   /// public
-  static const initial = '/';
   static const unknownRoute = '/unknownRoute';
 
   /// frame
@@ -8,10 +7,6 @@ class MyRoutes {
 
   /// application
   static const application = '/application';
-
-  /// set
-  static const set = '/set';
-  static const setLanguage = '/setLanguage';
 
   /// search
   static const search = '/search';
@@ -27,6 +22,7 @@ class MyRoutes {
 
   /// phone
   static const phone = '/phone';
+  static const addOrEditPhone = '/addOrEditPhone';
 
   /// add_usdt
   static const addUsdt = '/addUsdt';

@@ -10,61 +10,41 @@ class WelcomeView extends GetView<WelcomeController> {
 
   @override
   Widget build(BuildContext context) {
-    /// 顶部文字标题
-    var title = MyText.welcom(Lang.welcomeTitle.tr);
-
-    /// 顶部文字副标题
-    var secondTitle = MyText.gray18(Lang.welcomeSecondTitle.tr);
-
-    /// 标题和副标题的间距
-    const space = SizedBox(height: 10);
+    var state = controller.state;
 
     /// 标题和副标题的组合
     var top = Column(children: [
-      title,
-      space,
-      secondTitle,
+      MyText.welcom(Lang.welcomeTitle.tr),
+      const SizedBox(height: 10),
+      MyText.gray18(Lang.welcomeSecondTitle.tr),
     ]);
 
     /// 中间图片部分
     var image = Image.asset('assets/images/welcome.png');
 
     Widget obxBuild() {
-      /// 按钮的构成
-      // var button = MyButton.infinity(
-      //   Lang.welcomeButton.tr,
-      //   onTap: controller.handleHome,
-      // );
-
+      /// 进度条
       var loadingBoxChild = LinearProgressIndicator(
-        value: controller.state.loadingValue,
+        value: state.loadingValue,
         minHeight: 16,
         backgroundColor: MyColors.secondText,
         color: MyColors.primary,
       );
 
-      var loadingBoxChildren = [
-        MyText.gray14('正在加载影片数据...  ${controller.state.loadingValue * 100} %'),
+      /// 进度条的组成：提示语 和 带圆角的进度条
+      return Column(children: [
+        MyText.gray14('正在加载影片数据...  ${state.loadingValue * 100} %'),
         const SizedBox(height: 16),
         MyButton(child: loadingBoxChild),
-      ];
-
-      var loadingBox = Column(children: loadingBoxChildren);
-
-      return loadingBox;
+      ]);
     }
 
-    /// 页面的成员数组
-    var children = [
-      Column(children: [image, top]),
-      Obx(obxBuild),
-    ];
-
     /// 页面的排列方式
-    var column = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: children,
-    );
+    var column = Column(children: [
+      Column(children: [image, top]),
+      const Spacer(),
+      Obx(obxBuild),
+    ]);
 
     /// 页面的左右上下边距
     var padding = Padding(

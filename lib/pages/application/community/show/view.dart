@@ -17,14 +17,8 @@ class CommunityShowView extends GetView<CommunityShowController> {
     //   controller: controller.communityController.scrollController,
     // );
 
-    var _medias = controller.state.resourceList;
-    var _types = controller.state.mediaTypeList;
-
     void getData() async {
       controller.state.isRetry = false;
-      if (controller.state.mediaTypeList.value.list.isEmpty) {
-        await controller.getTypes();
-      }
       await controller.getMedias(type: controller.type);
     }
 
@@ -35,20 +29,22 @@ class CommunityShowView extends GetView<CommunityShowController> {
       );
       var children = [
         const SizedBox(height: 20),
-        for (int i = 0; i < _types.value.list.length; i++)
+        for (int i = 0; i < controller.types.value.list.length; i++)
           CommunityButtonTabBar(
-            typeName: _types.value.list[i].mediaTypeName,
-            list: _types.value.list[i].typelist,
+            typeName: controller.types.value.list[i].mediaTypeName,
+            list: controller.types.value.list[i].typelist,
             onTap: controller.typesClick,
             chooseIndex: controller.chooseIndex[i],
             typeIndex: i,
           ),
-        MediaBox(mediaDataList: _medias.value.list),
+        MediaBox(mediaDataList: controller.medias.value.list),
         if (!controller.state.isRetry &&
-            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+            (controller.types.value.list.isEmpty ||
+                controller.medias.value.list.isEmpty))
           loading,
         if (controller.state.isRetry &&
-            (_types.value.list.isEmpty || _medias.value.list.isEmpty))
+            (controller.types.value.list.isEmpty ||
+                controller.medias.value.list.isEmpty))
           MyButton.retry(onTap: getData),
       ];
 

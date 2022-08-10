@@ -19,7 +19,7 @@ class MyInput extends StatefulWidget {
     this.hintText = Lang.defaultHintText,
     this.obscureText = false,
     this.width = double.infinity,
-    this.height = 36,
+    this.height = 40,
     this.borderRadius = MyStyle.borderRadius,
     this.onTap,
     this.autofocus = false,
@@ -51,7 +51,7 @@ class MyInput extends StatefulWidget {
     FocusNode? focusNode,
   }) {
     var textBox = SizedBox(
-      width: 100,
+      width: 80,
       child: MyText(text),
     );
 

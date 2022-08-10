@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
 import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/pages/application/community/show/library.dart';
 
 class CommunityShowController extends GetxController {
   final state = CommunityShowState();
   final type = 1;
+  final medias = ResourceController.to.showList;
+  final types = ResourceController.to.showTypeList;
 
-  List<int> chooseIndex = [];
+  List<int> chooseIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   void typesClick(int typeIndex, String typaName, int index) {
     state.isRetry = false;
@@ -29,7 +32,7 @@ class CommunityShowController extends GetxController {
     int? year,
     int? sort,
   }) async {
-    var getMedias = await ResourceApi.getResourceList(
+    var _getMedias = await ResourceApi.getResourceList(
       type: type,
       mediaType: mediaType,
       pageNo: pageNo,
@@ -40,12 +43,12 @@ class CommunityShowController extends GetxController {
       sort: sort,
     );
 
-    if (getMedias != null && getMedias.code == 200) {
-      var medias = ResourceDataList.fromJson(getMedias.data);
+    if (_getMedias != null && _getMedias.code == 200) {
+      var _medias = ResourceDataList.fromJson(_getMedias.data);
 
-      state.resourceList.update((val) {
-        val!.list = medias.list;
-        val.size = medias.size;
+      medias.update((val) {
+        val!.list = _medias.list;
+        val.size = _medias.size;
       });
 
       state.isRetry = false;
@@ -54,33 +57,12 @@ class CommunityShowController extends GetxController {
     }
   }
 
-  Future<void> getTypes() async {
-    var getTypes = await ResourceApi.getResourceType();
-
-    if (getTypes != null && getTypes.code == 200) {
-      var types = MediaTypeList.fromJson(getTypes.data);
-
-      state.mediaTypeList.update((val) {
-        val!.list = types.list;
-        val.size = types.size;
-      });
-
-      for (int i = 0; i < state.mediaTypeList.value.list.length; i++) {
-        chooseIndex.add(0);
-      }
-    }
-  }
-
   @override
   void onReady() async {
     super.onReady();
 
-    await getTypes();
-
-    await getMedias(type: type);
-
     debounce(state.data, (ResourceResponseData value) async {
-      state.resourceList.update((val) {
+      medias.update((val) {
         val!.list.clear();
         val.size = 0;
       });

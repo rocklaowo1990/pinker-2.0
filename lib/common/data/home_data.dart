@@ -1,79 +1,73 @@
+import 'package:pinker/common/data/library.dart';
+
 class HomeData {
   HomeData({
     required this.banner,
-    required this.types,
-    required this.size,
+    required this.medias,
   });
 
   List<HomeDataBanner> banner;
-  List<HomeDataType> types;
-  int size;
+  List<HomeDataMedias> medias;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         banner: List<HomeDataBanner>.from(
             json["banner"].map((x) => HomeDataBanner.fromJson(x))),
-        types: List<HomeDataType>.from(
-            json["types"].map((x) => HomeDataType.fromJson(x))),
-        size: json["size"],
+        medias: List<HomeDataMedias>.from(
+            json["medias"].map((x) => HomeDataMedias.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "banner": List<dynamic>.from(banner.map((x) => x.toJson())),
-        "types": List<dynamic>.from(types.map((x) => x.toJson())),
-        "size": size,
+        "medias": List<dynamic>.from(medias.map((x) => x.toJson())),
       };
 
   static Map<String, dynamic> child = {
     "banner": <HomeDataBanner>[],
-    "types": <HomeDataType>[],
-    "size": 0,
+    "medias": <HomeDataMedias>[],
   };
 }
 
 class HomeDataBanner {
   HomeDataBanner({
     required this.image,
-    required this.bannerType,
     required this.title,
     this.bannerUrl,
   });
 
   String image;
-  int bannerType;
   String title;
   String? bannerUrl;
 
   factory HomeDataBanner.fromJson(Map<String, dynamic> json) => HomeDataBanner(
         image: json["image"],
-        bannerType: json["bannerType"],
         title: json["title"],
         bannerUrl: json["bannerUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "image": image,
-        "bannerType": bannerType,
         "title": title,
         "bannerUrl": bannerUrl,
       };
 }
 
-class HomeDataType {
-  HomeDataType({
-    required this.typeId,
-    required this.typeName,
+class HomeDataMedias {
+  HomeDataMedias({
+    required this.list,
+    required this.title,
   });
 
-  int typeId;
-  String typeName;
+  List<ResourceData> list;
+  String title;
 
-  factory HomeDataType.fromJson(Map<String, dynamic> json) => HomeDataType(
-        typeId: json["typeId"],
-        typeName: json["typeName"],
+  factory HomeDataMedias.fromJson(Map<String, dynamic> json) => HomeDataMedias(
+        list: List<ResourceData>.from(
+            json["list"].map((x) => ResourceData.fromJson(x))),
+        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
-        "typeId": typeId,
-        "typeName": typeName,
+        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "title": title,
       };
 }

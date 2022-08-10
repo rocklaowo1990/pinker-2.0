@@ -82,6 +82,9 @@ dependencies:
 
   # 点赞
   like_button: ^2.0.4
+
+  # 控制屏幕常亮
+  wakelock: ^0.6.1+2
   
 
 dev_dependencies:

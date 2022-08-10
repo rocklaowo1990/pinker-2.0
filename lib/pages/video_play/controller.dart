@@ -9,6 +9,7 @@ import 'package:pinker/common/services/storage.dart';
 import 'package:pinker/pages/video_play/library.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
+import 'package:wakelock/wakelock.dart';
 
 class VideoPlayController extends GetxController {
   final state = VideoPlayState();
@@ -30,20 +31,27 @@ class VideoPlayController extends GetxController {
   late ChewieController chewieController;
 
   void guessPlay(ResourceData resourceData) async {
-    videoPlayerController.dispose();
-    chewieController.dispose();
+    if (resourceData.id == state.resourceData.value.id) return;
 
-    await scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-    );
+    if (scrollController.offset > 0) {
+      await scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
 
     if (videoPlayerController.value.isInitialized) {
+      isFavorites = false;
+      await videoPlayerController.dispose();
+      chewieController.dispose();
       state.pageIndex.value = 0;
       state.chooise = [0, 0];
       state.resourceData.value = resourceData;
       state.resourceData.update((val) {});
+      for (var data in ResourceController.to.favoritesId) {
+        if (data == resourceData.id.toString()) isFavorites = true;
+      }
       await videoPlay(resourceData.playUrls[0].urls[0]);
     }
   }
@@ -51,7 +59,9 @@ class VideoPlayController extends GetxController {
   void listener() async {
     if (!chewieController.isFullScreen) {
       await ConfigController.to.setPreferredOrientations();
-      await ConfigController.to.getTransparentStatusBar();
+      if (ConfigController.to.platform == 'android') {
+        await ConfigController.to.getTransparentStatusBar();
+      }
     }
   }
 
@@ -104,12 +114,19 @@ class VideoPlayController extends GetxController {
 
     if (isFavorites) {
       favoritesId.add(state.resourceData.value.id.toString());
+      ResourceController.to.favoritesList.update((val) {
+        val!.list.add(state.resourceData.value);
+        val.size += 1;
+      });
     } else {
       favoritesId.remove(state.resourceData.value.id.toString());
+      ResourceController.to.favoritesList.update((val) {
+        val!.list.remove(state.resourceData.value);
+        val.size -= 1;
+      });
     }
 
     MyStorageService.to.setList(storageFavoritesIdKey, favoritesId);
-
     return isFavorites;
   }
 
@@ -130,6 +147,8 @@ class VideoPlayController extends GetxController {
   void onReady() async {
     super.onReady();
 
+    Wakelock.enable();
+
     getResourceList(state.resourceData.value.id);
     videoPlay(state.resourceData.value.playUrls[0].urls[0]);
   }
@@ -142,6 +161,8 @@ class VideoPlayController extends GetxController {
       chewieController.removeListener(listener);
       chewieController.dispose();
     }
+
+    Wakelock.disable();
 
     super.onClose();
   }

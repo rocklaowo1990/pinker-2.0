@@ -12,10 +12,6 @@ import 'package:pinker/common/widgets/library.dart';
 class ConfigController extends GetxController {
   static ConfigController get to => Get.find();
 
-  // final _isLightMode = StorageService.to.getBool(storageIsLightModeKey).obs;
-  // set isLightMode(bool value) => _isLightMode.value = value;
-  // bool get isLightMode => _isLightMode.value;
-
   /// 是否曾经使用过APP，
   bool isHaveUsed = MyStorageService.to.getBool(storageIsHaveUsedKey);
 
@@ -34,41 +30,21 @@ class ConfigController extends GetxController {
   /// 包信息
   PackageInfo? packageInfo;
 
-  /// 改变状态栏的文字颜色
-  // static void changeSystem() {
-  //   bool _isLight = ConfigController.to.isLightMode;
-
-  //   var light = Brightness.light;
-  //   var dark = Brightness.dark;
-
-  //   var style = SystemUiOverlayStyle(
-  //     statusBarColor: MyColors.transparent,
-  //     systemNavigationBarColor: MyColors.transparent,
-  //     systemNavigationBarIconBrightness: _isLight ? dark : light,
-  //     statusBarIconBrightness: _isLight ? dark : light,
-  //     statusBarBrightness: _isLight ? light : dark,
-  //   );
-
-  //   SystemChrome.setSystemUIOverlayStyle(style);
-  // }
-
   /// 将顶部状态栏和底部状态栏设置成透明
   Future<void> getTransparentStatusBar() async {
-    if (platform == 'android') {
-      /// 显示顶部栏(隐藏底部栏，没有这个的话底部状态栏的透明度无法实现)
-      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      var color = MyColors.transparent;
-      var style = SystemUiOverlayStyle(
-        statusBarColor: MyColors.transparent,
-        systemNavigationBarColor: color,
-        systemNavigationBarDividerColor: MyColors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
-      );
+    /// 显示顶部栏(隐藏底部栏，没有这个的话底部状态栏的透明度无法实现)
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-      SystemChrome.setSystemUIOverlayStyle(style);
-    }
+    const style = SystemUiOverlayStyle(
+      statusBarColor: MyColors.transparent,
+      systemNavigationBarColor: MyColors.transparent,
+      systemNavigationBarDividerColor: MyColors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    );
+
+    SystemChrome.setSystemUIOverlayStyle(style);
   }
 
   /// 弹窗：重试

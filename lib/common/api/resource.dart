@@ -39,21 +39,13 @@ class ResourceApi {
   }
 
   static Future<ResponseData?> getResourceType({
+    required int type,
     Future<void> Function(ErrorEntity)? errorCallBack,
   }) async {
     Response? response = await MyHttp().get(
       '/resource/getResourceType',
       errorCallBack: errorCallBack,
-    );
-    return response != null ? ResponseData.fromJson(response.data) : null;
-  }
-
-  static Future<ResponseData?> getType({
-    Future<void> Function(ErrorEntity)? errorCallBack,
-  }) async {
-    Response? response = await MyHttp().get(
-      '/resource/getType',
-      errorCallBack: errorCallBack,
+      queryParameters: {'type': type},
     );
     return response != null ? ResponseData.fromJson(response.data) : null;
   }

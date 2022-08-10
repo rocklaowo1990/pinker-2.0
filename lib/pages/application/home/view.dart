@@ -35,23 +35,15 @@ class HomeView extends GetView<HomeController> {
       color: Colors.white12,
     );
 
-    var lineChildren = [lineDark, lineLight];
-
-    var line = Row(children: lineChildren);
-
-    var searchIcon = MyIcons.search();
-
-    const searchSpace = SizedBox(width: 16);
-
-    var searchRightChildren = [line, searchSpace, searchIcon];
-
-    var searchRight = Row(children: searchRightChildren);
-
-    var searchChildren = [searchText, const Spacer(), searchRight];
+    var searchRight = Row(children: [
+      Row(children: [lineDark, lineLight]),
+      const SizedBox(width: 16),
+      MyIcons.search(),
+    ]);
 
     var searchButtonChild = Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Row(children: searchChildren),
+      child: Row(children: [searchText, const Spacer(), searchRight]),
     );
 
     var searchButton = MyButton(
@@ -81,7 +73,7 @@ class HomeView extends GetView<HomeController> {
     var tabBar = MyTabBar(
       pageController: controller.pageController,
       pageIndex: controller.state.pageIndexRx,
-      tabs: ResourceController.to.types.value.list,
+      tabs: ResourceController.to.types,
       scrollController: controller.scrollController,
     );
 

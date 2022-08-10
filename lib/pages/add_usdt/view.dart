@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/add_usdt/library.dart';
-
-import '../../common/widgets/library.dart';
 
 class AddUsdtView extends GetView<AddUsdtController> {
   const AddUsdtView({Key? key}) : super(key: key);
@@ -14,6 +13,9 @@ class AddUsdtView extends GetView<AddUsdtController> {
       left: MyButton.back(),
       center: const MyText('添加 USDT-TRC'),
     );
+
+    var button = MyButton.infinity('提交', onTap: controller.addUsdt);
+    var enableButton = MyButton.enable('提交', width: double.infinity);
 
     var bodyChildren = [
       MyText.gray14('请认真核对 USDT-TRC20 或 USDT-TRC 的收款地址'),
@@ -27,7 +29,7 @@ class AddUsdtView extends GetView<AddUsdtController> {
         contentPadding: const EdgeInsets.all(16),
       ),
       const SizedBox(height: 32),
-      MyButton.infinity('提交'),
+      Obx(() => controller.state.isEnable ? enableButton : button),
     ];
 
     var bodyChild = Column(children: bodyChildren);

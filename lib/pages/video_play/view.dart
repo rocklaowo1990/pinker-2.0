@@ -12,17 +12,29 @@ class VideoPlayView extends GetView<VideoPlayController> {
 
   @override
   Widget build(BuildContext context) {
-    var resourceData = controller.state.resourceData;
-    var resourceList = controller.state.resourceList;
+    /// 状态控制器
+    var state = controller.state;
 
+    /// 资源的信息
+    var resourceData = state.resourceData;
+
+    /// 资源列表
+    var resourceList = state.resourceList;
+
+    /// 播放地址集合，也就是集数
+    var playUrls = resourceData.value.playUrls;
+
+    /// AppBar: 标题是动态的
     var header = MyAppBar(
       isShowLine: true,
       center: Obx(() => MyText.text18('正在播放: ${resourceData.value.name}')),
       left: MyButton.back(),
     );
 
+    /// 加载动画
     var lottie = MyIcons.lottie('image_holder');
 
+    /// 视频的封面图
     var videoImage = Obx(() {
       var imageBox = MyImage(
         imageUrl: resourceData.value.image,
@@ -31,39 +43,52 @@ class VideoPlayView extends GetView<VideoPlayController> {
       return resourceData.value.image.isEmpty ? lottie : imageBox;
     });
 
+    /// 视频区的遮罩，主要是遮住封面图
     var mark = Container(color: Colors.black54);
 
+    /// 视频加载动画只需要 0.5 的透明度，这里是处理透明度的
     var lottieOpcaty = Opacity(opacity: 0.5, child: lottie);
 
-    var loadingContentChildren = [
+    /// 加载中的组成部分
+    var loadingContentChildren = <Widget>[
       MyIcons.loading(),
       const SizedBox(height: 20),
       const MyText('精彩即将开始...'),
+      const SizedBox(height: 8),
+      MyText.gray16('(影片加载中无法切换视频)'),
     ];
 
+    /// 加载中：精彩即将开始。。。
     var loadingContent = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: loadingContentChildren,
     );
 
-    var loadingBoxChildren = [
+    /// 加载中的组成方式：
+    /// 封面图放最底下
+    /// 遮罩罩住封面图
+    /// 加载动画
+    /// 最后把加载中放到顶层
+    var loadingBox = Stack(children: [
       Positioned(child: videoImage, top: 0, left: 0, bottom: 0, right: 0),
       Positioned(child: mark, top: 0, left: 0, bottom: 0, right: 0),
       Positioned(child: lottieOpcaty, top: 0, left: 0, bottom: 0, right: 0),
       loadingContent,
-    ];
+    ]);
 
-    var loadingBox = Stack(children: loadingBoxChildren);
+    /// 如果在加载中，那就是展示加载的样式
+    /// 如果是在播放，那就展示播放的内容
+    var videoBoxChild = Obx(() => state.isShowLoading
+        ? loadingBox
+        : Chewie(controller: controller.chewieController));
 
+    /// 播放去的样式
     const videoBoxChildDecortion = BoxDecoration(
       shape: BoxShape.rectangle,
       color: MyColors.black,
     );
 
-    var videoBoxChild = Obx(() => controller.state.isShowLoading
-        ? loadingBox
-        : Chewie(controller: controller.chewieController));
-
+    /// 播放器的容器
     var videBox = Container(
       width: Get.width,
       height: Get.width * 720 / 1280,
@@ -72,177 +97,237 @@ class VideoPlayView extends GetView<VideoPlayController> {
       clipBehavior: Clip.hardEdge,
     );
 
+    /// 下方开始是影片的信息部分
+    /// 影片的标题，采用24dp的大小
     var title = Obx(() => MyText.text24(resourceData.value.name));
 
+    /// 这是播放地址的标题
     var playUrlsTitle = Obx(() {
       return MyTabBar(
         pageController: controller.pageController,
-        pageIndex: controller.state.pageIndex,
+        pageIndex: state.pageIndex,
         tabs: resourceData.value.playUrls.map((e) => e.title).toList(),
       );
     });
 
-    var partsBox = Obx(() {
-      var playUrls = resourceData.value.playUrls;
+    /// 这里是 listView 的构建方法
+    /// 不同分组的按钮点击同一个位置，都是不同处理
+    Widget listViewBuild(int buttonIndex) {
+      return Obx(() {
+        /// 颜色定义
+        var primaryColor = MyColors.primary;
+        var inputColor = MyColors.input;
 
-      Widget itemBuilder(BuildContext context, int pageIndex) {
-        Widget getButton(int buttonIndex) {
-          return Obx(() {
-            // print(buttonIndex);
-            // print(controller.state.pageIndex.value);
-            // print(controller.state.buttonIndex);
-            // var textColor = controller.state.index == index
-            //     ? MyColors.text
-            //     : MyColors.secondText;
+        /// 集数的点击事件，更换播放链接
+        void _onTap() async {
+          if (controller.videoPlayerController.value.isInitialized) {
+            /// 更换播放链接之前要把播放器控制器释放
+            await controller.videoPlayerController.dispose();
+            controller.chewieController.dispose();
 
-            var primaryColor = MyColors.primary;
+            /// 确认哪个位置的按钮被选中
+            state.chooise = [state.pageIndex.value, buttonIndex];
 
-            var inputColor = MyColors.input;
-
-            void _onTap() async {
-              if (controller.videoPlayerController.value.isInitialized) {
-                controller.videoPlayerController.dispose();
-                controller.chewieController.dispose();
-
-                controller.state.chooise = [
-                  controller.state.pageIndex.value,
-                  buttonIndex,
-                ];
-                await controller.videoPlay(
-                  resourceData.value.playUrls[controller.state.pageIndex.value]
-                      .urls[buttonIndex],
-                );
-              }
-            }
-
-            var isChooise = controller.state.pageIndex.value ==
-                    controller.state.chooise[0] &&
-                buttonIndex == controller.state.chooise[1];
-            var isShowLoading = controller.state.isShowLoading;
-            var isLoading = isChooise || isShowLoading;
-
-            return MyButton(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: MyText('第 ${buttonIndex + 1} 集', color: MyColors.text),
-              ),
-              color: isChooise ? primaryColor : inputColor,
-              onTap: isLoading || isChooise ? null : _onTap,
+            /// 然后传入新的播放地址，重新初始化播放器
+            await controller.videoPlay(
+              playUrls[state.pageIndex.value].urls[buttonIndex],
             );
-          });
+          }
         }
 
-        return ListView.separated(
-          itemBuilder: (context, index) => getButton(index),
-          itemCount: playUrls[pageIndex].urls.length,
-          separatorBuilder: (context, index) => const SizedBox(width: 10),
-          scrollDirection: Axis.horizontal,
-        );
-      }
+        /// 是否被选中
+        var isChooise = state.pageIndex.value == state.chooise[0] &&
+            buttonIndex == state.chooise[1];
 
+        /// 是否显示loading
+        var isShowLoading = state.isShowLoading;
+
+        /// 是否在加载中
+        var isLoading = isChooise || isShowLoading;
+
+        /// 播放按钮的文件间距
+        var buttonChild = Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8),
+          child: MyText('第 ${buttonIndex + 1} 集'),
+        );
+
+        /// 播放按钮
+        return MyButton(
+          child: buttonChild,
+          color: isChooise ? primaryColor : inputColor,
+          onTap: isLoading || isChooise ? null : _onTap,
+        );
+      });
+    }
+
+    /// 页面 pageView 的构建方法
+    /// 选用构建方式是因为需要index判断
+    Widget pageViewBuild(BuildContext context, int pageIndex) {
+      return ListView.separated(
+        itemBuilder: (context, index) => listViewBuild(index),
+        itemCount: playUrls[pageIndex].urls.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        scrollDirection: Axis.horizontal,
+      );
+    }
+
+    /// 下方是播放地址的组件
+    /// 播放地址可能不是一个，所以播放地址用的是滑动组件
+    /// 播放地址这里是动态的，所以需要obx包裹
+    var partsBox = Obx(() {
       var pageView = PageView.builder(
-        itemBuilder: itemBuilder,
-        itemCount: playUrls.length,
+        itemBuilder: pageViewBuild,
+        itemCount: resourceData.value.playUrls.length,
         controller: controller.pageController,
         physics: const NeverScrollableScrollPhysics(),
       );
 
-      // var = children[index].urls.asMap().keys.length
-
+      /// 整个播放地址只用一行空间，不然pageview没有高度会报错
       return SizedBox(height: 40, child: pageView);
     });
 
+    /// 影片的文字部分：动态组成方法
     Widget getContentBox() {
+      var _value = resourceData.value;
+
       /// 影片的年份 ｜ 地区 ｜ 子类型
       var yearChildren = [
-        if (resourceData.value.score != null) '★ ${resourceData.value.score!}',
-        if (resourceData.value.score != null) ' | ',
-        if (resourceData.value.year != null) resourceData.value.year,
-        if (resourceData.value.year != null) ' | ',
-        if (resourceData.value.country != null) resourceData.value.country,
-        if (resourceData.value.country != null) ' | ',
-        if (resourceData.value.mediaType != null) resourceData.value.mediaType,
-        if (resourceData.value.mediaType != null) ' | ',
-        if (resourceData.value.ranking != null)
-          '排名: ${resourceData.value.ranking!}'
+        if (_value.score != null) '★ ${_value.score!}',
+        if (_value.score != null) ' | ',
+        if (_value.year != null) _value.year,
+        if (_value.year != null) ' | ',
+        if (_value.country != null) _value.country,
+        if (_value.country != null) ' | ',
+        if (_value.mediaType != null) _value.mediaType,
+        if (_value.mediaType != null) ' | ',
+        if (_value.ranking != null) '排名: ${_value.ranking!}'
       ];
 
-      var yearString = MyCharacter.getListToString(yearChildren);
+      /// 年份那一排文字转成字符串
+      var yearChildrenString = MyCharacter.getListToString(yearChildren);
 
+      /// 收藏部分组件：喜欢构建
+      Widget _likeBuilder(bool _) => _ ? MyIcons.likePress() : MyIcons.like();
+
+      /// 收藏控件组件：内容组件
+      Widget _countBuilder(int? count, bool isLiked, String text) {
+        return MyText.gray14(controller.isFavorites ? '已收藏' : '收藏');
+      }
+
+      /// 收藏控件
       var favorites = LikeButton(
         onTap: controller.onFavorites,
         size: 20,
         isLiked: controller.isFavorites,
         likeCountPadding: const EdgeInsets.only(left: 8),
         likeCount: 0,
-        likeBuilder: (bool isLiked) {
-          return isLiked ? MyIcons.likePress() : MyIcons.like();
-        },
+        likeBuilder: _likeBuilder,
         mainAxisAlignment: MainAxisAlignment.start,
-        countBuilder: (int? count, bool isLiked, String text) {
-          return MyText.gray14(controller.isFavorites ? '已收藏' : '收藏');
-        },
+        countBuilder: _countBuilder,
         likeCountAnimationType: LikeCountAnimationType.part,
       );
 
+      /// 影片介绍部分的综合组成
+      /// 标题 和 收藏
+      /// 影片介绍
+      /// 播放地址
       var contentBoxChildren = [
+        /// 第一部分：影片的标题和收藏按钮
         Row(children: [title, const Spacer(), favorites]),
+
+        /// 间距
         const SizedBox(height: 8),
-        if (yearChildren.isNotEmpty) MyText.gray14(yearString, lineHeight: 1.3),
+
+        /// 年份信息，包含评分，年份等信息
+        if (yearChildren.isNotEmpty)
+          MyText.gray14(
+            yearChildrenString,
+            lineHeight: 1.3,
+          ),
+
+        /// 影片的演员表
         if (resourceData.value.actors != null)
-          MyText.gray14('演员: ${resourceData.value.actors!}', lineHeight: 1.3),
+          MyText.gray14(
+            '演员: ${resourceData.value.actors!}',
+            lineHeight: 1.3,
+          ),
+
+        /// 影片的导演
         if (resourceData.value.director != null)
-          MyText.gray14('导演: ${resourceData.value.director!}', lineHeight: 1.3),
+          MyText.gray14(
+            '导演: ${resourceData.value.director!}',
+            lineHeight: 1.3,
+          ),
+
+        /// 影片的详细介绍，只展示三行
         if (resourceData.value.introduce != null)
           MyText.gray14(
             '剧情: ${resourceData.value.introduce!}',
             maxLines: 3,
             lineHeight: 1.3,
           ),
+
+        /// 间距
         const SizedBox(height: 8),
+
+        /// 播放地址的标题，可能会被用来区分语言
         playUrlsTitle,
+
+        /// 间距
         const SizedBox(height: 16),
+
+        /// 播放地址
         partsBox,
       ];
 
+      /// 影片介绍部分：竖版排列
       return Column(
         children: contentBoxChildren,
         crossAxisAlignment: CrossAxisAlignment.start,
       );
     }
 
+    /// 给影片介绍的内容增加边距
     var contentBox = Padding(
       padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
       child: Obx(getContentBox),
     );
 
+    /// 猜你喜欢部分：这部分也是动态的
+    /// 分成没有内容或者有内容两种情况
     var guessBox = Obx(() {
+      /// 有内容
       var data = MediaBox(
         mediaDataList: resourceList.value.list,
         title: resourceList.value.list.isEmpty ? null : '猜你喜欢',
         onTap: controller.guessPlay,
       );
+
+      /// 加载中
       var loading = Padding(
         padding: const EdgeInsets.only(top: 32),
         child: MyIcons.loading(),
       );
 
-      return !controller.state.isRetry && resourceList.value.list.isEmpty
-          ? loading
-          : data;
+      /// 如果实在加载中，或者是重新加载中，就显示加载的样式
+      /// 如果拿到了数据，就展示数据
+      return !state.isRetry && resourceList.value.list.isEmpty ? loading : data;
     });
 
-    var bodyChildren = [contentBox, guessBox];
-
-    var bodyChild = Column(children: bodyChildren);
-
-    var body = SingleChildScrollView(
-      child: bodyChild,
+    /// 页面组成：不包含播放器的部分
+    var content = SingleChildScrollView(
+      child: Column(children: [contentBox, guessBox]),
       controller: controller.scrollController,
     );
 
-    return MyScaffold(
-        header: header,
-        body: Column(children: [videBox, Expanded(child: body)]));
+    /// 页面组成
+    var body = Column(children: [
+      // const SizedBox(height: 10),
+      videBox,
+      const SizedBox(height: 10),
+      Expanded(child: content)
+    ]);
+
+    return MyScaffold(header: header, body: body);
   }
 }

@@ -17,7 +17,7 @@ class CommunityView extends GetView<CommunityController> {
     var tabBar = MyTabBar(
       pageController: controller.pageController,
       pageIndex: controller.state.pageIndexRx,
-      tabs: ResourceController.to.types.value.list,
+      tabs: ResourceController.to.types,
     );
 
     var appBar = MyAppBar(center: tabBar, isShowLine: true);
