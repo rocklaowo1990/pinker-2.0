@@ -7,8 +7,8 @@ import 'package:pinker/pages/application/community/movie/library.dart';
 class CommunityMovieController extends GetxController {
   final state = CommunityMovieState();
   final type = 1;
-  final medias = ResourceController.to.moiveList;
-  final types = ResourceController.to.moiveTypeList;
+  final medias = ResourceController.to.movieList;
+  final types = ResourceController.to.movieTypeList;
 
   List<int> chooseIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 

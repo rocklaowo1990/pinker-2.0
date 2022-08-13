@@ -10,8 +10,8 @@ class ResourceController extends GetxController {
 
   /// 首页电影数据
   final homeMoiveData = HomeData.fromJson(HomeData.child).obs;
-  final moiveList = ResourceDataList.fromJson(ResourceDataList.child).obs;
-  final moiveTypeList = MediaTypeList.fromJson(MediaTypeList.child).obs;
+  final movieList = ResourceDataList.fromJson(ResourceDataList.child).obs;
+  final movieTypeList = MediaTypeList.fromJson(MediaTypeList.child).obs;
 
   /// 首页成人影院数据
   final homeSexData = HomeData.fromJson(HomeData.child).obs;
@@ -45,6 +45,9 @@ class ResourceController extends GetxController {
 
   /// 热门搜索
   final hotList = ResourceDataList.fromJson(ResourceDataList.child).obs;
+
+  /// 短视频列表
+  final shortList = ResourceDataList.fromJson(ResourceDataList.child).obs;
 
   /// 视频播放
   static void videoPlay(ResourceData resourceData) {

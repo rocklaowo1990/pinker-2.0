@@ -82,7 +82,7 @@ class VideoPlayView extends GetView<VideoPlayController> {
         ? loadingBox
         : Chewie(controller: controller.chewieController));
 
-    /// 播放去的样式
+    /// 播放区域的样式
     const videoBoxChildDecortion = BoxDecoration(
       shape: BoxShape.rectangle,
       color: MyColors.black,

@@ -1,4 +1,4 @@
-library application_act;
+library application_short;
 
 export 'binding.dart';
 export 'controller.dart';

@@ -18,6 +18,7 @@ class ResourceData {
     this.director,
     this.pubTime,
     this.price,
+    this.shortUrl,
   });
 
   /// 影片的名字
@@ -74,6 +75,9 @@ class ResourceData {
   /// 收费方式
   int payType;
 
+  /// 短视频播放地址
+  String? shortUrl;
+
   factory ResourceData.fromJson(Map<String, dynamic> json) => ResourceData(
         name: json['name'],
         image: json['image'],
@@ -94,6 +98,7 @@ class ResourceData {
         isCanSee: json['isCanSee'],
         price: json['price'],
         payType: json['payType'],
+        shortUrl: json['shortUrl'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,6 +120,7 @@ class ResourceData {
         'isCanSee': isCanSee,
         'price': price,
         'payType': payType,
+        'shortUrl': shortUrl,
       };
   static Map<String, dynamic> child = {
     'name': '',

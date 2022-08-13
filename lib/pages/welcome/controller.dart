@@ -90,6 +90,31 @@ class WelcomeController extends GetxController {
     }
   }
 
+  /// 获取分类的信息
+  Future<void> getMediaList() async {
+    /// 调用获取影片列表的接口
+    var _getMediaList = await ResourceApi.getResourceList(
+      pageNo: 1,
+      type: 6,
+      pageSize: 20,
+      errorCallBack: ConfigController.to.errorDaliog,
+    );
+
+    /// 请求失败拦截：重新调用接口方法
+    if (_getMediaList != null && _getMediaList.code == 200) {
+      /// 格式化获取到的影片数据
+      var _mediaList = ResourceDataList.fromJson(_getMediaList.data);
+
+      /// 更新影片数据
+      ResourceController.to.shortList.update((val) {
+        val!.list = _mediaList.list;
+        val.size = _mediaList.size;
+      });
+    } else {
+      await getMediaList();
+    }
+  }
+
   /// 获取搜索关键字
   Future<void> getSearchWord() async {
     /// 调用获取搜索关键字接口
@@ -203,8 +228,8 @@ class WelcomeController extends GetxController {
     await getData(
       type: 1,
       homeDataRx: ResourceController.to.homeMoiveData,
-      mediaListRx: ResourceController.to.moiveList,
-      mediaTypeListRx: ResourceController.to.moiveTypeList,
+      mediaListRx: ResourceController.to.movieList,
+      mediaTypeListRx: ResourceController.to.movieTypeList,
     );
 
     /// 进度条更新
@@ -269,8 +294,16 @@ class WelcomeController extends GetxController {
     /// 如果存在token，则请求用户数据
     if (UserController.to.token != '') await getUserInfo();
 
+    /// 进度条更新
+    state.loadingValue = 0.8;
+
     /// 获取收藏的推文数组
     await getFavorites();
+
+    /// 进度条更新
+    state.loadingValue = 0.9;
+
+    await getMediaList();
 
     /// 进度条更新
     state.loadingValue = 1;
