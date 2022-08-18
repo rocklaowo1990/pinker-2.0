@@ -7,29 +7,32 @@ import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/application/my/library.dart';
 import 'package:pinker/pages/application/short/library.dart';
-import 'package:wakelock/wakelock.dart';
 
 class ApplicationController extends GetxController {
   final state = ApplicationState();
   final shortList = ResourceController.to.shortList;
+  int pageIndex = 0;
 
   bool isPlay = false;
 
   var pageController = PageController();
 
   void onPageChanged(int index) async {
+    pageIndex = index;
     final ShortController shortController = Get.find();
 
     if (index != 2) {
-      if (isPlay) {
-        await shortController.videoPlayerController.pause();
-        isPlay = false;
-        Wakelock.disable();
+      if (shortController.videoPlayerController != null) {
+        await shortController.videoPlayerController!.dispose();
+        shortController.videoPlayerController = null;
+        if (shortController.chewieController != null) {
+          shortController.chewieController!.dispose();
+          shortController.chewieController = null;
+        }
       }
     } else {
       await shortController.videoPlay(
         shortList.value.list[shortController.pageIndex].shortUrl!,
-        isReset: false,
       );
     }
   }

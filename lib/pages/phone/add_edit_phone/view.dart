@@ -37,7 +37,7 @@ class AddOrEditPhoneView extends GetView<AddOrEditPhoneController> {
       text_2,
       const SizedBox(height: 32),
       MyButton(child: codeButtonChild, onTap: () {}),
-      const SizedBox(height: 16),
+      const SizedBox(height: 32),
       MyInput(
         controller: controller.inputController,
         focusNode: controller.inputFocusNode,

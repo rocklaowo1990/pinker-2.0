@@ -78,9 +78,10 @@ class VideoPlayView extends GetView<VideoPlayController> {
 
     /// 如果在加载中，那就是展示加载的样式
     /// 如果是在播放，那就展示播放的内容
-    var videoBoxChild = Obx(() => state.isShowLoading
-        ? loadingBox
-        : Chewie(controller: controller.chewieController));
+    var videoBoxChild = Obx(() =>
+        state.isShowLoading || controller.chewieController == null
+            ? loadingBox
+            : Chewie(controller: controller.chewieController!));
 
     /// 播放区域的样式
     const videoBoxChildDecortion = BoxDecoration(
@@ -120,19 +121,26 @@ class VideoPlayView extends GetView<VideoPlayController> {
 
         /// 集数的点击事件，更换播放链接
         void _onTap() async {
-          if (controller.videoPlayerController.value.isInitialized) {
-            /// 更换播放链接之前要把播放器控制器释放
-            await controller.videoPlayerController.dispose();
-            controller.chewieController.dispose();
+          state.chooise = [state.pageIndex.value, buttonIndex];
 
-            /// 确认哪个位置的按钮被选中
-            state.chooise = [state.pageIndex.value, buttonIndex];
+          /// 然后传入新的播放地址，重新初始化播放器
+          await controller.videoPlay(
+            playUrls[state.pageIndex.value].urls[buttonIndex],
+          );
 
-            /// 然后传入新的播放地址，重新初始化播放器
-            await controller.videoPlay(
-              playUrls[state.pageIndex.value].urls[buttonIndex],
-            );
-          }
+          // if (controller.videoPlayerController.value.isInitialized) {
+          //   /// 更换播放链接之前要把播放器控制器释放
+          //   await controller.videoPlayerController.dispose();
+          //   controller.chewieController.dispose();
+
+          //   /// 确认哪个位置的按钮被选中
+          //   state.chooise = [state.pageIndex.value, buttonIndex];
+
+          //   /// 然后传入新的播放地址，重新初始化播放器
+          //   await controller.videoPlay(
+          //     playUrls[state.pageIndex.value].urls[buttonIndex],
+          //   );
+          // }
         }
 
         /// 是否被选中
@@ -140,10 +148,10 @@ class VideoPlayView extends GetView<VideoPlayController> {
             buttonIndex == state.chooise[1];
 
         /// 是否显示loading
-        var isShowLoading = state.isShowLoading;
+        // var isShowLoading = state.isShowLoading;
 
         /// 是否在加载中
-        var isLoading = isChooise || isShowLoading;
+        // var isLoading = isChooise || isShowLoading;
 
         /// 播放按钮的文件间距
         var buttonChild = Padding(
@@ -155,7 +163,7 @@ class VideoPlayView extends GetView<VideoPlayController> {
         return MyButton(
           child: buttonChild,
           color: isChooise ? primaryColor : inputColor,
-          onTap: isLoading || isChooise ? null : _onTap,
+          onTap: isChooise ? null : _onTap,
         );
       });
     }

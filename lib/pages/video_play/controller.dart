@@ -27,8 +27,8 @@ class VideoPlayController extends GetxController {
     iconColor: MyColors.text,
   );
 
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
+  VideoPlayerController? videoPlayerController;
+  ChewieController? chewieController;
 
   void guessPlay(ResourceData resourceData) async {
     if (resourceData.id == state.resourceData.value.id) return;
@@ -41,23 +41,22 @@ class VideoPlayController extends GetxController {
       );
     }
 
-    if (videoPlayerController.value.isInitialized) {
-      isFavorites = false;
-      await videoPlayerController.dispose();
-      chewieController.dispose();
-      state.pageIndex.value = 0;
-      state.chooise = [0, 0];
-      state.resourceData.value = resourceData;
-      state.resourceData.update((val) {});
-      for (var data in ResourceController.to.favoritesId) {
-        if (data == resourceData.id.toString()) isFavorites = true;
-      }
-      await videoPlay(resourceData.playUrls[0].urls[0]);
+    isFavorites = false;
+    state.pageIndex.value = 0;
+    state.chooise = [0, 0];
+    state.resourceData.value = resourceData;
+    state.resourceData.update((val) {});
+
+    for (var data in ResourceController.to.favoritesId) {
+      if (data == resourceData.id.toString()) isFavorites = true;
     }
+    await videoPlay(resourceData.playUrls[0].urls[0]);
   }
 
   void listener() async {
-    if (!chewieController.isFullScreen) {
+    if (!chewieController!.isFullScreen) {
+      Wakelock.enable();
+
       await ConfigController.to.setPreferredOrientations();
       if (ConfigController.to.platform == 'android') {
         await ConfigController.to.getTransparentStatusBar();
@@ -66,25 +65,33 @@ class VideoPlayController extends GetxController {
   }
 
   Future<void> videoPlay(String url) async {
-    state.isShowLoading = true;
-
-    videoPlayerController = VideoPlayerController.network(url);
-    try {
-      await videoPlayerController.initialize();
-
-      if (videoPlayerController.value.isInitialized) {
-        chewieController = ChewieController(
-          videoPlayerController: videoPlayerController,
-          autoPlay: true,
-          customControls: customControls,
-        );
-
-        state.isShowLoading = false;
-
-        chewieController.addListener(listener);
+    if (videoPlayerController != null) {
+      await videoPlayerController!.dispose();
+      videoPlayerController = null;
+      if (chewieController != null) {
+        chewieController!.removeListener(listener);
+        chewieController!.dispose();
+        chewieController = null;
       }
-    } catch (e) {
-      debugPrint(e.toString());
+    }
+
+    state.isShowLoading = true;
+    videoPlayerController = VideoPlayerController.network(url);
+    await videoPlayerController!.initialize();
+
+    if (videoPlayerController!.value.isInitialized) {
+      chewieController = ChewieController(
+        videoPlayerController: videoPlayerController!,
+        autoPlay: true,
+        customControls: customControls,
+      );
+
+      state.isShowLoading = false;
+
+      chewieController!.addListener(listener);
+    } else {
+      videoPlayerController!.dispose();
+      videoPlayerController = null;
     }
   }
 
@@ -136,6 +143,8 @@ class VideoPlayController extends GetxController {
     state.resourceData.value = arguments;
     state.resourceData.update((value) {});
 
+    // playUrl = state.resourceData.value.playUrls[0].urls[0];
+
     // state.isLoading = false;
 
     for (var data in ResourceController.to.favoritesId) {
@@ -155,11 +164,13 @@ class VideoPlayController extends GetxController {
 
   @override
   void onClose() {
-    videoPlayerController.dispose();
+    if (videoPlayerController != null) {
+      videoPlayerController!.dispose();
+    }
 
-    if (videoPlayerController.value.isInitialized) {
-      chewieController.removeListener(listener);
-      chewieController.dispose();
+    if (chewieController != null) {
+      chewieController!.removeListener(listener);
+      chewieController!.dispose();
     }
 
     Wakelock.disable();

@@ -72,7 +72,7 @@ class MyController extends GetxController {
 
   void password() {
     if (UserController.to.token.isNotEmpty) {
-      Get.toNamed(MyRoutes.phone);
+      Get.toNamed(MyRoutes.editPassword);
     } else {
       login();
     }

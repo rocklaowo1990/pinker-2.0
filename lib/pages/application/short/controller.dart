@@ -14,40 +14,40 @@ class ShortController extends GetxController {
 
   int pageIndex = 0;
 
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
+  VideoPlayerController? videoPlayerController;
+  ChewieController? chewieController;
 
   // final customControls = const CupertinoControls(
   //   backgroundColor: MyColors.input,
   //   iconColor: MyColors.text,
   // );
 
-  Future<void> videoPlay(String url, {bool isReset = true}) async {
-    state.isShowLoading = true;
-
-    if (isReset) {
-      await videoPlayerController.dispose();
-      chewieController.dispose();
+  Future<void> videoPlay(String url) async {
+    if (videoPlayerController != null) {
+      await videoPlayerController!.dispose();
+      videoPlayerController = null;
+      if (chewieController != null) {
+        chewieController!.dispose();
+        chewieController = null;
+      }
     }
 
+    state.isShowLoading = true;
     videoPlayerController = VideoPlayerController.network(url);
+    await videoPlayerController!.initialize();
 
-    try {
-      await videoPlayerController.initialize();
+    if (videoPlayerController!.value.isInitialized) {
+      chewieController = ChewieController(
+        videoPlayerController: videoPlayerController!,
+        autoPlay: true,
+        looping: true,
+        customControls: Container(),
+      );
 
-      if (videoPlayerController.value.isInitialized) {
-        chewieController = ChewieController(
-          videoPlayerController: videoPlayerController,
-          autoPlay: true,
-          looping: true,
-          customControls: Container(),
-        );
-
-        state.isShowLoading = false;
-        applicationController.isPlay = true;
-      }
-    } catch (e) {
-      debugPrint(e.toString());
+      state.isShowLoading = false;
+    } else {
+      videoPlayerController!.dispose();
+      videoPlayerController = null;
     }
   }
 

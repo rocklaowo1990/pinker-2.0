@@ -206,6 +206,11 @@ class MyView extends GetView<MyController> {
           text: '密码',
           onTap: controller.password,
         ),
+        MyButton.my(
+          icon: MyIcons.password(),
+          text: '代理',
+          onTap: controller.password,
+        ),
         if (userInfo.value.userId != 0)
           MyButton.my(
             icon: MyIcons.exit(),

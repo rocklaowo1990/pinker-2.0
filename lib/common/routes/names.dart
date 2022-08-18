@@ -29,4 +29,7 @@ class MyRoutes {
 
   /// video_play
   static const videoPlay = '/videoPlay';
+
+  /// eidt_password
+  static const editPassword = '/editPassword';
 }

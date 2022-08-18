@@ -6,6 +6,8 @@ import 'package:pinker/pages/add_usdt/view.dart';
 import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/bank/binding.dart';
 import 'package:pinker/pages/bank/view.dart';
+import 'package:pinker/pages/edit_password/binding.dart';
+import 'package:pinker/pages/edit_password/view.dart';
 import 'package:pinker/pages/favorites/library.dart';
 import 'package:pinker/pages/phone/add_edit_phone/binding.dart';
 import 'package:pinker/pages/phone/add_edit_phone/view.dart';
@@ -53,6 +55,13 @@ class AppPages {
       name: MyRoutes.welcome,
       page: () => const WelcomeView(),
       binding: WelcomeBinding(),
+    ),
+
+    /// 修改密码
+    GetPage(
+      name: MyRoutes.editPassword,
+      page: () => const EditPasswordView(),
+      binding: EditPasswordBinding(),
     ),
 
     /// 银行卡页面
