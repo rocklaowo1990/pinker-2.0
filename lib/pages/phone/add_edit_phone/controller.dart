@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/pages/phone/add_edit_phone/library.dart';
 
@@ -11,6 +12,10 @@ class AddOrEditPhoneController extends GetxController {
 
   void linstener() {
     state.isEnable = inputController.text.isEmpty ? true : false;
+  }
+
+  void countryCode() {
+    Get.toNamed(MyRoutes.countryCode);
   }
 
   @override

@@ -6,6 +6,8 @@ import 'package:pinker/pages/add_usdt/view.dart';
 import 'package:pinker/pages/application/library.dart';
 import 'package:pinker/pages/bank/binding.dart';
 import 'package:pinker/pages/bank/view.dart';
+import 'package:pinker/pages/country_code/binding.dart';
+import 'package:pinker/pages/country_code/view.dart';
 import 'package:pinker/pages/edit_password/binding.dart';
 import 'package:pinker/pages/edit_password/view.dart';
 import 'package:pinker/pages/favorites/library.dart';
@@ -105,6 +107,13 @@ class AppPages {
       name: MyRoutes.search,
       page: () => const SearchView(),
       binding: SearchBinding(),
+    ),
+
+    /// 区号选择
+    GetPage(
+      name: MyRoutes.countryCode,
+      page: () => const CountryCodeView(),
+      binding: CountryCodeBinding(),
     ),
   ];
 }

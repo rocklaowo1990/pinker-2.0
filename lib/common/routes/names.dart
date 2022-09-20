@@ -32,4 +32,7 @@ class MyRoutes {
 
   /// eidt_password
   static const editPassword = '/editPassword';
+
+  /// country_code
+  static const countryCode = '/countryCode';
 }
