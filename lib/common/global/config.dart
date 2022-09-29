@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/lang/library.dart';
 import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/utils/library.dart';
@@ -31,6 +32,15 @@ class ConfigController extends GetxController {
   /// 语言设置
   final locale = const Locale('en', 'US').obs;
 
+  /// 区号列表数据
+  /// areaCodeList: 区号列表数据
+  /// areaCode：区号的状态，改变时会对应的改变页面的文字
+  /// areaShortName：区号的短名称
+  final areaCodeList = AreaCodeListData.fromJson(AreaCodeListData.child);
+  final areaCode = MyStorageService.to.getString(storageAreaCodeKey).obs;
+  final areaName = MyStorageService.to.getString(storageAreaCodeKey).obs;
+  String areaShortName = 'CN';
+
   @override
   void onReady() async {
     super.onReady();
@@ -49,9 +59,6 @@ class ConfigController extends GetxController {
       model = iosInfo.model;
     }
 
-    /// 包信息
-    packageInfo = await PackageInfo.fromPlatform();
-
     /// 读取储存的语言设置
     var localeString = MyStorageService.to.getString(storageLocalKey);
 
@@ -65,6 +72,9 @@ class ConfigController extends GetxController {
       locale.value = const Locale('ve', 'NA');
     }
     locale.update((val) {});
+
+    /// 包信息
+    packageInfo = await PackageInfo.fromPlatform();
 
     /// 设置安卓状态栏
     await SystemStye.getTransparentStatusBar();

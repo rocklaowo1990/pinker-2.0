@@ -9,7 +9,7 @@ class AreaCodeController extends GetxController {
   final searchController = TextEditingController();
   final searchNode = FocusNode();
 
-  final codeList = UserController.to.areaCodeList.areaCodeList;
+  final codeList = ConfigController.to.areaCodeList.areaCodeList;
 
   @override
   void onReady() async {

@@ -1,4 +1,4 @@
-library country_code;
+library notice;
 
 export 'binding.dart';
 export 'controller.dart';

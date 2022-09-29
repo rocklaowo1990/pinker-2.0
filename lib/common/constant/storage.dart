@@ -15,6 +15,7 @@ const String storageFavoritesIdKey = 'favorites_id';
 
 /// 城市区号
 const String storageAreaCodeKey = 'area_code';
+const String storageAreaNameKey = 'area_name';
 
 /// 语言设置
 const String storageLocalKey = 'local';

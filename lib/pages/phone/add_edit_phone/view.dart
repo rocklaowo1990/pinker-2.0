@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinker/common/global/user.dart';
+import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/phone/add_edit_phone/library.dart';
 
@@ -24,7 +24,8 @@ class AddOrEditPhoneView extends GetView<AddOrEditPhoneController> {
 
     var codeButtonChild = Row(children: [
       const SizedBox(width: 8),
-      Obx(() => MyText('${state.code}  ${state.country}')),
+      Obx(() => MyText.primary(
+          '+${ConfigController.to.areaCode.value}  ${ConfigController.to.areaName.value}')),
       const Spacer(),
       MyIcons.right(),
       const SizedBox(width: 4),

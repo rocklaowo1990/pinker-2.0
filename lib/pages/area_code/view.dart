@@ -31,7 +31,7 @@ class AreaCodeView extends GetView<AreaCodeController> {
     }) {
       var codeText = MyText('+$code');
       var countryText = MyText(country);
-      var buttonState = Obx(() => UserController.to.areaCode.value == code
+      var buttonState = Obx(() => ConfigController.to.areaCode.value == code
           ? const Icon(Icons.check_circle, color: MyColors.primary, size: 24)
           : const SizedBox());
 
@@ -71,8 +71,14 @@ class AreaCodeView extends GetView<AreaCodeController> {
                           code: item.phoneCode,
                           country: countryName,
                           onTap: () {
-                            UserController.to.areaCode.value = item.phoneCode;
-                            UserController.to.areaShortName = item.countryCode;
+                            ConfigController.to.areaCode.value = item.phoneCode;
+                            ConfigController.to.areaName.value =
+                                Get.locale == const Locale('zh', 'CN')
+                                    ? item.chineseName
+                                    : item.englishName;
+
+                            ConfigController.to.areaShortName =
+                                item.countryCode;
                             Get.back();
                           });
                     }),

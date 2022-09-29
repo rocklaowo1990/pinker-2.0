@@ -1,24 +1,18 @@
 import 'package:get/get.dart';
-import 'package:pinker/pages/add_bank/binding.dart';
-import 'package:pinker/pages/add_bank/view.dart';
-import 'package:pinker/pages/add_usdt/binding.dart';
-import 'package:pinker/pages/add_usdt/view.dart';
+import 'package:pinker/pages/add_bank/library.dart';
+import 'package:pinker/pages/add_usdt/library.dart';
+
 import 'package:pinker/pages/application/library.dart';
-import 'package:pinker/pages/bank/binding.dart';
-import 'package:pinker/pages/bank/view.dart';
-import 'package:pinker/pages/country_code/binding.dart';
-import 'package:pinker/pages/country_code/view.dart';
-import 'package:pinker/pages/edit_password/binding.dart';
-import 'package:pinker/pages/edit_password/view.dart';
+import 'package:pinker/pages/area_code/library.dart';
+import 'package:pinker/pages/bank/library.dart';
+import 'package:pinker/pages/edit_password/library.dart';
 import 'package:pinker/pages/favorites/library.dart';
-import 'package:pinker/pages/phone/add_edit_phone/binding.dart';
-import 'package:pinker/pages/phone/add_edit_phone/view.dart';
-import 'package:pinker/pages/phone/binding.dart';
-import 'package:pinker/pages/phone/view.dart';
+import 'package:pinker/pages/notice/library.dart';
+import 'package:pinker/pages/phone/add_edit_phone/library.dart';
+import 'package:pinker/pages/phone/library.dart';
 import 'package:pinker/pages/search/library.dart';
 import 'package:pinker/pages/unknown/library.dart';
-import 'package:pinker/pages/video_play/binding.dart';
-import 'package:pinker/pages/video_play/view.dart';
+import 'package:pinker/pages/video_play/library.dart';
 import 'package:pinker/pages/web_box/library.dart';
 import 'package:pinker/pages/welcome/library.dart';
 import 'names.dart';
@@ -112,9 +106,9 @@ class AppPages {
 
     /// 区号选择
     GetPage(
-      name: MyRoutes.countryCode,
-      page: () => const CountryCodeView(),
-      binding: CountryCodeBinding(),
+      name: MyRoutes.areaCode,
+      page: () => const AreaCodeView(),
+      binding: AreaCodeBinding(),
     ),
 
     /// 区号选择
@@ -122,6 +116,13 @@ class AppPages {
       name: MyRoutes.webBox,
       page: () => const WebBoxView(),
       binding: WebBoxBinding(),
+    ),
+
+    /// 通知页面
+    GetPage(
+      name: MyRoutes.notice,
+      page: () => const NoticeView(),
+      binding: NoticeBinding(),
     ),
   ];
 }

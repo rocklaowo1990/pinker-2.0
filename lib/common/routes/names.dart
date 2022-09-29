@@ -34,8 +34,11 @@ class MyRoutes {
   static const editPassword = '/edit_password';
 
   /// country_code
-  static const countryCode = '/country_code';
+  static const areaCode = '/area_code';
 
   /// web_box
   static const webBox = '/web_box';
+
+  /// notice
+  static const notice = '/notice';
 }
