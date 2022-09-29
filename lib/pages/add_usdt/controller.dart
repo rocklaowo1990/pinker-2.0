@@ -24,7 +24,7 @@ class AddUsdtController extends GetxController {
   void addUsdt() async {
     if (inputFocusNode.hasFocus) inputFocusNode.unfocus();
 
-    ConfigController.to.getDaliog(child: DialogChild.loading());
+    MyDialog.getDaliog(child: DialogChild.loading());
     var response = await UserApi.addUsdt(
       number: inputController.text,
     );

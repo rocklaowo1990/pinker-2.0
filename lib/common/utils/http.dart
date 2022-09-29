@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:pinker/common/constant/library.dart';
-import 'package:pinker/common/global/library.dart';
+import 'package:pinker/common/widgets/library.dart';
 
 class MyHttp {
   // final Function errorCallBack;
@@ -100,7 +100,7 @@ class MyHttp {
 
   /// 错误处理
   void onError(ErrorEntity eInfo) async {
-    ConfigController.to.getSnakBar('错误码: ${eInfo.code}', eInfo.message);
+    MyDialog.getSnakBar('错误码: ${eInfo.code}', eInfo.message);
   }
 
   // 错误信息

@@ -20,7 +20,7 @@ class MyView extends GetView<MyController> {
 
     /// appBar 的子内容
     var appBarChildren = [
-      MyButton.customer(),
+      MyButton.customer(onTap: controller.onCustomer),
       const SizedBox(width: 40),
       MyButton.email(),
       const SizedBox(width: 20),

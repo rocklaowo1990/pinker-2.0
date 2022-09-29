@@ -19,6 +19,7 @@ import 'package:pinker/pages/search/library.dart';
 import 'package:pinker/pages/unknown/library.dart';
 import 'package:pinker/pages/video_play/binding.dart';
 import 'package:pinker/pages/video_play/view.dart';
+import 'package:pinker/pages/web_box/library.dart';
 import 'package:pinker/pages/welcome/library.dart';
 import 'names.dart';
 
@@ -114,6 +115,13 @@ class AppPages {
       name: MyRoutes.countryCode,
       page: () => const CountryCodeView(),
       binding: CountryCodeBinding(),
+    ),
+
+    /// 区号选择
+    GetPage(
+      name: MyRoutes.webBox,
+      page: () => const WebBoxView(),
+      binding: WebBoxBinding(),
     ),
   ];
 }

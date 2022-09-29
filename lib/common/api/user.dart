@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/utils/library.dart';
+import 'package:pinker/common/widgets/library.dart';
 
 class UserApi {
   static Future<ResponseData?> getUserInfo({
@@ -9,7 +10,7 @@ class UserApi {
   }) async {
     Response? response = await MyHttp().get(
       '/user/getUserInfo',
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorSnakBar,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -23,7 +24,7 @@ class UserApi {
   }) async {
     Response? response = await MyHttp().post(
       '/user/deleteBank',
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorSnakBar,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -40,7 +41,7 @@ class UserApi {
   }) async {
     Response? response = await MyHttp().post(
       '/user/addBank',
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorSnakBar,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -55,7 +56,7 @@ class UserApi {
   }) async {
     Response? response = await MyHttp().post(
       '/user/addUsdt',
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorSnakBar,
       options: Options(
         headers: {'token': UserController.to.token},
       ),

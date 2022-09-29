@@ -6,6 +6,7 @@ import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/style/colors.dart';
 import 'package:pinker/common/services/storage.dart';
+import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/pages/video_play/library.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -57,9 +58,9 @@ class VideoPlayController extends GetxController {
     if (!chewieController!.isFullScreen) {
       Wakelock.enable();
 
-      await ConfigController.to.setPreferredOrientations();
+      await SystemStye.setPreferredOrientations();
       if (ConfigController.to.platform == 'android') {
-        await ConfigController.to.getTransparentStatusBar();
+        await SystemStye.getTransparentStatusBar();
       }
     }
   }

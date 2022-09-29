@@ -39,7 +39,7 @@ class BankController extends GetxController {
       onTap: _onTap,
     );
 
-    ConfigController.to.getDaliog(
+    MyDialog.getDaliog(
         child: Obx(() => isLoading.value ? DialogChild.loading() : alert));
   }
 
@@ -62,7 +62,7 @@ class BankController extends GetxController {
       onTap: _onTap,
     );
 
-    ConfigController.to.getDaliog(
+    MyDialog.getDaliog(
         child: Obx(() => isLoading.value ? DialogChild.loading() : alert));
   }
 }

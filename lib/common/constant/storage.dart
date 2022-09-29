@@ -12,3 +12,9 @@ const String storageIsLightModeKey = 'is_light_mode';
 
 /// 观看历史
 const String storageFavoritesIdKey = 'favorites_id';
+
+/// 城市区号
+const String storageAreaCodeKey = 'area_code';
+
+/// 语言设置
+const String storageLocalKey = 'local';

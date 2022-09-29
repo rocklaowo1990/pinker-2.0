@@ -1,6 +1,6 @@
 class MyRoutes {
   /// public
-  static const unknownRoute = '/unknownRoute';
+  static const unknownRoute = '/unknown_route';
 
   /// frame
   static const welcome = '/welcome';
@@ -22,17 +22,20 @@ class MyRoutes {
 
   /// phone
   static const phone = '/phone';
-  static const addOrEditPhone = '/addOrEditPhone';
+  static const addOrEditPhone = '/add_or_edit_phone';
 
   /// add_usdt
-  static const addUsdt = '/addUsdt';
+  static const addUsdt = '/add_usdt';
 
   /// video_play
-  static const videoPlay = '/videoPlay';
+  static const videoPlay = '/video_play';
 
   /// eidt_password
-  static const editPassword = '/editPassword';
+  static const editPassword = '/edit_password';
 
   /// country_code
-  static const countryCode = '/countryCode';
+  static const countryCode = '/country_code';
+
+  /// web_box
+  static const webBox = '/web_box';
 }

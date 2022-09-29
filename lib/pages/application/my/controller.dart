@@ -8,6 +8,7 @@ import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/services/storage.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/application/my/library.dart';
+import 'package:pinker/pages/web_box/library.dart';
 
 class MyController extends GetxController {
   final state = MyState();
@@ -20,9 +21,16 @@ class MyController extends GetxController {
 
   void pick() {}
 
+  void onCustomer() {
+    Get.toNamed(
+      MyRoutes.webBox,
+      arguments: WebBoxArguments(title: '客服', url: 'https://www.google.com/'),
+    );
+  }
+
   void login() {
-    ConfigController.to.getDaliog(
-      child: DialogChild.signIn(),
+    MyDialog.getDaliog(
+      child: const LoginBox(),
     );
   }
 
@@ -47,7 +55,7 @@ class MyController extends GetxController {
       UserController.to.userInfo.update((val) {});
 
       Get.back();
-      ConfigController.to.getSnakBar('操作成功', '您已成功退出登陆');
+      MyDialog.getSnakBar('操作成功', '您已成功退出登陆');
     }
 
     var alert = DialogChild.alert(
@@ -58,8 +66,7 @@ class MyController extends GetxController {
 
     var loading = DialogChild.loading();
 
-    ConfigController.to
-        .getDaliog(child: Obx(() => isLoading.value ? loading : alert));
+    MyDialog.getDaliog(child: Obx(() => isLoading.value ? loading : alert));
   }
 
   void phone() {

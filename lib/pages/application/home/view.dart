@@ -74,7 +74,7 @@ class HomeView extends GetView<HomeController> {
       pageController: controller.pageController,
       pageIndex: controller.state.pageIndexRx,
       tabs: ResourceController.to.types,
-      scrollController: controller.scrollController,
+      // scrollController: controller.scrollController,
     );
 
     var headerColumn = Column(children: [appBar, tabBar]);
@@ -105,7 +105,7 @@ class HomeView extends GetView<HomeController> {
       MovieView(),
       DramaView(),
       ShowView(),
-      CartoomView(),
+      CartoonView(),
       SexView(),
     ];
 

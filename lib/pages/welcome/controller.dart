@@ -4,6 +4,7 @@ import 'package:pinker/common/data/home_data.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
+import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/welcome/library.dart';
 
 class WelcomeController extends GetxController {
@@ -13,7 +14,7 @@ class WelcomeController extends GetxController {
   Future<void> getUserInfo() async {
     /// 调用获取用户信息的接口
     var _getUserInfo = await UserApi.getUserInfo(
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 请求成功
@@ -40,7 +41,7 @@ class WelcomeController extends GetxController {
       type: 0,
       pageSize: 20,
       sort: 4,
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 数据获取成功
@@ -69,7 +70,7 @@ class WelcomeController extends GetxController {
         int id = int.fromEnvironment(item);
         var getResourceData = await ResourceApi.getResourceData(
           id: id,
-          errorCallBack: ConfigController.to.errorDaliog,
+          errorCallBack: MyDialog.getErrorDaliog,
         );
 
         if (getResourceData != null && getResourceData.code == 200) {
@@ -97,7 +98,7 @@ class WelcomeController extends GetxController {
       pageNo: 1,
       type: 6,
       pageSize: 20,
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 请求失败拦截：重新调用接口方法
@@ -119,7 +120,7 @@ class WelcomeController extends GetxController {
   Future<void> getSearchWord() async {
     /// 调用获取搜索关键字接口
     var _getSearchWord = await HomeApi.getSearchWord(
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 请求成功
@@ -147,7 +148,7 @@ class WelcomeController extends GetxController {
     /// 调用获取首页信息的接口：包括banner等信息,影片的标题和列表数据
     var _getHomeData = await HomeApi.getHomeData(
       type: type,
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 请求成功
@@ -174,7 +175,7 @@ class WelcomeController extends GetxController {
       pageNo: 1,
       type: type,
       pageSize: 20,
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     /// 请求失败拦截：重新调用接口方法
@@ -199,7 +200,7 @@ class WelcomeController extends GetxController {
     /// 调用获取电影类目的检索类型
     var _getResourceType = await ResourceApi.getResourceType(
       type: type,
-      errorCallBack: ConfigController.to.errorDaliog,
+      errorCallBack: MyDialog.getErrorDaliog,
     );
 
     if (_getResourceType != null && _getResourceType.code == 200) {

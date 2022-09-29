@@ -6,8 +6,8 @@ import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/application/home/cartoon/library.dart';
 
-class CartoomView extends GetView<CartoomController> {
-  const CartoomView({Key? key}) : super(key: key);
+class CartoonView extends GetView<CartoonController> {
+  const CartoonView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class CartoomView extends GetView<CartoomController> {
 
     var bodyChild = ListView(
       children: bodyChildren,
-      controller: controller.homeController.scrollController,
+      controller: controller.scrollController,
     );
 
     var body = Container(child: bodyChild, color: MyColors.background);

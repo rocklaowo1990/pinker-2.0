@@ -89,7 +89,7 @@ class DramaView extends GetView<DramaController> {
 
     var bodyChild = ListView(
       children: bodyChildren,
-      controller: controller.homeController.scrollController,
+      controller: controller.scrollController,
     );
 
     var body = Container(child: bodyChild, color: MyColors.background);

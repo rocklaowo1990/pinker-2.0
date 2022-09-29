@@ -6,7 +6,7 @@ import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/utils/library.dart';
-import 'package:pinker/common/widgets/dialog_child.dart';
+import 'package:pinker/common/widgets/my_dialog.dart';
 import 'package:pinker/pages/search/library.dart';
 
 class SearchController extends GetxController {

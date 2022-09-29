@@ -85,6 +85,9 @@ dependencies:
 
   # 控制屏幕常亮
   wakelock: ^0.6.1+2
+
+  # APP 内置浏览器
+  webview_flutter: ^3.0.4
   
 
 dev_dependencies:

@@ -1,12 +1,13 @@
 library widgets;
 
-export 'dialog_child.dart';
 export 'home_banner.dart';
+export 'login_box.dart';
 export 'media_box.dart';
 export 'media_hot.dart';
 export 'media_search.dart';
 export 'my_app_bar.dart';
 export 'my_button.dart';
+export 'my_dialog.dart';
 export 'my_footer_bar.dart';
 export 'my_icons.dart';
 export 'my_image.dart';

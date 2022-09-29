@@ -32,7 +32,7 @@ class AddBankController extends GetxController {
     if (bankNameFocusNode.hasFocus) bankNameFocusNode.unfocus();
     if (numberFocusNode.hasFocus) numberFocusNode.unfocus();
 
-    ConfigController.to.getDaliog(child: DialogChild.loading());
+    MyDialog.getDaliog(child: DialogChild.loading());
     var response = await UserApi.addBank(
       name: nameController.text,
       number: numberController.text,

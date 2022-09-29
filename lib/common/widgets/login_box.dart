@@ -1,74 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
-import 'package:pinker/common/constant/storage.dart';
+import 'package:pinker/common/constant/library.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
-import 'package:pinker/common/services/storage.dart';
+import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/widgets/library.dart';
 
-class DialogChild extends StatelessWidget {
-  const DialogChild({
+class LoginBox extends StatelessWidget {
+  const LoginBox({
     Key? key,
-    required this.child,
-    this.isAutoBack = true,
+    this.forgotCallBack,
+    this.loginCallBack,
+    this.registerCallBack,
   }) : super(key: key);
 
-  final Widget child;
-  final bool isAutoBack;
+  final void Function()? loginCallBack;
+  final void Function()? registerCallBack;
+  final void Function()? forgotCallBack;
 
-  static DialogChild oneButton({
-    required String title,
-    required String content,
-    String buttonText = '确认',
-    void Function()? onTap,
-  }) {
-    var titleBox = MyText.gray18(title);
-
-    var contentBox = MyText(content);
-
-    var sureButton = MyButton(
-      width: double.infinity,
-      height: 50,
-      child: MyText.primary(buttonText),
-      onTap: onTap,
-    );
-
-    var contentBody = Padding(
-      padding: const EdgeInsets.only(top: 40, bottom: 40, left: 20, right: 20),
-      child: Column(
-        children: [titleBox, const SizedBox(height: 20), contentBox],
-      ),
-    );
-
-    var bodyChild = Column(
-      children: [
-        contentBody,
-        Container(height: 1, color: MyColors.line),
-        sureButton,
-      ],
-    );
-
-    var child = Container(
-      child: bodyChild,
-      width: Get.width - 32 - 64,
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        color: MyColors.secondBackground,
-        borderRadius: MyStyle.borderRadius,
-        shape: BoxShape.rectangle,
-      ),
-    );
-
-    return DialogChild(child: child);
-  }
-
-  static DialogChild signIn({
-    void Function()? loginCallBack,
-    void Function()? registerCallBack,
-    void Function()? forgotCallBack,
-  }) {
+  @override
+  Widget build(BuildContext context) {
     final accountController = TextEditingController();
     final accountFocusNode = FocusNode();
     final passwordController = TextEditingController();
@@ -96,7 +49,7 @@ class DialogChild extends StatelessWidget {
       var _signIn = await AccountApi.signIn(
         account: accountController.text,
         password: passwordController.text,
-        errorCallBack: ConfigController.to.errorSnakBar,
+        errorCallBack: MyDialog.getErrorSnakBar,
       );
 
       if (_signIn == null || _signIn.code != 200) {
@@ -106,7 +59,7 @@ class DialogChild extends StatelessWidget {
       }
 
       var _getUserInfo = await UserApi.getUserInfo(
-        errorCallBack: ConfigController.to.errorSnakBar,
+        errorCallBack: MyDialog.getErrorSnakBar,
       );
 
       if (_getUserInfo == null || _getUserInfo.code != 200) {
@@ -126,7 +79,7 @@ class DialogChild extends StatelessWidget {
       UserController.to.userInfo.update((val) {});
 
       Get.back();
-      ConfigController.to.getSnakBar('操作成功', '您已成功登陆');
+      MyDialog.getSnakBar('操作成功', '您已成功登陆');
     }
 
     var closeButtonChildren = [
@@ -259,105 +212,5 @@ class DialogChild extends StatelessWidget {
     );
 
     return DialogChild(child: child, isAutoBack: false);
-  }
-
-  static DialogChild loading() {
-    var child = MyButton(
-      child: MyIcons.loading(),
-      width: 80,
-      height: 80,
-      color: MyColors.input,
-    );
-    return DialogChild(
-      child: child,
-      isAutoBack: false,
-    );
-  }
-
-  static DialogChild alert({
-    required String title,
-    required String content,
-    void Function()? onTap,
-  }) {
-    void back() {
-      Get.back();
-      // MyHttp().cancelToken.cancel();
-    }
-
-    var titleBox = MyText.text20(title);
-
-    var contentBox = MyText(content);
-
-    var cancelButton = MyButton(
-      width: double.infinity,
-      height: 50,
-      onTap: back,
-      child: const MyText('取消'),
-    );
-
-    var sureButton = MyButton(
-      width: double.infinity,
-      height: 50,
-      child: MyText.primary('确认'),
-      onTap: onTap,
-    );
-
-    var contentBody = Padding(
-      padding: const EdgeInsets.only(top: 40, bottom: 40, left: 20, right: 20),
-      child: Column(
-        children: [titleBox, const SizedBox(height: 20), contentBox],
-      ),
-    );
-
-    var buttons = Row(
-      children: [
-        Expanded(child: cancelButton),
-        Container(width: 1, height: 32, color: MyColors.line),
-        Expanded(child: sureButton),
-      ],
-    );
-
-    var body = Column(
-      children: [
-        contentBody,
-        Container(height: 1, color: MyColors.line),
-        buttons,
-      ],
-    );
-
-    var child = Container(
-      child: body,
-      width: Get.width - 32 - 64,
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        color: MyColors.secondBackground,
-        borderRadius: MyStyle.borderRadius,
-        shape: BoxShape.rectangle,
-      ),
-    );
-
-    return DialogChild(child: child);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    void back() => Get.back();
-
-    var button = MyButton(
-      width: Get.width,
-      height: Get.height,
-      onTap: back,
-    );
-
-    var body = SizedBox(
-      width: Get.width,
-      height: Get.height,
-      child: Column(children: [const Spacer(), child, const Spacer()]),
-    );
-
-    return Scaffold(
-      body: isAutoBack ? Stack(children: [button, body]) : body,
-      backgroundColor: MyColors.background88,
-    );
   }
 }
