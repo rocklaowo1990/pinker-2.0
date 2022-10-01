@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
-import 'package:pinker/common/data/home_data.dart';
 import 'package:pinker/common/data/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';

@@ -15,6 +15,7 @@ class UserApi {
         headers: {'token': UserController.to.token},
       ),
     );
+
     return response != null ? ResponseData.fromJson(response.data) : null;
   }
 
@@ -61,6 +62,38 @@ class UserApi {
         headers: {'token': UserController.to.token},
       ),
       data: {'number': number},
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
+  }
+
+  static Future<ResponseData?> addOrEditPhone({
+    required String number,
+    required String code,
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().post(
+      '/user/addOrEditPhone',
+      errorCallBack: MyDialog.getErrorSnakBar,
+      options: Options(
+        headers: {'token': UserController.to.token},
+      ),
+      data: {'number': number, 'code': code},
+    );
+    return response != null ? ResponseData.fromJson(response.data) : null;
+  }
+
+  static Future<ResponseData?> editPassword({
+    required String oldPassword,
+    required String newPassword,
+    Future<void> Function(ErrorEntity)? errorCallBack,
+  }) async {
+    Response? response = await MyHttp().post(
+      '/user/editPassword',
+      errorCallBack: MyDialog.getErrorSnakBar,
+      options: Options(
+        headers: {'token': UserController.to.token},
+      ),
+      data: {'oldPassword': oldPassword, 'newPassword': newPassword},
     );
     return response != null ? ResponseData.fromJson(response.data) : null;
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
 import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/home/movie/library.dart';
 

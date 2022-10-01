@@ -22,7 +22,9 @@ class MyView extends GetView<MyController> {
     var appBarChildren = [
       MyButton.customer(onTap: controller.onCustomer),
       const SizedBox(width: 40),
-      MyButton.email(),
+      Obx(() => controller.homeController.state.isRead
+          ? MyButton.emailRead(onTap: controller.onNotice)
+          : MyButton.email(onTap: controller.onNotice)),
       const SizedBox(width: 20),
     ];
 

@@ -6,6 +6,7 @@ class UserInfo {
     required this.isFirstSetPassword,
     this.bank,
     this.usdt,
+    this.code,
     this.phone,
   });
 
@@ -15,6 +16,7 @@ class UserInfo {
   BankInfo? bank;
   BankInfo? usdt;
   String? phone;
+  String? code;
   bool isFirstSetPassword;
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
@@ -24,6 +26,7 @@ class UserInfo {
         bank: json["bank"] == null ? null : BankInfo.fromJson(json["bank"]),
         usdt: json["usdt"] == null ? null : BankInfo.fromJson(json["usdt"]),
         phone: json["phone"],
+        code: json["code"],
         isFirstSetPassword: json["isFirstSetPassword"],
       );
 
@@ -34,6 +37,7 @@ class UserInfo {
         "bank": bank == null ? null : bank!.toJson(),
         "usdt": usdt == null ? null : usdt!.toJson(),
         "phone": phone,
+        "code": code,
         "isFirstSetPassword": isFirstSetPassword,
       };
 

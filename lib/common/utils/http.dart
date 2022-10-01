@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:pinker/common/constant/library.dart';
 import 'package:pinker/common/widgets/library.dart';
@@ -223,6 +225,7 @@ class MyHttp {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+      log(response.data.toString());
       return response;
     } on DioError catch (err) {
       var eInfo = createErrorEntity(err);

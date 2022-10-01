@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/global/user.dart';
 import 'package:pinker/common/widgets/library.dart';
 import 'package:pinker/pages/edit_password/library.dart';
 
@@ -25,6 +26,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
         '请输入当前密码',
         controller: controller.oldController,
         focusNode: controller.oldFocusNode,
+        obscureText: true,
       ),
       const SizedBox(height: 10),
       MyInput.getInfo(
@@ -32,6 +34,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
         '8-24位字母和数字组合,允许有符号',
         controller: controller.newController,
         focusNode: controller.newFocusNode,
+        obscureText: true,
       ),
       const SizedBox(height: 10),
       MyInput.getInfo(
@@ -39,15 +42,17 @@ class EditPasswordView extends GetView<EditPasswordController> {
         '8-24位字母和数字组合,允许有符号',
         controller: controller.newReController,
         focusNode: controller.newReFocusNode,
+        obscureText: true,
       ),
       const SizedBox(height: 32),
       Obx(() => controller.state.isEnable ? enableButton : button),
       const SizedBox(height: 10),
-      MyButton(
-        child: const MyText('忘记密码'),
-        height: 40,
-        onTap: () {},
-      ),
+      if (!UserController.to.userInfo.value.isFirstSetPassword)
+        MyButton(
+          child: const MyText('忘记密码'),
+          height: 40,
+          onTap: () {},
+        ),
     ];
 
     var bodyChild = Column(children: bodyChildren);

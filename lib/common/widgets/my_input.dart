@@ -49,6 +49,7 @@ class MyInput extends StatefulWidget {
     String hintText, {
     TextEditingController? controller,
     FocusNode? focusNode,
+    bool obscureText = false,
   }) {
     var textBox = SizedBox(
       width: 80,
@@ -56,6 +57,7 @@ class MyInput extends StatefulWidget {
     );
 
     var inputBox = MyInput(
+      obscureText: obscureText,
       controller: controller ?? TextEditingController(),
       focusNode: focusNode ?? FocusNode(),
       hintText: hintText,

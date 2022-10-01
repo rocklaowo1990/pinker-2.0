@@ -48,8 +48,8 @@ class AddOrEditPhoneView extends GetView<AddOrEditPhoneController> {
       const SizedBox(height: 32),
       Obx(() {
         return state.isEnable
-            ? MyButton.enable('下一步')
-            : MyButton.infinity('下一步', onTap: () {});
+            ? MyButton.enable('确认')
+            : MyButton.infinity('确认', onTap: controller.onSure);
       }),
     ]);
 

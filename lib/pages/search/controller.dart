@@ -46,15 +46,13 @@ class SearchController extends GetxController {
   /// 清除搜索历史记录的按钮的点击事件
   /// 点击后显示确认弹窗
   void clear() {
-    Get.dialog(
-      DialogChild(
-        child: DialogChild.alert(
-          title: '清除记录',
-          content: '是否确认继续操作',
-          onTap: clearHistory,
-        ),
+    if (inputFocusNode.hasFocus) inputFocusNode.unfocus();
+    MyDialog.getDaliog(
+      child: DialogChild.alert(
+        title: '清除记录',
+        content: '是否确认继续操作',
+        onTap: clearHistory,
       ),
-      useSafeArea: false,
     );
   }
 

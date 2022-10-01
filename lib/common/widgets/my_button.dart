@@ -11,7 +11,7 @@ class MyButton extends StatelessWidget {
     this.height,
     this.onTap,
     this.child,
-    this.isRadius = true,
+    this.borderRadius = MyStyle.borderRadius,
     this.color,
     this.padding,
   }) : super(key: key);
@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
   final double? height;
   final void Function()? onTap;
   final Widget? child;
-  final bool isRadius;
+  final BorderRadiusGeometry borderRadius;
   final Color? color;
   final EdgeInsetsGeometry? padding;
 
@@ -29,7 +29,12 @@ class MyButton extends StatelessWidget {
     return MyButton(onTap: onTap, child: MyIcons.close(size: size));
   }
 
-  /// 消息按钮
+  /// 消息按钮-未读
+  static MyButton emailRead({void Function()? onTap}) {
+    return MyButton(onTap: onTap, child: MyIcons.emialRead());
+  }
+
+  /// 消息按钮-已读
   static MyButton email({void Function()? onTap}) {
     return MyButton(onTap: onTap, child: MyIcons.emial());
   }
@@ -169,7 +174,7 @@ class MyButton extends StatelessWidget {
     }
 
     var decoration = BoxDecoration(
-      borderRadius: isRadius ? MyStyle.borderRadius : BorderRadius.zero,
+      borderRadius: borderRadius,
       color: color,
       shape: BoxShape.rectangle,
     );

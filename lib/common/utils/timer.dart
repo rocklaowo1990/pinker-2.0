@@ -1,7 +1,22 @@
 class MyTimer {
   /// 时间戳转时间
   static String getDate(int value) {
-    DateTime time = DateTime.fromMillisecondsSinceEpoch(value);
+    var valueToString = value.toString();
+    late int timeValue;
+
+    if (valueToString.length < 13) {
+      var length = 13 - valueToString.length;
+      for (int i = 0; i < length; i++) {
+        valueToString += '0';
+      }
+      timeValue = int.parse(valueToString);
+    } else if (valueToString.length > 13) {
+      timeValue = value ~/ 1000;
+    } else {
+      timeValue = value;
+    }
+
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(timeValue);
     DateTime now = DateTime.now();
     Duration cha = now.difference(time);
 

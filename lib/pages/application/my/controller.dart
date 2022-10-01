@@ -7,6 +7,7 @@ import 'package:pinker/common/routes/library.dart';
 import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/services/storage.dart';
 import 'package:pinker/common/widgets/library.dart';
+import 'package:pinker/pages/application/home/library.dart';
 import 'package:pinker/pages/application/my/library.dart';
 import 'package:pinker/pages/web_box/library.dart';
 
@@ -14,18 +15,35 @@ class MyController extends GetxController {
   final state = MyState();
 
   final scrollController = ScrollController();
+  final homeController = Get.find<HomeController>();
 
   void history() => Get.toNamed(MyRoutes.history);
 
-  void recharge() {}
+  void recharge() {
+    if (UserController.to.token.isNotEmpty) {
+      Get.toNamed(MyRoutes.bank);
+    } else {
+      login();
+    }
+  }
 
-  void pick() {}
+  void pick() {
+    if (UserController.to.token.isNotEmpty) {
+      Get.toNamed(MyRoutes.bank);
+    } else {
+      login();
+    }
+  }
 
   void onCustomer() {
     Get.toNamed(
       MyRoutes.webBox,
       arguments: WebBoxArguments(title: '客服', url: 'https://www.google.com/'),
     );
+  }
+
+  void onNotice() {
+    Get.toNamed(MyRoutes.notice);
   }
 
   void login() {

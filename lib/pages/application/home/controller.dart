@@ -1,6 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinker/common/api/library.dart';
+import 'package:pinker/common/constant/library.dart';
+import 'package:pinker/common/data/library.dart';
+import 'package:pinker/common/global/user.dart';
 import 'package:pinker/common/routes/library.dart';
+import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/pages/application/home/cartoon/library.dart';
 import 'package:pinker/pages/application/home/drama/library.dart';
@@ -12,6 +19,38 @@ import 'package:pinker/pages/application/home/show/library.dart';
 class HomeController extends GetxController {
   final state = HomeState();
   final pageController = PageController();
+
+  void onRead() {
+    state.isRead = false;
+
+    for (var i in state.noticeList.value.noticeList) {
+      var isAlredRead = false;
+      var noticeHaveReadId = MyStorageService.to.getList(storageNoticesIdKey);
+
+      for (var j in noticeHaveReadId) {
+        if (i.id.toString() == j) {
+          isAlredRead = true;
+          break;
+        }
+      }
+
+      if (!isAlredRead) {
+        state.isRead = true;
+        break;
+      }
+    }
+  }
+
+  Future<void> getNoiiceList() async {
+    var getNoiiceList = await PublicApi.getNoticeList();
+
+    if (getNoiiceList != null && getNoiiceList.code == 200) {
+      state.noticeList.value = NoticeList.fromJson(getNoiiceList.data);
+      state.noticeList.update((val) {});
+    }
+
+    onRead();
+  }
 
   void pageChanged(int index) async {
     state.pageIndexRx.value = index;
@@ -96,6 +135,13 @@ class HomeController extends GetxController {
 
   void search() {
     Get.toNamed(MyRoutes.search);
+  }
+
+  @override
+  void onReady() {
+    log('用户token: ${UserController.to.token}');
+    getNoiiceList();
+    super.onReady();
   }
 
   @override

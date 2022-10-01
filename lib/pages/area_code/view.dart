@@ -46,7 +46,7 @@ class AreaCodeView extends GetView<AreaCodeController> {
       ]);
 
       return MyButton(
-        isRadius: false,
+        borderRadius: BorderRadius.zero,
         onTap: onTap,
         child: SizedBox(height: 50, child: bodyChild),
       );

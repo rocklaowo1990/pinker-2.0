@@ -67,7 +67,7 @@ class MyTabBar extends StatelessWidget {
         return MyButton(
           child: child,
           onTap: pageIndex.value == index ? null : onTap,
-          isRadius: false,
+          borderRadius: BorderRadius.zero,
         );
       }
 

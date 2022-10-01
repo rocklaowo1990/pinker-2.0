@@ -19,6 +19,7 @@ class MyIcons {
   static Widget customer() => SvgPicture.asset('assets/svg/my_customer.svg');
 
   static Widget emial() => SvgPicture.asset('assets/svg/my_email.svg');
+  static Widget emialRead() => SvgPicture.asset('assets/svg/my_email_1.svg');
 
   static Widget bank() => Image.asset('assets/images/my_bank.png', width: 28);
 

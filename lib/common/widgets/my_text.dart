@@ -49,8 +49,17 @@ class MyText extends StatelessWidget {
   }
 
   /// 16号的灰色文字
-  static MyText gray16(String data, {double lineHeight = 1.0}) {
-    return MyText(data, color: MyColors.secondText, lineHeight: lineHeight);
+  static MyText gray16(
+    String data, {
+    double lineHeight = 1.0,
+    int maxLines = 1,
+  }) {
+    return MyText(
+      data,
+      color: MyColors.secondText,
+      lineHeight: lineHeight,
+      maxLines: maxLines,
+    );
   }
 
   /// 14号的灰色文字

@@ -19,3 +19,6 @@ const String storageAreaNameKey = 'area_name';
 
 /// 语言设置
 const String storageLocalKey = 'local';
+
+/// 消息浏览记录
+const String storageNoticesIdKey = 'notices_id';

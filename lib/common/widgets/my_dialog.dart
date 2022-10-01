@@ -19,16 +19,22 @@ class DialogChild extends StatelessWidget {
     required String content,
     String buttonText = '确认',
     void Function()? onTap,
+    int maxLines = 1,
   }) {
     var titleBox = MyText.gray18(title);
 
-    var contentBox = MyText(content);
+    var contentBox = MyText(
+      content,
+      maxLines: maxLines,
+      lineHeight: 1.2,
+    );
 
     var sureButton = MyButton(
+      borderRadius: BorderRadius.zero,
       width: double.infinity,
       height: 50,
       child: MyText.primary(buttonText),
-      onTap: onTap,
+      onTap: onTap ?? () => Get.back(),
     );
 
     var contentBody = Padding(
@@ -126,7 +132,7 @@ class DialogChild extends StatelessWidget {
 
     var child = Container(
       child: body,
-      width: Get.width - 32 - 64,
+      width: Get.width * 0.6,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: MyColors.secondBackground,
