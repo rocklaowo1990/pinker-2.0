@@ -7,10 +7,12 @@ import 'package:pinker/common/widgets/library.dart';
 class UserApi {
   static Future<ResponseData?> getUserInfo({
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().get(
       '/user/getUserInfo',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -22,10 +24,12 @@ class UserApi {
   static Future<ResponseData?> deleteBank({
     required int type,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/user/deleteBank',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -39,10 +43,12 @@ class UserApi {
     required String number,
     required String bankName,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/user/addBank',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -54,10 +60,12 @@ class UserApi {
   static Future<ResponseData?> addUsdt({
     required String number,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/user/addUsdt',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -70,10 +78,12 @@ class UserApi {
     required String number,
     required String code,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/user/addOrEditPhone',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),
@@ -86,10 +96,12 @@ class UserApi {
     required String oldPassword,
     required String newPassword,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/user/editPassword',
       errorCallBack: MyDialog.getErrorSnakBar,
+      cancelToken: cancelToken,
       options: Options(
         headers: {'token': UserController.to.token},
       ),

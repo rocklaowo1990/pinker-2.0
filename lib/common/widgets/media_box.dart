@@ -43,7 +43,7 @@ class MediaBox extends StatelessWidget {
         const SizedBox(height: 10),
         MyText(resourceData.name),
         if (resourceData.introduction != null)
-          MyText.gray14(resourceData.introduction!, lineHeight: 1.5)
+          MyText.gray14(resourceData.introduction!)
       ];
 
       /// 返回

@@ -3,7 +3,7 @@ import 'package:pinker/common/style/library.dart';
 
 class SystemStye {
   /// 将顶部状态栏和底部状态栏设置成透明
-  static Future<void> getTransparentStatusBar() async {
+  static Future<void> setTransparentStatusBar() async {
     /// 显示顶部栏(隐藏底部栏，没有这个的话底部状态栏的透明度无法实现)
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 

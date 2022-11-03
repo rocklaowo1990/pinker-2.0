@@ -42,36 +42,16 @@ class MediaSearch extends StatelessWidget {
     var mediaInfoChildren = <Widget>[
       mediaName,
       if (resourceData.score != null)
-        MyText.primary14(
-          '★ ${resourceData.score!}',
-          lineHeight: 1.2,
-        ),
-      if (yearChildren.isNotEmpty)
-        MyText.gray14(
-          yearString,
-          lineHeight: 1.2,
-        ),
+        MyText.primary14('★ ${resourceData.score!}'),
+      if (yearChildren.isNotEmpty) MyText.gray14(yearString),
       if (resourceData.actors != null)
-        MyText.gray14(
-          '演员: ${resourceData.actors!}',
-          lineHeight: 1.2,
-        ),
+        MyText.gray14('演员: ${resourceData.actors!}'),
       if (resourceData.director != null)
-        MyText.gray14(
-          '导演: ${resourceData.director!}',
-          lineHeight: 1.2,
-        ),
+        MyText.gray14('导演: ${resourceData.director!}'),
       if (resourceData.introduce != null)
-        MyText.gray14(
-          '剧情: ${resourceData.introduce!}',
-          maxLines: 2,
-          lineHeight: 1.2,
-        ),
+        MyText.gray14('剧情: ${resourceData.introduce!}', maxLines: 2),
       if (resourceData.ranking != null)
-        MyText.primary14(
-          '排名: ${resourceData.ranking!}',
-          lineHeight: 1.2,
-        ),
+        MyText.primary14('排名: ${resourceData.ranking!}'),
     ];
 
     var mediaInfoChild = Column(

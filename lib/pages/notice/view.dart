@@ -45,7 +45,7 @@ class NoticeView extends GetView<NoticeController> {
               ],
             ),
             const SizedBox(height: 16),
-            MyText.gray16(content, maxLines: 2, lineHeight: 1.3),
+            MyText.gray16(content, maxLines: 2),
             const SizedBox(height: 16),
             MyText.gray14(MyTimer.getDate(int.parse(timer))),
           ],

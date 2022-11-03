@@ -40,7 +40,7 @@ class MediaHot extends StatelessWidget {
       const SizedBox(height: 8),
       nameBox,
       if (resourceData.introduction != null)
-        MyText.gray14(resourceData.introduction!, lineHeight: 1.5),
+        MyText.gray14(resourceData.introduction!),
       const Spacer(),
       if (yearString.isNotEmpty) MyText.gray14(yearString)
     ];

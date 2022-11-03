@@ -16,6 +16,7 @@ class ResourceApi {
     int? year,
     int? guessId,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().get(
       '/resource/getResourceList',
@@ -33,6 +34,7 @@ class ResourceApi {
       },
       onReceiveProgress: onReceiveProgress,
       errorCallBack: errorCallBack,
+      cancelToken: cancelToken,
     );
 
     return response != null ? ResponseData.fromJson(response.data) : null;
@@ -41,11 +43,13 @@ class ResourceApi {
   static Future<ResponseData?> getResourceType({
     required int type,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().get(
       '/resource/getResourceType',
       errorCallBack: errorCallBack,
       queryParameters: {'type': type},
+      cancelToken: cancelToken,
     );
     return response != null ? ResponseData.fromJson(response.data) : null;
   }
@@ -53,12 +57,14 @@ class ResourceApi {
   static Future<ResponseData?> getResourceData({
     required int id,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().get(
       '/resource/getResourceData',
       errorCallBack: errorCallBack,
       queryParameters: {'id': id},
       options: Options(headers: {'token': UserController.to.token}),
+      cancelToken: cancelToken,
     );
     return response != null ? ResponseData.fromJson(response.data) : null;
   }

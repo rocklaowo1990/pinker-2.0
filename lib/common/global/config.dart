@@ -77,7 +77,7 @@ class ConfigController extends GetxController {
     packageInfo = await PackageInfo.fromPlatform();
 
     /// 设置安卓状态栏
-    await SystemStye.getTransparentStatusBar();
+    await SystemStye.setTransparentStatusBar();
 
     /// 设置竖屏
     await SystemStye.setPreferredOrientations();

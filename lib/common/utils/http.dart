@@ -8,7 +8,6 @@ class MyHttp {
   // final Function errorCallBack;
 
   Dio dio = Dio();
-  CancelToken cancelToken = CancelToken();
 
   static final MyHttp _instance = MyHttp._internal();
 
@@ -164,16 +163,6 @@ class MyHttp {
     }
   }
 
-  /*
-   * 取消请求
-   *
-   * 同一个cancel token 可以用于多个请求，当一个cancel token取消时，所有使用该cancel token的请求都会被取消。
-   * 所以参数可选
-   */
-  void cancelRequests(CancelToken token) {
-    token.cancel("cancelled");
-  }
-
   /// 读取本地配置
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
@@ -198,6 +187,7 @@ class MyHttp {
     bool cacheDisk = false,
     void Function(int, int)? onReceiveProgress,
     Future<void> Function(ErrorEntity eInfo)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     var requestOptions = options ?? Options();
     requestOptions.extra ??= {};
@@ -241,6 +231,7 @@ class MyHttp {
     Map<String, dynamic>? queryParameters,
     Options? options,
     Future<void> Function(ErrorEntity eInfo)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -273,6 +264,8 @@ class MyHttp {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    CancelToken? cancelToken,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -280,14 +273,23 @@ class MyHttp {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.put(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.put(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 
   /// restful patch 操作
@@ -296,6 +298,8 @@ class MyHttp {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    CancelToken? cancelToken,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -303,14 +307,23 @@ class MyHttp {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.patch(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.patch(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 
   /// restful delete 操作
@@ -319,6 +332,8 @@ class MyHttp {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    CancelToken? cancelToken,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -326,14 +341,23 @@ class MyHttp {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.delete(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.delete(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 
   /// restful post form 表单提交操作
@@ -343,6 +367,8 @@ class MyHttp {
     Map<String, dynamic>? queryParameters,
     Options? options,
     void Function(int, int)? onSendProgress,
+    CancelToken? cancelToken,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -350,15 +376,24 @@ class MyHttp {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.post(
-      path,
-      data: FormData.fromMap(data),
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.post(
+        path,
+        data: FormData.fromMap(data),
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 
   /// restful post Stream 流数据
@@ -368,6 +403,8 @@ class MyHttp {
     int dataLength = 0,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    CancelToken? cancelToken,
+    Future<void> Function(ErrorEntity eInfo)? errorCallBack,
   }) async {
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -378,14 +415,23 @@ class MyHttp {
     requestOptions.headers!.addAll({
       Headers.contentLengthHeader: dataLength.toString(),
     });
-    var response = await dio.post(
-      path,
-      data: Stream.fromIterable(data.map((e) => [e])),
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+    Response response;
+
+    try {
+      response = await dio.post(
+        path,
+        data: Stream.fromIterable(data.map((e) => [e])),
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on DioError catch (err) {
+      var eInfo = createErrorEntity(err);
+      if (errorCallBack != null) await errorCallBack(eInfo);
+      return null;
+    }
   }
 }
 

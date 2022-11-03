@@ -8,6 +8,7 @@ class AccountApi {
     required String account,
     required String password,
     Future<void> Function(ErrorEntity)? errorCallBack,
+    CancelToken? cancelToken,
   }) async {
     Response? response = await MyHttp().post(
       '/account/signIn',
@@ -16,7 +17,9 @@ class AccountApi {
         'password': password,
       },
       errorCallBack: errorCallBack,
+      cancelToken: cancelToken,
     );
+
     return response != null ? ResponseData.fromJson(response.data) : null;
   }
 }

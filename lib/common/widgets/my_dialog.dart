@@ -23,11 +23,7 @@ class DialogChild extends StatelessWidget {
   }) {
     var titleBox = MyText.gray18(title);
 
-    var contentBox = MyText(
-      content,
-      maxLines: maxLines,
-      lineHeight: 1.2,
-    );
+    var contentBox = MyText(content, maxLines: maxLines);
 
     var sureButton = MyButton(
       borderRadius: BorderRadius.zero,

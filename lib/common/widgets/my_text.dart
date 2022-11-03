@@ -11,7 +11,6 @@ class MyText extends StatelessWidget {
     this.color = MyColors.text,
     this.fontSize = 16.0,
     this.fontWeight = FontWeight.normal,
-    this.lineHeight = 1.0,
   }) : super(key: key);
 
   final String data;
@@ -21,7 +20,6 @@ class MyText extends StatelessWidget {
   final Color color;
   final double fontSize;
   final FontWeight fontWeight;
-  final double lineHeight;
 
   /// 32号的静态态字体
   static MyText welcom(String data) {
@@ -51,13 +49,11 @@ class MyText extends StatelessWidget {
   /// 16号的灰色文字
   static MyText gray16(
     String data, {
-    double lineHeight = 1.0,
     int maxLines = 1,
   }) {
     return MyText(
       data,
       color: MyColors.secondText,
-      lineHeight: lineHeight,
       maxLines: maxLines,
     );
   }
@@ -66,27 +62,21 @@ class MyText extends StatelessWidget {
   static MyText gray14(
     String data, {
     int maxLines = 1,
-    double lineHeight = 1.0,
   }) {
     return MyText(
       data,
       fontSize: 14,
       color: MyColors.secondText,
       maxLines: maxLines,
-      lineHeight: lineHeight,
     );
   }
 
   /// 14号的主色文字
-  static MyText primary14(
-    String data, {
-    double lineHeight = 1.0,
-  }) {
+  static MyText primary14(String data) {
     return MyText(
       data,
       fontSize: 14,
       color: MyColors.primary,
-      lineHeight: lineHeight,
     );
   }
 
@@ -99,7 +89,6 @@ class MyText extends StatelessWidget {
       color: color,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      height: lineHeight,
     );
 
     return Text(

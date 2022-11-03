@@ -2,11 +2,8 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:like_button/like_button.dart';
-import 'package:pinker/common/constant/library.dart';
 import 'package:pinker/common/global/library.dart';
 import 'package:pinker/common/routes/library.dart';
-import 'package:pinker/common/services/librart.dart';
 import 'package:pinker/common/style/library.dart';
 import 'package:pinker/common/utils/library.dart';
 import 'package:pinker/common/widgets/library.dart';
@@ -102,53 +99,69 @@ class ShortView extends GetView<ShortController> {
       var yearChildrenString = MyCharacter.getListToString(yearChildren);
 
       /// 收藏部分组件：喜欢构建
-      Widget _likeBuilder(bool _) => _ ? MyIcons.likePress() : MyIcons.like();
+      // Widget _likeBuilder(bool _) => _ ? MyIcons.likePress() : MyIcons.like();
 
-      bool isFavorites = false;
-      for (var data in ResourceController.to.favoritesId) {
-        if (data == shortList.value.list[index].id.toString()) {
-          isFavorites = true;
-        }
-      }
+      // bool isFavorites = false;
+      // for (var data in ResourceController.to.favoritesId) {
+      //   if (data == shortList.value.list[index].id.toString()) {
+      //     isFavorites = true;
+      //   }
+      // }
 
       /// 收藏控件组件：内容组件
-      Widget _countBuilder(int? count, bool isLiked, String text) {
-        return MyText.gray14(isFavorites ? '已收藏' : '收藏');
-      }
+      // Widget _countBuilder(int? count, bool isLiked, String text) {
+      //   return MyText.gray14(isFavorites ? '已收藏' : '收藏');
+      // }
 
-      Future<bool> _onFavorites(bool value) async {
-        isFavorites = !isFavorites;
-        var favoritesId = ResourceController.to.favoritesId;
+      // Future<bool> _onFavorites(bool value) async {
+      //   isFavorites = !isFavorites;
+      //   var favoritesId = ResourceController.to.favoritesId;
 
-        if (isFavorites) {
-          favoritesId.add(shortList.value.list[index].id.toString());
-          ResourceController.to.favoritesList.update((val) {
-            val!.list.add(shortList.value.list[index]);
-            val.size += 1;
-          });
-        } else {
-          favoritesId.remove(shortList.value.list[index].id.toString());
-          ResourceController.to.favoritesList.update((val) {
-            val!.list.remove(shortList.value.list[index]);
-            val.size -= 1;
-          });
-        }
+      //   if (isFavorites) {
+      //     favoritesId.add(shortList.value.list[index].id.toString());
+      //     ResourceController.to.favoritesList.update((val) {
+      //       val!.list.add(shortList.value.list[index]);
+      //       val.size += 1;
+      //     });
+      //   } else {
+      //     favoritesId.remove(shortList.value.list[index].id.toString());
+      //     ResourceController.to.favoritesList.update((val) {
+      //       val!.list.remove(shortList.value.list[index]);
+      //       val.size -= 1;
+      //     });
+      //   }
 
-        MyStorageService.to.setList(storageFavoritesIdKey, favoritesId);
-        return isFavorites;
-      }
+      //   MyStorageService.to.setList(storageFavoritesIdKey, favoritesId);
+      //   return isFavorites;
+      // }
 
       /// 收藏控件
-      var favorites = LikeButton(
-        onTap: _onFavorites,
-        size: 20,
-        isLiked: isFavorites,
-        likeCountPadding: const EdgeInsets.only(left: 8),
-        likeCount: 0,
-        likeBuilder: _likeBuilder,
-        mainAxisAlignment: MainAxisAlignment.start,
-        countBuilder: _countBuilder,
-        likeCountAnimationType: LikeCountAnimationType.part,
+      // var favorites = LikeButton(
+      //   onTap: _onFavorites,
+      //   size: 20,
+      //   isLiked: isFavorites,
+      //   likeCountPadding: const EdgeInsets.only(left: 8),
+      //   likeCount: 0,
+      //   likeBuilder: _likeBuilder,
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   countBuilder: _countBuilder,
+      //   likeCountAnimationType: LikeCountAnimationType.part,
+      // );
+
+      var playButton = MyButton(
+        onTap: () async {
+          if (controller.videoPlayerController != null) {
+            await controller.videoPlayerController!.pause();
+
+            await Get.toNamed(MyRoutes.videoPlay,
+                arguments: shortList.value.list[index]);
+
+            await controller.videoPlayerController!.play();
+          }
+        },
+        child: const MyText('查看完整版'),
+        color: MyColors.primary,
+        padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
       );
 
       /// 影片介绍部分的综合组成
@@ -157,57 +170,26 @@ class ShortView extends GetView<ShortController> {
       /// 播放地址
       var contentBoxChildren = [
         /// 第一部分：影片的标题和收藏按钮
-        Row(children: [title, const Spacer(), favorites]),
+        Row(children: [title, const Spacer(), playButton]),
 
         /// 间距
         const SizedBox(height: 8),
 
         /// 年份信息，包含评分，年份等信息
-        if (yearChildren.isNotEmpty)
-          MyText.gray14(
-            yearChildrenString,
-            lineHeight: 1.3,
-          ),
+        if (yearChildren.isNotEmpty) MyText.gray14(yearChildrenString),
 
         /// 影片的演员表
         if (shortList.value.list[index].actors != null)
-          MyText.gray14(
-            '演员: ${shortList.value.list[index].actors!}',
-            lineHeight: 1.3,
-          ),
+          MyText.gray14('演员: ${shortList.value.list[index].actors!}'),
 
         /// 影片的导演
         if (shortList.value.list[index].director != null)
-          MyText.gray14(
-            '导演: ${shortList.value.list[index].director!}',
-            lineHeight: 1.3,
-          ),
+          MyText.gray14('导演: ${shortList.value.list[index].director!}'),
 
         /// 影片的详细介绍，只展示三行
         if (shortList.value.list[index].introduce != null)
-          MyText.gray14(
-            '剧情: ${shortList.value.list[index].introduce!}',
-            maxLines: 1,
-            lineHeight: 1.3,
-          ),
-        const SizedBox(height: 10),
-
-        MyButton(
-          onTap: () async {
-            if (controller.videoPlayerController != null) {
-              await controller.videoPlayerController!.pause();
-
-              await Get.toNamed(MyRoutes.videoPlay,
-                  arguments: shortList.value.list[index]);
-
-              await controller.videoPlayerController!.play();
-            }
-          },
-          child: const MyText('查看完整版'),
-          color: MyColors.primary,
-          height: 32,
-          width: 120,
-        ),
+          MyText.gray14('剧情: ${shortList.value.list[index].introduce!}',
+              maxLines: 1),
       ];
 
       /// 影片介绍部分：竖版排列

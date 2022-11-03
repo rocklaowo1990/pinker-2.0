@@ -34,23 +34,19 @@ class VideoPlayController extends GetxController {
   void guessPlay(ResourceData resourceData) async {
     if (resourceData.id == state.resourceData.value.id) return;
 
-    if (scrollController.offset > 0) {
-      await scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.ease,
-      );
-    }
-
     isFavorites = false;
     state.pageIndex.value = 0;
     state.chooise = [0, 0];
     state.resourceData.value = resourceData;
     state.resourceData.update((val) {});
 
+    state.resourceList.value.list.clear();
+    state.resourceList.update((val) {});
+
     for (var data in ResourceController.to.favoritesId) {
       if (data == resourceData.id.toString()) isFavorites = true;
     }
+    getResourceList(resourceData.id);
     await videoPlay(resourceData.playUrls[0].urls[0]);
   }
 
@@ -60,7 +56,7 @@ class VideoPlayController extends GetxController {
 
       await SystemStye.setPreferredOrientations();
       if (ConfigController.to.platform == 'android') {
-        await SystemStye.getTransparentStatusBar();
+        await SystemStye.setTransparentStatusBar();
       }
     }
   }

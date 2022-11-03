@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
@@ -31,6 +32,8 @@ class LoginBox extends StatelessWidget {
     final isOnTap = false.obs;
     final obscureText = true.obs;
 
+    final cancelToken = CancelToken();
+
     void linster() {
       if (accountController.text.isEmpty || passwordController.text.isEmpty) {
         isOnTap.value = false;
@@ -50,6 +53,7 @@ class LoginBox extends StatelessWidget {
         account: accountController.text,
         password: passwordController.text,
         errorCallBack: MyDialog.getErrorSnakBar,
+        cancelToken: cancelToken,
       );
 
       if (_signIn == null || _signIn.code != 200) {
@@ -84,8 +88,13 @@ class LoginBox extends StatelessWidget {
 
     var closeButtonChildren = [
       const Spacer(),
-      Obx(() => MyButton.close(
-          onTap: isLoading.value ? null : () => Get.back(), size: 20)),
+      MyButton.close(
+        onTap: () {
+          cancelToken.cancel();
+          Get.back();
+        },
+        size: 20,
+      ),
       const SizedBox(width: 10),
     ];
 
@@ -145,12 +154,12 @@ class LoginBox extends StatelessWidget {
     });
 
     var forgotButton = MyButton(
-      child: const MyText('忘记密码', lineHeight: 1.5),
+      child: const MyText('忘记密码'),
       onTap: isLoading.value ? null : () {},
     );
 
     var signUpButton = MyButton(
-      child: const MyText('注册账号', lineHeight: 1.5),
+      child: const MyText('注册账号'),
       onTap: isLoading.value ? null : () {},
     );
 

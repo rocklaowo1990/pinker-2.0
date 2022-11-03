@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinker/common/api/library.dart';
@@ -15,6 +16,8 @@ class SearchController extends GetxController {
   final inputController = TextEditingController();
   final inputFocusNode = FocusNode();
   final scrollController = ScrollController();
+
+  final cancelToken = CancelToken();
 
   /// 点击搜索历史记录的关键词的处理方法
   void history(int index) {
@@ -83,6 +86,7 @@ class SearchController extends GetxController {
       pageNo: 1,
       pageSize: 20,
       keyword: _text,
+      cancelToken: cancelToken,
     );
 
     /// 如果拿到数据
@@ -109,6 +113,12 @@ class SearchController extends GetxController {
     /// 搜索完成后，不管有没有拿到谁，关闭laoding的显示，展示搜索结果
     state.isShowLoading = false;
     state.isShowResault = true;
+  }
+
+  @override
+  void dispose() {
+    cancelToken.cancel();
+    super.dispose();
   }
 
   @override
